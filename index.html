@@ -1259,6 +1259,52 @@ input[type="range"]::-webkit-slider-thumb {
   .calc-grid { grid-template-columns: 1fr; }
   .tracker-info { grid-template-columns: repeat(3, 1fr); }
 }
+
+/* ═══ TRACKER COMMAND CENTER ═══ */
+.tracker-big-progress {
+  display: flex; align-items: center; gap: 10px;
+  margin: 0.75rem 0; padding: 0.5rem 0;
+}
+.tracker-big-bar {
+  flex: 1; height: 12px; background: var(--range-track);
+  border-radius: 6px; overflow: hidden;
+}
+.tracker-big-fill {
+  height: 100%; border-radius: 6px;
+  background: linear-gradient(90deg, var(--amber), var(--ridge));
+  transition: width 1s ease;
+}
+.tracker-big-label {
+  font-family: var(--font-mono); font-size: 0.8rem;
+  font-weight: 600; color: var(--text-primary); white-space: nowrap; min-width: 70px;
+}
+
+.tracker-next-gate {
+  background: var(--amber-bg); border: 1px solid var(--amber-border);
+  border-radius: 10px; padding: 0.75rem 1rem; margin: 0.5rem 0;
+}
+.tracker-next-gate-label {
+  font-family: var(--font-mono); font-size: 0.7rem; color: var(--amber);
+  letter-spacing: 0.1em; margin-bottom: 0.25rem;
+}
+.tracker-next-gate-info {
+  font-family: var(--font-mono); font-size: 1rem; font-weight: 600;
+  color: var(--text-primary);
+}
+
+.tracker-position {
+  display: flex; flex-direction: column; gap: 0.3rem;
+  margin: 0.5rem 0; font-size: 0.8rem;
+}
+.tracker-pos-row {
+  display: flex; align-items: center; gap: 0.4rem;
+}
+.tracker-pos-icon { font-size: 0.9rem; flex-shrink: 0; }
+.tracker-pos-text { color: var(--text-secondary); }
+
+.toast { max-width: 300px; text-align: center; }
+
+.cp-auto { background: var(--bg-card); color: var(--text-dim); border: 1px dashed var(--border); }
 </style>
 </head>
 <body>
@@ -1475,6 +1521,7 @@ input[type="range"]::-webkit-slider-thumb {
     </div>
     <!-- Active / Done: live display -->
     <div id="trackerActive" style="display:none;">
+      <!-- Row 1: Clock + Status -->
       <div class="tracker-header">
         <div>
           <div class="tracker-clock" id="trackerClock">--:--:--</div>
@@ -1482,6 +1529,14 @@ input[type="range"]::-webkit-slider-thumb {
         </div>
         <div class="tracker-status active" id="trackerStatus">進行中</div>
       </div>
+
+      <!-- Row 2: Big progress bar -->
+      <div class="tracker-big-progress">
+        <div class="tracker-big-bar"><div class="tracker-big-fill" id="trackerBigFill"></div></div>
+        <div class="tracker-big-label" id="trackerBigLabel">S1 47%</div>
+      </div>
+
+      <!-- Row 3: Elapsed / Remaining -->
       <div class="tracker-info">
         <div class="tracker-info-item">
           <div class="tracker-info-label">已經過</div>
@@ -1496,8 +1551,32 @@ input[type="range"]::-webkit-slider-thumb {
           <div class="tracker-info-value" id="trackerETA">--:--</div>
         </div>
       </div>
+
+      <!-- Row 4: Next gate countdown (most important info) -->
+      <div class="tracker-next-gate" id="trackerNextGate" style="display:none;">
+        <div class="tracker-next-gate-label">⏱ 下一關門</div>
+        <div class="tracker-next-gate-info" id="trackerNextGateInfo"></div>
+      </div>
+
+      <!-- Row 5: Current position + signal -->
+      <div class="tracker-position" id="trackerPosition">
+        <div class="tracker-pos-row">
+          <span class="tracker-pos-icon">📍</span>
+          <span class="tracker-pos-text" id="trackerPosText">--</span>
+        </div>
+        <div class="tracker-pos-row">
+          <span class="tracker-pos-icon" id="trackerSigIcon">📶</span>
+          <span class="tracker-pos-text" id="trackerSigText">--</span>
+        </div>
+      </div>
+
+      <!-- Row 6: Segment detail (existing) -->
       <div class="tracker-segment" id="trackerSeg"></div>
+
+      <!-- Hidden: gate display for backward compat -->
       <div class="tracker-gate" id="trackerGate" style="display:none;"></div>
+
+      <!-- Controls -->
       <div style="margin-top:0.75rem;display:flex;gap:0.5rem;justify-content:center;">
         <button onclick="stopTracker()" class="tracker-btn tracker-btn-stop">⏹ 停止追蹤</button>
         <button onclick="resetTracker()" class="tracker-btn tracker-btn-reset">🔄 重置</button>
@@ -2099,6 +2178,16 @@ const SEG_NAMES = {
 const SEG_KM = { s1:11.8, s2:12, s3:13, s4:13, t1:0, s5:12, t2:0, s6:11, s7:13, fin:0 };
 const SEG_ASCENT = { s1:1200, s2:800, s3:950, s4:350, t1:0, s5:550, t2:0, s6:680, s7:500, fin:0 };
 
+// ═══ SIGNAL DATA ═══
+const SEG_SIGNAL = {
+  s1: { icon: '📶', text: '收訊：間歇（谷地斷訊）' },
+  s2: { icon: '📵', text: '收訊：差（谷地死角）' },
+  s3: { icon: '📶', text: '收訊：好（稜線高處）' },
+  s4: { icon: '📵', text: '收訊：差（雙溪溝古道段）' },
+  s5: { icon: '📶', text: '收訊：好（靠近市區）' },
+  s6: { icon: '📶', text: '收訊：好（靠近市區）' },
+  s7: { icon: '📶', text: '收訊：好' },
+};
 
 // ═══ GATE TIMES DATA ═══
 const GATES = [
@@ -3161,7 +3250,8 @@ function toggleCheck(el) {
     const seg = SCHEDULE.find(s => s.id === id);
     state.checkpoints[id] = {
       time: Date.now(),
-      expectedMin: seg ? seg.startMin + seg.durMin : 0
+      expectedMin: seg ? seg.startMin + seg.durMin : 0,
+      auto: false
     };
   } else if (!item.classList.contains('checked')) {
     if (state.checkpoints) delete state.checkpoints[id];
@@ -3197,7 +3287,10 @@ function updateCheckpointDisplay() {
     }
 
     const actualTime = minToHHMM(currentStartMin + elapsed);
-    if (Math.abs(diff) < 5) {
+    if (checkpoint.auto) {
+      badgeEl.innerHTML = '⏱ ' + actualTime + ' (預估)';
+      badgeEl.className = 'checkpoint-badge cp-auto';
+    } else if (Math.abs(diff) < 5) {
       badgeEl.innerHTML = '✅ ' + actualTime + ' (準時)';
       badgeEl.className = 'checkpoint-badge cp-ontime';
     } else if (diff > 0) {
@@ -3326,8 +3419,45 @@ function showTrackerPreStart() {
 // Restore tracker state on page load
 if (state.startTime) {
   showTrackerActive();
+
+  // Auto-scroll to current segment on load when tracker is active
+  if (!state.trackerStopped) {
+    setTimeout(function() {
+      var currentSeg = null;
+      var diffMin = (Date.now() - state.startTime) / 60000;
+      for (var i = 0; i < SCHEDULE.length; i++) {
+        var s = SCHEDULE[i];
+        if (diffMin >= s.startMin && diffMin < s.startMin + s.durMin) {
+          currentSeg = document.querySelector('.tl-item[data-id="' + s.id + '"]');
+          break;
+        }
+      }
+      if (currentSeg) {
+        currentSeg.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }, 1500);
+  }
 } else {
   showTrackerPreStart();
+}
+
+function showSegmentToast(seg) {
+  const toast = document.getElementById('toast');
+  const elapsed = (Date.now() - state.startTime) / 60000;
+  const expected = seg.startMin + seg.durMin;
+  const diff = Math.round(elapsed - expected);
+  let msg = '✓ ' + seg.name.split(' ')[0] + ' 完成';
+  if (Math.abs(diff) < 3) {
+    msg += ' — 準時';
+  } else if (diff > 0) {
+    msg += ' — 慢 ' + diff + ' 分';
+  } else {
+    msg += ' — 快 ' + (-diff) + ' 分';
+  }
+  toast.textContent = msg;
+  toast.classList.add('show');
+  clearTimeout(window._segToastTimer);
+  window._segToastTimer = setTimeout(() => toast.classList.remove('show'), 4000);
 }
 
 function updateTracker() {
@@ -3421,10 +3551,16 @@ function updateTracker() {
   const totalPct = Math.round((diffMin / totalMin) * 100);
   kmDone += current.km * (segProgress / 100);
 
+  // Big progress bar
+  document.getElementById('trackerBigFill').style.width = Math.min(100, totalPct) + '%';
+  document.getElementById('trackerBigLabel').textContent = current.name.split(' ')[0] + ' ' + segProgress + '%';
+
   segEl.innerHTML = '目前應在 <span class="seg-highlight">' + current.name + '</span>（段內 ' + segProgress + '%）<br>' +
     '總進度 <strong>' + totalPct + '%</strong> ・ 約 ' + kmDone.toFixed(1) + 'km';
 
-  // Next gate countdown
+  // Next gate countdown (enhanced panel)
+  var nextGateEl = document.getElementById('trackerNextGate');
+  var nextGateInfoEl = document.getElementById('trackerNextGateInfo');
   let nextGate = null;
   for (const gate of GATES) {
     const scaled = scaleBaseTime(gate.baseMin, currentPace);
@@ -3436,17 +3572,82 @@ function updateTracker() {
   }
 
   if (nextGate) {
-    const gRH = Math.floor(nextGate.remainMin / 60);
-    const gRM = Math.floor(nextGate.remainMin % 60);
+    nextGateEl.style.display = '';
     const gateClockStr = minToClockWithDay(currentStartMin + nextGate.elapsedMin);
-    gateEl.style.display = '';
-    gateEl.innerHTML = '下一關門：<strong>' + nextGate.name + '</strong> ' + gateClockStr + '（剩 ' + gRH + 'h' + pad(gRM) + 'm）';
+    const gRemainMin = Math.max(0, Math.round(nextGate.remainMin));
+    const gRemainH = Math.floor(gRemainMin / 60);
+    const gRemainM = gRemainMin % 60;
+    nextGateInfoEl.innerHTML = nextGate.name + ' <span style="color:var(--amber)">' + gateClockStr + '</span>（剩 ' + gRemainH + 'h' + String(gRemainM).padStart(2,'0') + 'm）';
+
+    // Urgent styling when <30min
+    if (gRemainMin < 30) {
+      nextGateEl.style.borderColor = 'var(--sunset)';
+      nextGateEl.style.background = 'var(--sunset-bg)';
+      var gateSpan = nextGateInfoEl.querySelector('span');
+      if (gateSpan) gateSpan.style.color = 'var(--sunset)';
+    } else {
+      nextGateEl.style.borderColor = '';
+      nextGateEl.style.background = '';
+    }
+
+    // Also update old hidden gate element for backward compat
+    gateEl.style.display = 'none';
   } else {
+    nextGateEl.style.display = 'none';
     gateEl.style.display = 'none';
   }
 
+  // Position estimate
+  var posText = document.getElementById('trackerPosText');
+  var sigIcon = document.getElementById('trackerSigIcon');
+  var sigText = document.getElementById('trackerSigText');
+
+  var journeyPct = diffMin / totalMin;
+  var xPos = journeyPct * 1000;
+  var nearestPoint = elevData[0];
+  var minDist = Infinity;
+  for (var pi = 0; pi < elevData.length; pi++) {
+    var dist = Math.abs(elevData[pi].x - xPos);
+    if (dist < minDist) { minDist = dist; nearestPoint = elevData[pi]; }
+  }
+  posText.textContent = '預估位置：' + nearestPoint.seg;
+
+  // Signal for current segment
+  var currentSegId = current.id;
+  if (SEG_SIGNAL[currentSegId]) {
+    sigIcon.textContent = SEG_SIGNAL[currentSegId].icon;
+    sigText.textContent = SEG_SIGNAL[currentSegId].text;
+    document.getElementById('trackerPosition').style.display = '';
+  } else {
+    document.getElementById('trackerPosition').style.display = 'none';
+  }
+
+  // Auto-check completed segments
+  if (!state.trackerStopped) {
+    var currentIdx = SCHEDULE.findIndex(function(s) { return s.id === current.id; });
+    for (var ci = 0; ci < currentIdx; ci++) {
+      var seg = SCHEDULE[ci];
+      var item = document.querySelector('.tl-item[data-id="' + seg.id + '"]');
+      if (item && !item.classList.contains('checked')) {
+        item.classList.add('checked');
+        state.timeline[seg.id] = true;
+        if (!state.checkpoints) state.checkpoints = {};
+        if (!state.checkpoints[seg.id]) {
+          state.checkpoints[seg.id] = {
+            time: state.startTime + (seg.startMin + seg.durMin) * 60000,
+            expectedMin: seg.startMin + seg.durMin,
+            auto: true
+          };
+        }
+        showSegmentToast(seg);
+      }
+    }
+    saveState(state);
+    updateProgress();
+    updateCheckpointDisplay();
+  }
+
   updateGateColors();
-  updateCheckpointDisplay();
   updateElevTrackerDot();
 
   const pillSeg = document.getElementById('pillSeg');
