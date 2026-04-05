@@ -253,7 +253,7 @@ nav a:hover, nav a.active { color: var(--amber); }
   pointer-events: none; opacity: 0; transition: opacity 0.2s; z-index: 10;
 }
 
-/* ── Pace Config ── */
+/* ── Config Section (merged pace + start time) ── */
 .pace-section {
   max-width: 900px; margin: 0 auto 2rem; padding: 0 1rem;
 }
@@ -288,6 +288,36 @@ nav a:hover, nav a.active { color: var(--amber); }
   font-family: var(--font-mono); font-size: 0.6rem; color: var(--text-dim);
   margin-bottom: 4px;
 }
+
+/* Config row: start time */
+.config-row { margin-bottom: 0.75rem; }
+.config-row-label {
+  font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-dim);
+  margin-bottom: 4px; display: flex; justify-content: space-between; align-items: center;
+}
+.config-row-label .config-value-big {
+  font-size: 1.3rem; font-weight: 600; color: var(--amber);
+}
+
+/* Month selector */
+.month-selector {
+  display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 0.75rem;
+}
+.month-btn {
+  font-family: var(--font-mono); font-size: 0.6rem;
+  padding: 4px 8px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.04); color: var(--text-dim);
+  cursor: pointer; transition: all 0.2s; min-width: 36px; text-align: center;
+}
+.month-btn:hover { border-color: rgba(255,255,255,0.2); }
+.month-btn.active {
+  background: rgba(245,158,11,0.15); border-color: var(--amber); color: var(--amber);
+}
+.month-sun-info {
+  font-family: var(--font-mono); font-size: 0.6rem; color: var(--text-dim);
+  margin-bottom: 0.75rem;
+}
+
 .pace-stats {
   display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.6rem;
 }
@@ -302,6 +332,17 @@ nav a:hover, nav a.active { color: var(--amber); }
   font-family: var(--font-mono); font-size: 1rem; font-weight: 600; color: var(--text);
 }
 .pace-stat-value .unit { font-size: 0.55em; color: var(--text-dim); font-weight: 400; }
+
+/* Smart summary */
+.smart-summary {
+  margin-top: 0.75rem; padding: 0.6rem 0.8rem; border-radius: 8px;
+  background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06);
+  font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-dim);
+  line-height: 1.7;
+}
+.smart-summary .ss-night { color: #a5b4fc; }
+.smart-summary .ss-day { color: var(--sky); }
+.smart-summary .ss-headlamp { color: var(--amber); }
 
 /* ═══ MAIN TIMELINE (checkable) ═══ */
 .timeline-section { padding: 2.5rem 1rem; max-width: 900px; margin: 0 auto; position: relative; }
@@ -906,8 +947,8 @@ input[type="range"]::-webkit-slider-thumb {
 <section class="hero" id="hero">
   <div class="hero-eyebrow">ONE DAY CHALLENGE ── 2026</div>
   <h1>台北大縱走<br>一日完走</h1>
-  <div class="hero-sub" id="heroSub">上河<span id="heroPace">×0.6</span>｜<span>00:00</span>起登｜北<span>→</span>南</div>
-  <a href="#pace" class="hero-pace-link" id="heroPaceLink">調整配速 ↓</a>
+  <div class="hero-sub" id="heroSub">上河<span id="heroPace">×0.6</span>｜<span id="heroStartLabel">00:00</span> 起登｜北<span>→</span>南</div>
+  <a href="#pace" class="hero-pace-link" id="heroPaceLink">調整設定 ↓</a>
   <div class="hero-stats">
     <div class="stat"><div class="stat-value">92<span class="unit">km</span></div><div class="stat-label">山徑總長</div></div>
     <div class="stat"><div class="stat-value">5,000<span class="unit">m</span></div><div class="stat-label">累計爬升</div></div>
@@ -949,35 +990,49 @@ input[type="range"]::-webkit-slider-thumb {
   <div class="section-label">DAY / NIGHT</div>
   <div class="section-title" style="margin-bottom:0.75rem;">日夜週期</div>
   <div class="daynight-track" id="daynightTrack" style="position:relative;">
-    <div class="daynight-markers" id="daynightMarkers">
-      <div class="dn-marker" style="left:0%" data-label="00:00" data-base-min="0"></div>
-      <div class="dn-marker" style="left:25.9%" data-label="天亮" data-base-min="330"></div>
-      <div class="dn-marker" style="left:58.6%" data-label="過半" data-base-min="740"></div>
-      <div class="dn-marker" style="left:86.2%" data-label="日落" data-base-min="1110"></div>
-      <div class="dn-marker" style="left:100%" data-label="完走" data-base-min="1270"></div>
-    </div>
+    <div class="daynight-markers" id="daynightMarkers"></div>
     <div class="daynight-tooltip" id="daynightTooltip"></div>
   </div>
   <div class="daynight-labels" id="daynightLabels"><span>00:00</span><span>06:00</span><span>12:00</span><span>18:00</span><span id="dnFinishLabel">21:10</span></div>
 </section>
 
-<!-- ═══ PACE CONFIG ═══ -->
+<!-- ═══ CONFIG (merged pace + start time + month) ═══ -->
 <section class="pace-section" id="pace">
   <div class="pace-card">
     <div class="pace-header">
       <div>
-        <div class="pace-title">配速設定</div>
-        <div class="pace-title-sub">上河倍率 -- 拖曳調整你的速度</div>
-      </div>
-      <div class="pace-value-display">
-        <span style="font-family:var(--font-mono);font-size:0.75rem;color:var(--text-dim);">×</span>
-        <span class="pace-multiplier" id="paceDisplay">0.60</span>
+        <div class="pace-title">計畫設定</div>
+        <div class="pace-title-sub">起登時間、月份、配速倍率</div>
       </div>
     </div>
-    <div class="pace-slider-wrap">
+
+    <!-- Start time slider -->
+    <div class="config-row">
+      <div class="config-row-label">
+        <span>起登時間</span>
+        <span class="config-value-big" id="startTimeDisplay">00:00</span>
+      </div>
+      <div class="pace-slider-labels"><span>20:00</span><span>06:00</span></div>
+      <input type="range" id="startSlider" min="-240" max="360" step="30" value="0" oninput="onConfigChange()">
+    </div>
+
+    <!-- Month selector -->
+    <div class="config-row">
+      <div class="config-row-label"><span>月份</span><span class="month-sun-info" id="monthSunInfo">日出 06:40 / 日落 17:20</span></div>
+      <div class="month-selector" id="monthSelector"></div>
+    </div>
+
+    <!-- Pace slider -->
+    <div class="config-row">
+      <div class="config-row-label">
+        <span>上河倍率</span>
+        <span class="config-value-big" id="paceDisplay">0.60</span>
+      </div>
       <div class="pace-slider-labels"><span>×0.50 (快)</span><span>×1.20 (慢)</span></div>
-      <input type="range" id="paceSlider" min="50" max="120" step="1" value="60" oninput="onPaceChange()">
+      <input type="range" id="paceSlider" min="50" max="120" step="1" value="60" oninput="onConfigChange()">
     </div>
+
+    <!-- Stats row -->
     <div class="pace-stats">
       <div class="pace-stat">
         <div class="pace-stat-label">上河倍率</div>
@@ -988,10 +1043,13 @@ input[type="range"]::-webkit-slider-thumb {
         <div class="pace-stat-value" id="paceStatTotal">21h10m</div>
       </div>
       <div class="pace-stat">
-        <div class="pace-stat-label">預估完走</div>
+        <div class="pace-stat-label">預估完走時間</div>
         <div class="pace-stat-value" id="paceStatFinish">21:10</div>
       </div>
     </div>
+
+    <!-- Smart summary -->
+    <div class="smart-summary" id="smartSummary"></div>
   </div>
 </section>
 
@@ -1052,15 +1110,15 @@ input[type="range"]::-webkit-slider-thumb {
   </div>
 
   <div class="timeline" id="timelineList">
-    <!-- S1 --><div class="tl-item" data-phase="night" data-id="s1"><div class="tl-card"><div class="tl-header"><div class="tl-header-left"><div class="tl-check" onclick="toggleCheck(this)"><span class="tl-check-icon">&#10003;</span></div><span class="tl-seg">S1</span><span class="tl-time-badge" data-seg="s1">00:00</span></div><span class="tl-duration" data-seg="s1">3h20m</span></div><div class="tl-route">關渡<span class="arrow">→</span>二子坪</div><div class="tl-note">夜間摸黑起登，經忠義山、貴子坑，攀上<span class="highlight">大屯山 1092m</span></div><div class="tl-meta"><span class="tl-meta-item">📏 11.8km</span><span class="tl-meta-item">⬆ +1,200m</span><span class="tl-meta-item">🌙 全程夜走</span></div></div></div>
-    <!-- S2 --><div class="tl-item" data-phase="dawn" data-id="s2"><div class="tl-card"><div class="tl-header"><div class="tl-header-left"><div class="tl-check" onclick="toggleCheck(this)"><span class="tl-check-icon">&#10003;</span></div><span class="tl-seg">S2</span><span class="tl-time-badge" data-seg="s2">03:20</span></div><span class="tl-duration" data-seg="s2">2h40m</span></div><div class="tl-route">面天坪<span class="arrow">→</span>小油坑</div><div class="tl-note"><span class="highlight">最難路段！</span>大屯山西峰/南峰泥濘拉繩。天色漸亮</div><div class="tl-meta"><span class="tl-meta-item">📏 12km</span><span class="tl-meta-item">⬆ +800m</span><span class="tl-meta-item">⚠️ 濕滑拉繩</span></div></div></div>
-    <!-- S3 --><div class="tl-item" data-phase="day" data-id="s3"><div class="tl-card"><div class="tl-header"><div class="tl-header-left"><div class="tl-check" onclick="toggleCheck(this)"><span class="tl-check-icon">&#10003;</span></div><span class="tl-seg">S3</span><span class="tl-time-badge" data-seg="s3">06:00</span></div><span class="tl-duration" data-seg="s3">3h20m</span></div><div class="tl-route">小油坑<span class="arrow">→</span>風櫃口</div><div class="tl-note">登<span class="highlight">七星山 1120m</span> 全程最高！擎天崗大草原、石梯嶺</div><div class="tl-meta"><span class="tl-meta-item">📏 13km</span><span class="tl-meta-item">⬆ +950m</span><span class="tl-meta-item">🌅 日出</span></div></div></div>
-    <!-- S4 --><div class="tl-item" data-phase="day" data-id="s4"><div class="tl-card"><div class="tl-header"><div class="tl-header-left"><div class="tl-check" onclick="toggleCheck(this)"><span class="tl-check-icon">&#10003;</span></div><span class="tl-seg">S4</span><span class="tl-time-badge" data-seg="s4">09:20</span></div><span class="tl-duration" data-seg="s4">3h00m</span></div><div class="tl-route">風櫃口<span class="arrow">→</span>大湖公園</div><div class="tl-note">一路下降至市區。<span class="highlight">陽明山段結束！過半</span>（官方終點為中華科大，含道路段）</div><div class="tl-meta"><span class="tl-meta-item">📏 ~13km 步道</span><span class="tl-meta-item">⬆ +350m ⬇ -870m</span><span class="tl-meta-item">✅ 過半</span></div></div></div>
+    <!-- S1 --><div class="tl-item" data-phase="night" data-id="s1"><div class="tl-card"><div class="tl-header"><div class="tl-header-left"><div class="tl-check" onclick="toggleCheck(this)"><span class="tl-check-icon">&#10003;</span></div><span class="tl-seg">S1</span><span class="tl-time-badge" data-seg="s1">00:00</span></div><span class="tl-duration" data-seg="s1">3h20m</span></div><div class="tl-route">關渡<span class="arrow">→</span>二子坪</div><div class="tl-note">夜間摸黑起登，經忠義山、貴子坑，攀上<span class="highlight">大屯山 1092m</span></div><div class="tl-meta"><span class="tl-meta-item">📏 11.8km</span><span class="tl-meta-item">⬆ +1,200m</span><span class="tl-meta-item tl-meta-condition" data-seg="s1">🌙 全程夜走</span></div></div></div>
+    <!-- S2 --><div class="tl-item" data-phase="dawn" data-id="s2"><div class="tl-card"><div class="tl-header"><div class="tl-header-left"><div class="tl-check" onclick="toggleCheck(this)"><span class="tl-check-icon">&#10003;</span></div><span class="tl-seg">S2</span><span class="tl-time-badge" data-seg="s2">03:20</span></div><span class="tl-duration" data-seg="s2">2h40m</span></div><div class="tl-route">面天坪<span class="arrow">→</span>小油坑</div><div class="tl-note"><span class="highlight">最難路段！</span>大屯山西峰/南峰泥濘拉繩。天色漸亮</div><div class="tl-meta"><span class="tl-meta-item">📏 12km</span><span class="tl-meta-item">⬆ +800m</span><span class="tl-meta-item tl-meta-condition" data-seg="s2">⚠️ 濕滑拉繩</span></div></div></div>
+    <!-- S3 --><div class="tl-item" data-phase="day" data-id="s3"><div class="tl-card"><div class="tl-header"><div class="tl-header-left"><div class="tl-check" onclick="toggleCheck(this)"><span class="tl-check-icon">&#10003;</span></div><span class="tl-seg">S3</span><span class="tl-time-badge" data-seg="s3">06:00</span></div><span class="tl-duration" data-seg="s3">3h20m</span></div><div class="tl-route">小油坑<span class="arrow">→</span>風櫃口</div><div class="tl-note">登<span class="highlight">七星山 1120m</span> 全程最高！擎天崗大草原、石梯嶺</div><div class="tl-meta"><span class="tl-meta-item">📏 13km</span><span class="tl-meta-item">⬆ +950m</span><span class="tl-meta-item tl-meta-condition" data-seg="s3">🌅 日出</span></div></div></div>
+    <!-- S4 --><div class="tl-item" data-phase="day" data-id="s4"><div class="tl-card"><div class="tl-header"><div class="tl-header-left"><div class="tl-check" onclick="toggleCheck(this)"><span class="tl-check-icon">&#10003;</span></div><span class="tl-seg">S4</span><span class="tl-time-badge" data-seg="s4">09:20</span></div><span class="tl-duration" data-seg="s4">3h00m</span></div><div class="tl-route">風櫃口<span class="arrow">→</span>大湖公園</div><div class="tl-note">一路下降至市區。<span class="highlight">陽明山段結束！過半</span>（官方終點為中華科大，含道路段）</div><div class="tl-meta"><span class="tl-meta-item">📏 ~13km 步道</span><span class="tl-meta-item">⬆ +350m ⬇ -870m</span><span class="tl-meta-item tl-meta-condition" data-seg="s4">✅ 過半</span></div></div></div>
     <!-- Transit 1 --><div class="tl-item" data-phase="transit" data-id="t1"><div class="tl-card"><div class="tl-header"><div class="tl-header-left"><div class="tl-check" onclick="toggleCheck(this)"><span class="tl-check-icon">&#10003;</span></div><span class="tl-seg">接駁</span><span class="tl-time-badge" data-seg="t1">12:20</span></div><span class="tl-duration" data-seg="t1">~20m</span></div><div class="tl-route">大湖公園<span class="arrow">→</span>劍潭</div><div class="tl-note">Uber 直達。<span class="highlight">便利商店大補給！</span></div></div></div>
-    <!-- S5 --><div class="tl-item" data-phase="afternoon" data-id="s5"><div class="tl-card"><div class="tl-header"><div class="tl-header-left"><div class="tl-check" onclick="toggleCheck(this)"><span class="tl-check-icon">&#10003;</span></div><span class="tl-seg">S5</span><span class="tl-time-badge" data-seg="s5">12:40</span></div><span class="tl-duration" data-seg="s5">3h00m</span></div><div class="tl-route">劍潭<span class="arrow">→</span>碧山巖</div><div class="tl-note">老地方觀機平台、大崙頭山。<span class="highlight">午後最熱，岔路多注意導航</span></div><div class="tl-meta"><span class="tl-meta-item">📏 12km</span><span class="tl-meta-item">⬆ +550m</span><span class="tl-meta-item">🌡️ 防曬</span></div></div></div>
+    <!-- S5 --><div class="tl-item" data-phase="afternoon" data-id="s5"><div class="tl-card"><div class="tl-header"><div class="tl-header-left"><div class="tl-check" onclick="toggleCheck(this)"><span class="tl-check-icon">&#10003;</span></div><span class="tl-seg">S5</span><span class="tl-time-badge" data-seg="s5">12:40</span></div><span class="tl-duration" data-seg="s5">3h00m</span></div><div class="tl-route">劍潭<span class="arrow">→</span>碧山巖</div><div class="tl-note">老地方觀機平台、大崙頭山。<span class="highlight">午後最熱，岔路多注意導航</span></div><div class="tl-meta"><span class="tl-meta-item">📏 12km</span><span class="tl-meta-item">⬆ +550m</span><span class="tl-meta-item tl-meta-condition" data-seg="s5">🌡️ 防曬</span></div></div></div>
     <!-- Transit 2 --><div class="tl-item" data-phase="transit" data-id="t2"><div class="tl-card"><div class="tl-header"><div class="tl-header-left"><div class="tl-check" onclick="toggleCheck(this)"><span class="tl-check-icon">&#10003;</span></div><span class="tl-seg">接駁</span><span class="tl-time-badge" data-seg="t2">15:40</span></div><span class="tl-duration" data-seg="t2">~40m</span></div><div class="tl-route">碧山巖<span class="arrow">→</span>中華科大</div><div class="tl-note">Uber 直達（或小2公車→捷運→南港）。補給休息</div></div></div>
-    <!-- S6 --><div class="tl-item" data-phase="afternoon" data-id="s6"><div class="tl-card"><div class="tl-header"><div class="tl-header-left"><div class="tl-check" onclick="toggleCheck(this)"><span class="tl-check-icon">&#10003;</span></div><span class="tl-seg">S6</span><span class="tl-time-badge" data-seg="s6">16:20</span></div><span class="tl-duration" data-seg="s6">2h24m</span></div><div class="tl-route">中華科大<span class="arrow">→</span>麟光</div><div class="tl-note"><span class="highlight">九五峰眺望101</span>，糶米古道。最後補給在麟光站</div><div class="tl-meta"><span class="tl-meta-item">📏 11km</span><span class="tl-meta-item">⬆ +680m</span><span class="tl-meta-item">🌇 夕陽</span></div></div></div>
-    <!-- S7 --><div class="tl-item" data-phase="dusk" data-id="s7"><div class="tl-card"><div class="tl-header"><div class="tl-header-left"><div class="tl-check" onclick="toggleCheck(this)"><span class="tl-check-icon">&#10003;</span></div><span class="tl-seg">S7</span><span class="tl-time-badge" data-seg="s7">18:44</span></div><span class="tl-duration" data-seg="s7">2h26m</span></div><div class="tl-route">麟光<span class="arrow">→</span>指南宮<span class="arrow">→</span>政大</div><div class="tl-note">經世界山莊→和平東路→指南宮千階→貓空。<span class="highlight">最後衝刺！</span>天黑需頭燈</div><div class="tl-meta"><span class="tl-meta-item">📏 13km</span><span class="tl-meta-item">⬆ +500m</span><span class="tl-meta-item">🔦 頭燈</span></div></div></div>
+    <!-- S6 --><div class="tl-item" data-phase="afternoon" data-id="s6"><div class="tl-card"><div class="tl-header"><div class="tl-header-left"><div class="tl-check" onclick="toggleCheck(this)"><span class="tl-check-icon">&#10003;</span></div><span class="tl-seg">S6</span><span class="tl-time-badge" data-seg="s6">16:20</span></div><span class="tl-duration" data-seg="s6">2h24m</span></div><div class="tl-route">中華科大<span class="arrow">→</span>麟光</div><div class="tl-note"><span class="highlight">九五峰眺望101</span>，糶米古道。最後補給在麟光站</div><div class="tl-meta"><span class="tl-meta-item">📏 11km</span><span class="tl-meta-item">⬆ +680m</span><span class="tl-meta-item tl-meta-condition" data-seg="s6">🌇 夕陽</span></div></div></div>
+    <!-- S7 --><div class="tl-item" data-phase="dusk" data-id="s7"><div class="tl-card"><div class="tl-header"><div class="tl-header-left"><div class="tl-check" onclick="toggleCheck(this)"><span class="tl-check-icon">&#10003;</span></div><span class="tl-seg">S7</span><span class="tl-time-badge" data-seg="s7">18:44</span></div><span class="tl-duration" data-seg="s7">2h26m</span></div><div class="tl-route">麟光<span class="arrow">→</span>指南宮<span class="arrow">→</span>政大</div><div class="tl-note">經世界山莊→和平東路→指南宮千階→貓空。<span class="highlight">最後衝刺！</span>天黑需頭燈</div><div class="tl-meta"><span class="tl-meta-item">📏 13km</span><span class="tl-meta-item">⬆ +500m</span><span class="tl-meta-item tl-meta-condition" data-seg="s7">🔦 頭燈</span></div></div></div>
     <!-- Finish --><div class="tl-item" data-phase="finish" data-id="fin"><div class="tl-card"><div class="tl-header"><div class="tl-header-left"><div class="tl-check" onclick="toggleCheck(this)"><span class="tl-check-icon">&#10003;</span></div><span class="tl-seg">完走</span><span class="tl-time-badge" data-seg="fin">~21:10</span></div></div><div class="tl-route" style="font-size:1.2rem;">🏁 完走！</div><div class="tl-note" id="finishNote">全程 <strong>~21 小時</strong>・92km・+5000m</div></div></div>
   </div>
 </section>
@@ -1335,10 +1393,25 @@ const state = loadState();
 if (!state.timeline) state.timeline = {};
 if (!state.gear) state.gear = {};
 
+// ═══ SUN TABLE ═══
+const SUN_TABLE = {
+  1:  { rise: 400, set: 1040 },
+  2:  { rise: 385, set: 1065 },
+  3:  { rise: 360, set: 1085 },
+  4:  { rise: 335, set: 1100 },
+  5:  { rise: 315, set: 1115 },
+  6:  { rise: 310, set: 1125 },
+  7:  { rise: 315, set: 1120 },
+  8:  { rise: 325, set: 1105 },
+  9:  { rise: 335, set: 1080 },
+  10: { rise: 345, set: 1050 },
+  11: { rise: 360, set: 1030 },
+  12: { rise: 385, set: 1030 },
+};
+
 // ═══ PACE SYSTEM ═══
 const BASE_PACE = 0.6;
 
-// Base durations at x0.6
 const BASE_SEGMENTS = [
   { id:'s1', baseDur:200, transit:false },
   { id:'s2', baseDur:160, transit:false },
@@ -1351,13 +1424,9 @@ const BASE_SEGMENTS = [
   { id:'s7', baseDur:146, transit:false },
 ];
 
-// Supply base arrival minutes at x0.6
 const SUPPLY_BASE = [90, 200, 360, 450, 740, 760, 940, 1124];
-
-// Milestone base minutes at x0.6
 const MILESTONE_BASE = [0, 330, 390, 740, 1110, 1270];
 
-// Segment names for schedule
 const SEG_NAMES = {
   s1:'S1 關渡→二子坪', s2:'S2 面天坪→小油坑', s3:'S3 小油坑→風櫃口',
   s4:'S4 風櫃口→大湖公園', t1:'Uber 大湖公園→劍潭', s5:'S5 劍潭→碧山巖',
@@ -1365,19 +1434,17 @@ const SEG_NAMES = {
 };
 const SEG_KM = { s1:11.8, s2:12, s3:13, s4:13, t1:0, s5:12, t2:0, s6:11, s7:13, fin:0 };
 const SEG_ASCENT = { s1:1200, s2:800, s3:950, s4:350, t1:0, s5:550, t2:0, s6:680, s7:500, fin:0 };
-
-// Segment header labels
 const SEG_HEADER_LABELS = { s1:'S1', s2:'S2', s3:'S3', s4:'S4', s5:'S5', s6:'S6', s7:'S7' };
 
 let currentPace = BASE_PACE;
+let currentStartMin = 0; // minutes from midnight (can be negative for prev day)
+let currentMonth = new Date().getMonth() + 1;
 
-// Compute scaled duration for a segment
 function scaledDur(seg, pace) {
   if (seg.transit) return seg.baseDur;
   return Math.round(seg.baseDur * (pace / BASE_PACE));
 }
 
-// Build full schedule at given pace
 function buildSchedule(pace) {
   const segs = [];
   let cumMin = 0;
@@ -1390,30 +1457,33 @@ function buildSchedule(pace) {
   return { segs, totalMin: cumMin };
 }
 
-// Scale a base-time that falls within segments
 function scaleBaseTime(baseMin, pace) {
-  // Walk through base segments to find where baseMin falls, then compute scaled time
   let baseCum = 0;
   let scaledCum = 0;
   for (const bs of BASE_SEGMENTS) {
     const bDur = bs.baseDur;
     const sDur = scaledDur(bs, pace);
     if (baseMin <= baseCum + bDur) {
-      // falls within this segment
       const frac = bDur > 0 ? (baseMin - baseCum) / bDur : 0;
       return Math.round(scaledCum + frac * sDur);
     }
     baseCum += bDur;
     scaledCum += sDur;
   }
-  // past all segments
   return scaledCum;
 }
 
+function normMin(m) { return ((m % 1440) + 1440) % 1440; }
+
 function minToHHMM(min) {
-  const h = Math.floor(min / 60) % 24;
-  const m = Math.round(min % 60);
+  const n = normMin(min);
+  const h = Math.floor(n / 60);
+  const m = Math.round(n % 60);
   return String(h).padStart(2,'0') + ':' + String(m).padStart(2,'0');
+}
+
+function minToClockHHMM(elapsedMin) {
+  return minToHHMM(currentStartMin + elapsedMin);
 }
 
 function minToDurStr(min) {
@@ -1424,13 +1494,36 @@ function minToDurStr(min) {
 }
 
 function minToApproxHr(min) {
-  const h = Math.floor(min / 60);
-  const m = Math.round(min % 60);
-  if (m === 0) return '~' + h;
-  return '~' + h;
+  return '~' + Math.floor(min / 60);
 }
 
-// Read pace from URL param, then localStorage, default 0.6
+// ═══ PHASE SYSTEM ═══
+function getPhase(clockMin, sunrise, sunset) {
+  clockMin = normMin(clockMin);
+  if (clockMin >= sunrise - 30 && clockMin <= sunrise + 30) return 'dawn';
+  if (clockMin >= sunset - 30 && clockMin <= sunset + 30) return 'dusk';
+  if (clockMin > sunrise + 30 && clockMin <= 840) return 'day';
+  if (clockMin > 840 && clockMin <= sunset - 30) return 'afternoon';
+  return 'night';
+}
+
+function getPhaseColor(phase) {
+  switch (phase) {
+    case 'night': return '#1e1b4b';
+    case 'dawn': return '#f59e0b';
+    case 'day': return '#7dd3fc';
+    case 'afternoon': return '#38bdf8';
+    case 'dusk': return '#e11d48';
+    default: return '#1e1b4b';
+  }
+}
+
+function isDark(clockMin, sunrise, sunset) {
+  clockMin = normMin(clockMin);
+  return clockMin < sunrise || clockMin > sunset;
+}
+
+// ═══ INIT CONFIG FROM URL / STATE ═══
 function getInitialPace() {
   const params = new URLSearchParams(window.location.search);
   const urlPace = parseFloat(params.get('pace'));
@@ -1439,10 +1532,25 @@ function getInitialPace() {
   return 0.6;
 }
 
-// Read start from URL param
-function getInitialStart() {
+function getInitialStartMin() {
   const params = new URLSearchParams(window.location.search);
-  const urlStart = params.get('start');
+  const urlStart = parseInt(params.get('start'));
+  if (!isNaN(urlStart) && urlStart >= -240 && urlStart <= 360) return urlStart;
+  if (state.startHour !== undefined && state.startHour >= -240 && state.startHour <= 360) return state.startHour;
+  return 0;
+}
+
+function getInitialMonth() {
+  const params = new URLSearchParams(window.location.search);
+  const urlMonth = parseInt(params.get('month'));
+  if (!isNaN(urlMonth) && urlMonth >= 1 && urlMonth <= 12) return urlMonth;
+  if (state.month && state.month >= 1 && state.month <= 12) return state.month;
+  return new Date().getMonth() + 1;
+}
+
+function getInitialTrackerStart() {
+  const params = new URLSearchParams(window.location.search);
+  const urlStart = params.get('trackerStart');
   if (urlStart) {
     const d = new Date(urlStart);
     if (!isNaN(d.getTime())) return d.getTime();
@@ -1451,18 +1559,47 @@ function getInitialStart() {
 }
 
 currentPace = getInitialPace();
+currentStartMin = getInitialStartMin();
+currentMonth = getInitialMonth();
 
-// Initialize start time from URL
-const initStart = getInitialStart();
-if (initStart) {
-  state.startTime = initStart;
+const initTrackerStart = getInitialTrackerStart();
+if (initTrackerStart) {
+  state.startTime = initTrackerStart;
   saveState(state);
 }
 
-// Apply pace to all UI elements
-function applyPace(pace) {
-  currentPace = pace;
+// ═══ BUILD MONTH SELECTOR ═══
+(function buildMonthBtns() {
+  const container = document.getElementById('monthSelector');
+  for (let m = 1; m <= 12; m++) {
+    const btn = document.createElement('button');
+    btn.className = 'month-btn' + (m === currentMonth ? ' active' : '');
+    btn.textContent = m + '月';
+    btn.dataset.month = m;
+    btn.onclick = function() {
+      document.querySelectorAll('.month-btn').forEach(b => b.classList.remove('active'));
+      this.classList.add('active');
+      currentMonth = parseInt(this.dataset.month);
+      onConfigChange();
+    };
+    container.appendChild(btn);
+  }
+})();
+
+// ═══ SCHEDULE DATA (mutable, rebuilt by applyConfig) ═══
+const SCHEDULE = [];
+let TOTAL_MIN_CURRENT = 1270;
+
+// ═══ MAIN CONFIG APPLY ═══
+function applyConfig() {
+  const pace = currentPace;
+  const startMin = currentStartMin;
+  const month = currentMonth;
+  const sun = SUN_TABLE[month];
+
   state.pace = pace;
+  state.startHour = startMin;
+  state.month = month;
   saveState(state);
 
   const { segs, totalMin } = buildSchedule(pace);
@@ -1470,30 +1607,44 @@ function applyPace(pace) {
   segs.forEach(s => SCHEDULE.push(s));
   TOTAL_MIN_CURRENT = totalMin;
 
+  // Config UI
+  document.getElementById('startTimeDisplay').textContent = minToHHMM(startMin);
+  document.getElementById('startSlider').value = startMin;
+  document.getElementById('paceDisplay').textContent = pace.toFixed(2);
+  document.getElementById('paceSlider').value = Math.round(pace * 100);
+  document.getElementById('monthSunInfo').textContent = '日出 ' + minToHHMM(sun.rise) + ' / 日落 ' + minToHHMM(sun.set);
+
   // Hero
   const totalH = Math.floor(totalMin / 60);
   const totalM = Math.round(totalMin % 60);
   const heroTimeStr = totalM > 0 ? '~' + totalH + ':' + String(totalM).padStart(2,'0') : '~' + totalH;
   document.getElementById('heroTime').innerHTML = heroTimeStr + '<span class="unit">hr</span>';
   document.getElementById('heroPace').textContent = '\u00d7' + pace.toFixed(2);
+  document.getElementById('heroStartLabel').textContent = minToHHMM(startMin);
 
-  // Pace config display
-  document.getElementById('paceDisplay').textContent = pace.toFixed(2);
+  // Pace stats
   document.getElementById('paceStatMult').textContent = '\u00d7' + pace.toFixed(2);
   document.getElementById('paceStatTotal').textContent = minToDurStr(totalMin);
-  document.getElementById('paceStatFinish').textContent = minToHHMM(totalMin);
-  document.getElementById('paceSlider').value = Math.round(pace * 100);
+  const finishClockMin = startMin + totalMin;
+  document.getElementById('paceStatFinish').textContent = minToHHMM(finishClockMin);
 
-  // Timeline time badges and durations
+  // Timeline items: time badges, durations, phases, condition icons
   for (const seg of segs) {
+    const clockTime = normMin(startMin + seg.startMin);
+    const midClockTime = normMin(startMin + seg.startMin + seg.durMin / 2);
+    const endClockTime = normMin(startMin + seg.startMin + seg.durMin);
+
+    // Time badges (show clock time)
     const timeBadges = document.querySelectorAll('.tl-time-badge[data-seg="' + seg.id + '"]');
     timeBadges.forEach(el => {
       if (seg.id === 'fin') {
-        el.textContent = '~' + minToHHMM(seg.startMin);
+        el.textContent = '~' + minToHHMM(finishClockMin);
       } else {
-        el.textContent = minToHHMM(seg.startMin);
+        el.textContent = minToHHMM(startMin + seg.startMin);
       }
     });
+
+    // Duration labels
     const durEls = document.querySelectorAll('.tl-duration[data-seg="' + seg.id + '"]');
     durEls.forEach(el => {
       if (seg.id === 't1' || seg.id === 't2') {
@@ -1502,87 +1653,284 @@ function applyPace(pace) {
         el.textContent = minToDurStr(seg.durMin);
       }
     });
+
+    // Dynamic phase (skip transit and finish)
+    const tlItem = document.querySelector('.tl-item[data-id="' + seg.id + '"]');
+    if (tlItem) {
+      if (seg.id === 'fin') {
+        tlItem.setAttribute('data-phase', 'finish');
+      } else if (seg.id === 't1' || seg.id === 't2') {
+        tlItem.setAttribute('data-phase', 'transit');
+      } else {
+        const phase = getPhase(midClockTime, sun.rise, sun.set);
+        tlItem.setAttribute('data-phase', phase);
+      }
+    }
+
+    // Dynamic condition meta icons
+    if (seg.id !== 'fin' && seg.id !== 't1' && seg.id !== 't2') {
+      const condEl = document.querySelector('.tl-meta-condition[data-seg="' + seg.id + '"]');
+      if (condEl) {
+        const segStartClock = normMin(startMin + seg.startMin);
+        const segEndClock = normMin(startMin + seg.startMin + seg.durMin);
+        const phase = getPhase(midClockTime, sun.rise, sun.set);
+
+        // Check if sunrise/sunset falls during this segment
+        const absStart = startMin + seg.startMin;
+        const absEnd = startMin + seg.startMin + seg.durMin;
+        let hasSunrise = false;
+        let hasSunset = false;
+        // Check if sunrise time (mod 1440) falls within the segment's absolute time range
+        // We need to check each day the segment might span
+        for (let day = -1; day <= 2; day++) {
+          const sr = sun.rise + day * 1440;
+          const ss = sun.set + day * 1440;
+          if (sr > absStart && sr < absEnd) hasSunrise = true;
+          if (ss > absStart && ss < absEnd) hasSunset = true;
+        }
+
+        // Determine if entirely dark
+        let entirelyDark = true;
+        const checkPoints = 5;
+        for (let i = 0; i <= checkPoints; i++) {
+          const t = normMin(startMin + seg.startMin + seg.durMin * (i / checkPoints));
+          if (!isDark(t, sun.rise, sun.set)) { entirelyDark = false; break; }
+        }
+
+        if (hasSunrise) {
+          condEl.textContent = '🌅 日出';
+        } else if (hasSunset) {
+          condEl.textContent = '🌇 日落';
+        } else if (entirelyDark) {
+          condEl.textContent = '🌙 夜走';
+        } else if (phase === 'night') {
+          condEl.textContent = '🔦 頭燈';
+        } else if (phase === 'afternoon' && midClockTime > 720 && midClockTime < sun.set - 60) {
+          condEl.textContent = '🌡️ 防曬';
+        } else if (phase === 'dawn') {
+          condEl.textContent = '🌅 晨光';
+        } else if (phase === 'dusk') {
+          condEl.textContent = '🌇 黃昏';
+        } else if (phase === 'day') {
+          condEl.textContent = '☀️ 日間';
+        } else {
+          condEl.textContent = '☀️ 日間';
+        }
+      }
+    }
   }
 
-  // Finish line note
+  // Finish note
   const finNote = document.getElementById('finishNote');
   if (finNote) {
     finNote.innerHTML = '全程 <strong>~' + totalH + ' 小時' + (totalM > 0 ? ' ' + totalM + ' 分' : '') + '</strong>・92km・+5000m';
   }
 
-  // Segment accordion badges
+  // Segment accordion badges (show clock time)
   for (const seg of segs) {
     if (seg.id === 'fin' || seg.id === 't1' || seg.id === 't2') continue;
     const badges = document.querySelectorAll('[data-seg-badge="' + seg.id + '"]');
     const label = seg.id.toUpperCase().replace('S','S');
+    const clockStr = minToHHMM(startMin + seg.startMin);
     badges.forEach(el => {
-      el.textContent = label + '\u30FB' + minToHHMM(seg.startMin);
+      el.textContent = label + '\u30FB' + clockStr;
+      // Update badge phase class
+      const midClock = normMin(startMin + seg.startMin + seg.durMin / 2);
+      const phase = getPhase(midClock, sun.rise, sun.set);
+      el.className = 'seg-badge ' + phase;
     });
-    // Duration in seg stats
     const durEls = document.querySelectorAll('[data-seg-dur="' + seg.id + '"]');
-    durEls.forEach(el => {
-      el.textContent = minToDurStr(seg.durMin);
-    });
+    durEls.forEach(el => { el.textContent = minToDurStr(seg.durMin); });
   }
 
-  // Supply times
+  // Supply times (clock time)
   SUPPLY_BASE.forEach((baseMin, idx) => {
     const scaled = scaleBaseTime(baseMin, pace);
+    const clockTime = minToHHMM(startMin + scaled);
     const els = document.querySelectorAll('[data-supply-time="' + idx + '"]');
-    els.forEach(el => { el.textContent = minToHHMM(scaled); });
+    els.forEach(el => { el.textContent = clockTime; });
   });
 
-  // Milestone times
+  // Milestone times (clock time)
   MILESTONE_BASE.forEach((baseMin, idx) => {
     const scaled = scaleBaseTime(baseMin, pace);
+    const clockTime = minToHHMM(startMin + scaled);
     const els = document.querySelectorAll('[data-ms-time="' + idx + '"]');
-    els.forEach(el => { el.textContent = '~' + minToHHMM(scaled); });
+    els.forEach(el => { el.textContent = '~' + clockTime; });
   });
 
-  // Day/night bar markers
-  const markers = document.querySelectorAll('#daynightMarkers .dn-marker');
-  markers.forEach(mk => {
-    const bm = parseInt(mk.dataset.baseMin);
-    if (isNaN(bm)) return;
-    const scaled = scaleBaseTime(bm, pace);
-    const pct = totalMin > 0 ? (scaled / totalMin * 100) : 0;
-    mk.style.left = pct + '%';
-    if (bm === 0) mk.dataset.label = '00:00';
-    else if (mk.dataset.label === '完走' || bm === 1270) mk.dataset.label = '完走';
-    // Keep original labels for dawn/half/sunset
-  });
+  // ═══ DYNAMIC DAY/NIGHT BAR ═══
+  updateDaynightBar(startMin, totalMin, sun);
 
-  // Day/night labels
-  const dnFinish = document.getElementById('dnFinishLabel');
-  if (dnFinish) dnFinish.textContent = minToHHMM(totalMin);
+  // ═══ SMART SUMMARY ═══
+  updateSmartSummary(segs, startMin, totalMin, sun);
+
+  // Day/night bottom labels (clock times at 0%, 25%, 50%, 75%, 100%)
+  const dnLabels = document.getElementById('daynightLabels');
+  if (dnLabels) {
+    const pcts = [0, 0.25, 0.5, 0.75, 1];
+    const spans = dnLabels.querySelectorAll('span');
+    for (let i = 0; i < Math.min(spans.length, pcts.length); i++) {
+      const t = startMin + totalMin * pcts[i];
+      spans[i].textContent = minToHHMM(t);
+    }
+  }
 
   // Footer
   const footer = document.getElementById('footerLine');
   if (footer) footer.textContent = '台北大縱走 一日完走計畫 ── 上河 \u00d7' + pace.toFixed(2) + ' ── 2026';
 
-  // Update URL without reload
   updateURL();
 }
+
+// ═══ DAY/NIGHT BAR GRADIENT ═══
+function updateDaynightBar(startMin, totalMin, sun) {
+  const track = document.getElementById('daynightTrack');
+  if (!track) return;
+
+  // Build gradient by sampling at 1% intervals
+  const stops = [];
+  for (let i = 0; i <= 100; i++) {
+    const elapsed = totalMin * (i / 100);
+    const clockMin = normMin(startMin + elapsed);
+    const phase = getPhase(clockMin, sun.rise, sun.set);
+    let color;
+    switch (phase) {
+      case 'night': color = '#1e1b4b'; break;
+      case 'dawn': color = '#f59e0b'; break;
+      case 'day': color = (clockMin <= 660) ? '#38bdf8' : '#7dd3fc'; break;
+      case 'afternoon': {
+        // Gradual transition afternoon → dusk approach
+        const distToSunset = sun.set - 30 - clockMin;
+        const totalAfternoon = sun.set - 30 - 840;
+        if (totalAfternoon > 0 && distToSunset >= 0) {
+          const t = 1 - distToSunset / totalAfternoon;
+          // interpolate from #38bdf8 to #fb923c
+          const r = Math.round(56 + t * (251 - 56));
+          const g = Math.round(189 + t * (146 - 189));
+          const b = Math.round(248 + t * (60 - 248));
+          color = 'rgb(' + r + ',' + g + ',' + b + ')';
+        } else {
+          color = '#38bdf8';
+        }
+        break;
+      }
+      case 'dusk': color = '#e11d48'; break;
+      default: color = '#1e1b4b';
+    }
+    stops.push(color + ' ' + i + '%');
+  }
+
+  track.style.background = 'linear-gradient(90deg, ' + stops.join(', ') + ')';
+
+  // ═══ MARKERS ═══
+  const markersEl = document.getElementById('daynightMarkers');
+  markersEl.innerHTML = '';
+
+  function addMarker(pct, label) {
+    if (pct < 0 || pct > 100) return;
+    const mk = document.createElement('div');
+    mk.className = 'dn-marker';
+    mk.style.left = pct + '%';
+    mk.dataset.label = label;
+    markersEl.appendChild(mk);
+  }
+
+  // Start marker
+  addMarker(0, '起登');
+
+  // Sunrise marker: find when sunrise enters the journey
+  for (let day = -1; day <= 2; day++) {
+    const srAbs = sun.rise + day * 1440;
+    const elapsed = srAbs - startMin;
+    if (elapsed > 0 && elapsed < totalMin) {
+      addMarker((elapsed / totalMin) * 100, '天亮');
+      break;
+    }
+  }
+
+  // Midpoint
+  addMarker(50, '過半');
+
+  // Sunset marker
+  for (let day = -1; day <= 2; day++) {
+    const ssAbs = sun.set + day * 1440;
+    const elapsed = ssAbs - startMin;
+    if (elapsed > 0 && elapsed < totalMin) {
+      addMarker((elapsed / totalMin) * 100, '日落');
+      break;
+    }
+  }
+
+  // Finish marker
+  addMarker(100, '完走');
+}
+
+// ═══ SMART SUMMARY ═══
+function updateSmartSummary(segs, startMin, totalMin, sun) {
+  const el = document.getElementById('smartSummary');
+  if (!el) return;
+
+  let nightMin = 0;
+  let dayMin = 0;
+  const headlampSegs = [];
+
+  for (const seg of segs) {
+    if (seg.id === 'fin' || seg.id === 't1' || seg.id === 't2') continue;
+    // Sample segment at multiple points
+    const samples = 10;
+    let segNight = 0;
+    let segDay = 0;
+    let needsHeadlamp = false;
+    for (let i = 0; i <= samples; i++) {
+      const t = normMin(startMin + seg.startMin + seg.durMin * (i / samples));
+      if (isDark(t, sun.rise, sun.set)) {
+        segNight += seg.durMin / samples;
+        needsHeadlamp = true;
+      } else {
+        segDay += seg.durMin / samples;
+      }
+    }
+    nightMin += segNight;
+    dayMin += segDay;
+    if (needsHeadlamp) headlampSegs.push(seg.id.toUpperCase());
+  }
+
+  const nightH = (nightMin / 60).toFixed(1);
+  const dayH = (dayMin / 60).toFixed(1);
+
+  let html = '<span class="ss-night">🌙 夜走 ' + nightH + 'hr</span> ｜ <span class="ss-day">☀️ 日走 ' + dayH + 'hr</span>';
+  if (headlampSegs.length > 0) {
+    html += ' ｜ <span class="ss-headlamp">🔦 需頭燈: ' + headlampSegs.join(', ') + '</span>';
+  }
+
+  el.innerHTML = html;
+}
+
+// ═══ CONFIG EVENT HANDLERS ═══
+function onConfigChange() {
+  currentPace = parseInt(document.getElementById('paceSlider').value) / 100;
+  currentStartMin = parseInt(document.getElementById('startSlider').value);
+  // Month is handled by button click
+  applyConfig();
+  updateCalc();
+}
+
+// Backward compat
+function onPaceChange() { onConfigChange(); }
 
 function updateURL() {
   const url = new URL(window.location);
   url.searchParams.set('pace', currentPace.toFixed(2));
+  url.searchParams.set('start', String(currentStartMin));
+  url.searchParams.set('month', String(currentMonth));
   if (state.startTime) {
     const d = new Date(state.startTime);
     const pad = n => String(n).padStart(2,'0');
-    url.searchParams.set('start', d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate())+'T'+pad(d.getHours())+':'+pad(d.getMinutes()));
+    url.searchParams.set('trackerStart', d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate())+'T'+pad(d.getHours())+':'+pad(d.getMinutes()));
   }
   window.history.replaceState({}, '', url);
 }
-
-function onPaceChange() {
-  const val = parseInt(document.getElementById('paceSlider').value);
-  applyPace(val / 100);
-}
-
-// ═══ SCHEDULE DATA (mutable, rebuilt by applyPace) ═══
-const SCHEDULE = [];
-let TOTAL_MIN_CURRENT = 1270;
 
 // ═══ TIMELINE CHECK ═══
 function toggleCheck(el) {
@@ -1631,9 +1979,21 @@ function setStartTime() {
   if (!input.value) return;
   state.startTime = new Date(input.value).getTime();
   saveState(state);
-  updateURL();
+
+  // Auto-set planning start hour to match tracker start
+  const d = new Date(state.startTime);
+  const trackerHourMin = d.getHours() * 60 + d.getMinutes();
+  // Convert to our slider range: if trackerHourMin < 720 (12:00), treat as is; if >= 1200 (20:00), treat as negative
+  let sliderVal = trackerHourMin;
+  if (trackerHourMin >= 1200) sliderVal = trackerHourMin - 1440; // e.g., 22:00 = 1320 -> -120
+  sliderVal = Math.max(-240, Math.min(360, Math.round(sliderVal / 30) * 30));
+  currentStartMin = sliderVal;
+  document.getElementById('startSlider').value = sliderVal;
+
+  applyConfig();
   updateTracker();
 }
+
 // Restore start time
 if (state.startTime) {
   const d = new Date(state.startTime);
@@ -1706,7 +2066,6 @@ function updateTracker() {
   const eta = new Date(start.getTime() + totalMin * 60000);
   etaEl.textContent = pad(eta.getHours()) + ':' + pad(eta.getMinutes());
 
-  // Find current segment
   let current = SCHEDULE[SCHEDULE.length - 1];
   let kmDone = 0;
   for (let i = 0; i < SCHEDULE.length; i++) {
@@ -1721,7 +2080,6 @@ function updateTracker() {
   segEl.innerHTML = '目前應在 <span class="seg-highlight">' + current.name + '</span>（段內 ' + segProgress + '%）<br>' +
     '總進度 <strong>' + totalPct + '%</strong> ・ 約 ' + kmDone.toFixed(1) + 'km';
 
-  // Update pill segment name
   const pillSeg = document.getElementById('pillSeg');
   if (pillSeg) pillSeg.textContent = current.name.split(' ')[0];
 }
@@ -1736,23 +2094,18 @@ function updateCalc() {
   document.getElementById('tempVal').textContent = temp + '\u00b0C';
 
   const hours = Math.ceil(TOTAL_MIN_CURRENT / 60);
-  // Water: base 5ml/kg/hr, +50% if >30C, +25% if >25C
   let waterPerHr = weight * 5;
   if (temp > 30) waterPerHr *= 1.5;
   else if (temp > 25) waterPerHr *= 1.25;
   else if (temp < 10) waterPerHr *= 0.8;
   const totalWaterL = (waterPerHr * hours / 1000);
 
-  // Calories: ~5-8 kcal/kg/hr
   let calPerHr = weight * 7;
   if (temp > 30) calPerHr *= 1.1;
   const totalCal = Math.round(calPerHr * hours);
 
-  // Salt: 1 per hour base, 1.5 if hot
   const saltPerHr = temp > 28 ? 1.5 : 1;
   const totalSalt = Math.ceil(saltPerHr * hours);
-
-  // Gel: 1 per 45 min
   const totalGel = Math.ceil(hours * 60 / 45);
 
   document.getElementById('calcWater').innerHTML = totalWaterL.toFixed(1) + '<span class="unit">L</span>';
@@ -1823,8 +2176,8 @@ if (daynightTrack) {
     const xPct = (e.clientX - rect.left) / rect.width;
     const totalMin = TOTAL_MIN_CURRENT;
     const atMin = Math.round(xPct * totalMin);
-    const timeStr = minToHHMM(atMin);
-    daynightTooltip.textContent = timeStr + ' (' + minToDurStr(atMin) + ' into hike)';
+    const clockStr = minToHHMM(currentStartMin + atMin);
+    daynightTooltip.textContent = clockStr + ' (' + minToDurStr(atMin) + ' into hike)';
     daynightTooltip.style.left = (xPct * 100) + '%';
     daynightTooltip.style.opacity = '1';
     setTimeout(() => { daynightTooltip.style.opacity = '0'; }, 2000);
@@ -1844,7 +2197,6 @@ window.addEventListener('scroll', () => {
   pill.style.opacity = scrollTop > window.innerHeight * 0.5 ? '1' : '0';
 }, { passive: true });
 
-// Section observer for desktop nav
 const sections = document.querySelectorAll('section[id]');
 const navLinks = document.querySelectorAll('nav a[href^="#"]');
 const sectionObserver = new IntersectionObserver((entries) => {
@@ -1858,7 +2210,6 @@ const sectionObserver = new IntersectionObserver((entries) => {
 }, { threshold: 0.15, rootMargin: '-60px 0px -60% 0px' });
 sections.forEach(s => sectionObserver.observe(s));
 
-// Section observer for bottom nav
 const bottomNavLinks = document.querySelectorAll('.bottom-nav a[data-section]');
 const bottomSectionObserver = new IntersectionObserver((entries) => {
   entries.forEach(e => {
@@ -1876,7 +2227,6 @@ const fadeObserver = new IntersectionObserver((entries) => {
 }, { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
 document.querySelectorAll('.tl-item').forEach(i => fadeObserver.observe(i));
 
-// Nav click handlers (desktop)
 navLinks.forEach(a => {
   a.addEventListener('click', e => {
     e.preventDefault();
@@ -1885,7 +2235,6 @@ navLinks.forEach(a => {
   });
 });
 
-// Bottom nav click handlers
 bottomNavLinks.forEach(a => {
   a.addEventListener('click', e => {
     e.preventDefault();
@@ -1894,7 +2243,6 @@ bottomNavLinks.forEach(a => {
   });
 });
 
-// Hero pace link
 document.getElementById('heroPaceLink').addEventListener('click', e => {
   e.preventDefault();
   document.getElementById('pace').scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -1904,15 +2252,17 @@ document.getElementById('heroPaceLink').addEventListener('click', e => {
 document.getElementById('shareBtn').addEventListener('click', async () => {
   const url = new URL(window.location);
   url.searchParams.set('pace', currentPace.toFixed(2));
+  url.searchParams.set('start', String(currentStartMin));
+  url.searchParams.set('month', String(currentMonth));
   if (state.startTime) {
     const d = new Date(state.startTime);
     const pad = n => String(n).padStart(2,'0');
-    url.searchParams.set('start', d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate())+'T'+pad(d.getHours())+':'+pad(d.getMinutes()));
+    url.searchParams.set('trackerStart', d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate())+'T'+pad(d.getHours())+':'+pad(d.getMinutes()));
   }
   const shareUrl = url.toString();
   const shareData = {
     title: '台北大縱走 一日完走計畫',
-    text: '上河 \u00d7' + currentPace.toFixed(2) + ' 配速，預估 ' + minToDurStr(TOTAL_MIN_CURRENT),
+    text: '上河 \u00d7' + currentPace.toFixed(2) + ' 配速，' + minToHHMM(currentStartMin) + ' 起登，預估 ' + minToDurStr(TOTAL_MIN_CURRENT),
     url: shareUrl
   };
 
@@ -1923,7 +2273,6 @@ document.getElementById('shareBtn').addEventListener('click', async () => {
       await navigator.clipboard.writeText(shareUrl);
       showToast('已複製連結');
     } catch {
-      // Fallback
       const ta = document.createElement('textarea');
       ta.value = shareUrl;
       document.body.appendChild(ta);
@@ -1943,7 +2292,7 @@ function showToast(msg) {
 }
 
 // ═══ INIT ═══
-applyPace(currentPace);
+applyConfig();
 updateProgress();
 updateTracker();
 updateCalc();
