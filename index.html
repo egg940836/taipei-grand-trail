@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="zh-TW">
+<html lang="zh-TW" data-theme="light">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>台北大縱走 一日完走計畫</title>
-<meta name="theme-color" content="#0a0e1a">
+<meta name="theme-color" content="#f8fafc">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="台北大縱走">
@@ -14,16 +14,6 @@
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
 :root {
-  --night: #0a0e1a;
-  --amber: #f59e0b;
-  --sky: #38bdf8;
-  --sunrise: #fb923c;
-  --sunset: #e11d48;
-  --ridge: #6ee7b7;
-  --slate: #94a3b8;
-  --ghost: rgba(255,255,255,0.06);
-  --text: #e2e8f0;
-  --text-dim: #64748b;
   --font-display: 'Noto Serif TC', serif;
   --font-body: 'Zen Kaku Gothic New', sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
@@ -31,11 +21,120 @@
   --bottom-nav-h: 0px;
 }
 
+/* ── LIGHT THEME (default) ── */
+[data-theme="light"] {
+  --bg: #f8fafc;
+  --bg-card: rgba(0,0,0,0.03);
+  --bg-card-hover: rgba(0,0,0,0.05);
+  --bg-card-gradient-a: rgba(0,0,0,0.03);
+  --bg-card-gradient-b: rgba(0,0,0,0.01);
+  --border: rgba(0,0,0,0.08);
+  --border-hover: rgba(0,0,0,0.15);
+  --border-faint: rgba(0,0,0,0.05);
+  --text-primary: #1e293b;
+  --text-secondary: #475569;
+  --text-dim: #94a3b8;
+  --text-white: #1e293b;
+  --amber: #d97706;
+  --amber-bg: rgba(217,119,6,0.1);
+  --amber-border: rgba(217,119,6,0.25);
+  --sky: #0284c7;
+  --sky-bg: rgba(2,132,199,0.08);
+  --sunrise: #ea580c;
+  --sunrise-bg: rgba(234,88,12,0.08);
+  --sunset: #be123c;
+  --sunset-bg: rgba(190,18,60,0.08);
+  --ridge: #059669;
+  --ridge-bg: rgba(5,150,105,0.1);
+  --slate: #64748b;
+  --night-phase: #818cf8;
+  --night-phase-bg: rgba(129,140,248,0.1);
+  --nav-bg: rgba(248,250,252,0.88);
+  --pill-bg: rgba(248,250,252,0.92);
+  --toast-bg: rgba(248,250,252,0.95);
+  --shadow: rgba(0,0,0,0.08);
+  --shadow-heavy: rgba(0,0,0,0.15);
+  --topo-opacity: 0.06;
+  --topo-stroke: #000;
+  --range-track: rgba(0,0,0,0.1);
+  --divider-color: rgba(0,0,0,0.08);
+  --chart-grid: rgba(0,0,0,0.08);
+  --chart-label: rgba(0,0,0,0.4);
+  --elev-fill-top: rgba(5,150,105,0.25);
+  --elev-fill-bottom: rgba(5,150,105,0);
+  --hero-gradient: linear-gradient(135deg, #1e293b 0%, #475569 50%, var(--amber) 100%);
+  --dn-marker-bg: rgba(0,0,0,0.5);
+  --dn-marker-label: rgba(0,0,0,0.6);
+  --emergency-bg: rgba(190,18,60,0.06);
+  --emergency-border: rgba(190,18,60,0.15);
+  --timeline-dot-bg: var(--bg);
+  --gear-check-after: #fff;
+}
+
+/* ── DARK THEME ── */
+[data-theme="dark"] {
+  --bg: #0a0e1a;
+  --bg-card: rgba(255,255,255,0.06);
+  --bg-card-hover: rgba(255,255,255,0.08);
+  --bg-card-gradient-a: rgba(255,255,255,0.04);
+  --bg-card-gradient-b: rgba(255,255,255,0.01);
+  --border: rgba(255,255,255,0.06);
+  --border-hover: rgba(255,255,255,0.12);
+  --border-faint: rgba(255,255,255,0.05);
+  --text-primary: #e2e8f0;
+  --text-secondary: #94a3b8;
+  --text-dim: #64748b;
+  --text-white: #fff;
+  --amber: #f59e0b;
+  --amber-bg: rgba(245,158,11,0.15);
+  --amber-border: rgba(245,158,11,0.18);
+  --sky: #38bdf8;
+  --sky-bg: rgba(56,189,248,0.15);
+  --sunrise: #fb923c;
+  --sunrise-bg: rgba(251,146,60,0.15);
+  --sunset: #e11d48;
+  --sunset-bg: rgba(225,29,72,0.15);
+  --ridge: #6ee7b7;
+  --ridge-bg: rgba(110,231,183,0.15);
+  --slate: #94a3b8;
+  --night-phase: #818cf8;
+  --night-phase-bg: rgba(129,140,248,0.15);
+  --nav-bg: rgba(10,14,26,0.85);
+  --pill-bg: rgba(10,14,26,0.92);
+  --toast-bg: rgba(10,14,26,0.95);
+  --shadow: rgba(0,0,0,0.3);
+  --shadow-heavy: rgba(0,0,0,0.5);
+  --topo-opacity: 0.04;
+  --topo-stroke: #fff;
+  --range-track: rgba(255,255,255,0.1);
+  --divider-color: rgba(255,255,255,0.08);
+  --chart-grid: rgba(255,255,255,0.08);
+  --chart-label: rgba(255,255,255,0.3);
+  --elev-fill-top: rgba(110,231,183,0.3);
+  --elev-fill-bottom: rgba(110,231,183,0);
+  --hero-gradient: linear-gradient(135deg, #fff 0%, #cbd5e1 50%, var(--amber) 100%);
+  --dn-marker-bg: rgba(255,255,255,0.6);
+  --dn-marker-label: rgba(255,255,255,0.7);
+  --emergency-bg: rgba(225,29,72,0.06);
+  --emergency-border: rgba(225,29,72,0.15);
+  --timeline-dot-bg: var(--bg);
+  --gear-check-after: var(--bg);
+}
+
+/* ── Smooth transitions ── */
+body, .tl-card, .seg-card, .supply-card, nav, .bottom-nav, .tracker-card, .pace-card,
+.gate-card, .gear-item, .weather-card, .safety-card, .emergency-card, .logistics-card,
+.calc-card, .calc-slider-group, .milestone, .retreat-card, .gap-card, .toast,
+.progress-pill, .tl-progress-summary, .pace-stat, .smart-summary, .decision-tree,
+.seg-warning, .seg-danger, .seg-info, .seg-signal, footer, .offline-banner {
+  transition: background-color 0.3s, border-color 0.3s, color 0.3s, box-shadow 0.3s;
+}
+
 html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
 
 body {
-  background: var(--night);
-  color: var(--text);
+  background: var(--bg);
+  color: var(--text-primary);
   font-family: var(--font-body);
   line-height: 1.6;
   overflow-x: hidden;
@@ -44,7 +143,7 @@ body {
 }
 
 /* ── Topo BG ── */
-.topo-bg { position: fixed; inset: 0; z-index: 0; opacity: 0.04; pointer-events: none; }
+.topo-bg { position: fixed; inset: 0; z-index: 0; opacity: var(--topo-opacity); pointer-events: none; }
 .topo-bg svg { width: 100%; height: 100%; }
 
 /* ── Progress Bar (top) ── */
@@ -61,9 +160,9 @@ body {
   left: 50%;
   transform: translateX(-50%);
   z-index: 200;
-  background: rgba(10,14,26,0.92);
+  background: var(--pill-bg);
   backdrop-filter: blur(16px);
-  border: 1px solid rgba(255,255,255,0.12);
+  border: 1px solid var(--border-hover);
   border-radius: 50px;
   padding: 8px 18px;
   display: flex;
@@ -71,14 +170,14 @@ body {
   gap: 10px;
   font-family: var(--font-mono);
   font-size: 0.75rem;
-  color: var(--text);
-  box-shadow: 0 4px 24px rgba(0,0,0,0.5);
-  transition: opacity 0.3s;
+  color: var(--text-primary);
+  box-shadow: 0 4px 24px var(--shadow-heavy);
+  transition: opacity 0.3s, background-color 0.3s;
 }
 
 .progress-pill .pill-bar {
   width: 80px; height: 6px;
-  background: rgba(255,255,255,0.1);
+  background: var(--range-track);
   border-radius: 3px; overflow: hidden;
 }
 
@@ -95,9 +194,9 @@ body {
 nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 100;
   padding: 0 0; backdrop-filter: blur(20px);
-  background: rgba(10,14,26,0.85);
-  border-bottom: 1px solid var(--ghost);
-  transform: translateY(-100%); transition: transform 0.3s ease;
+  background: var(--nav-bg);
+  border-bottom: 1px solid var(--border);
+  transform: translateY(-100%); transition: transform 0.3s ease, background-color 0.3s;
 }
 nav.visible { transform: translateY(0); }
 
@@ -108,20 +207,35 @@ nav.visible { transform: translateY(0); }
 .nav-inner::-webkit-scrollbar { display: none; }
 
 nav a {
-  color: var(--slate); text-decoration: none; font-size: 0.75rem;
+  color: var(--text-secondary); text-decoration: none; font-size: 0.75rem;
   letter-spacing: 0.06em; transition: color 0.2s;
   padding: 12px 14px; white-space: nowrap; flex-shrink: 0;
 }
 nav a:hover, nav a.active { color: var(--amber); }
+
+/* ── Theme Toggle ── */
+.theme-toggle {
+  position: fixed; top: 12px; right: 16px; z-index: 1002;
+  width: 40px; height: 40px; border-radius: 50%;
+  background: var(--bg-card); border: 1px solid var(--border);
+  backdrop-filter: blur(12px);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; transition: all 0.3s;
+  box-shadow: 0 2px 8px var(--shadow);
+  -webkit-tap-highlight-color: transparent;
+}
+.theme-toggle:hover { border-color: var(--amber); box-shadow: 0 2px 12px var(--shadow-heavy); }
+.theme-toggle:active { transform: scale(0.9); }
+.theme-toggle svg { width: 20px; height: 20px; color: var(--amber); }
 
 /* ── Bottom Tab Nav (mobile) ── */
 .bottom-nav {
   display: none;
   position: fixed; bottom: 0; left: 0; right: 0;
   z-index: 300;
-  background: rgba(10,14,26,0.92);
+  background: var(--nav-bg);
   backdrop-filter: blur(20px);
-  border-top: 1px solid rgba(255,255,255,0.08);
+  border-top: 1px solid var(--border);
   padding-bottom: var(--safe-bottom);
   height: calc(60px + var(--safe-bottom));
 }
@@ -131,7 +245,7 @@ nav a:hover, nav a.active { color: var(--amber); }
 }
 .bottom-nav a {
   display: flex; flex-direction: column; align-items: center; justify-content: center;
-  text-decoration: none; color: var(--slate); font-size: 0.55rem;
+  text-decoration: none; color: var(--text-secondary); font-size: 0.55rem;
   letter-spacing: 0.04em; gap: 3px; padding: 4px 8px;
   min-width: 44px; min-height: 44px;
   transition: color 0.2s; -webkit-tap-highlight-color: transparent;
@@ -152,7 +266,7 @@ nav a:hover, nav a.active { color: var(--amber); }
 }
 .divider {
   max-width: 900px; margin: 0 auto; padding: 0 1rem;
-  height: 1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
+  height: 1px; background: linear-gradient(90deg, transparent, var(--divider-color), transparent);
 }
 
 /* ── Hero ── */
@@ -174,16 +288,16 @@ nav a:hover, nav a.active { color: var(--amber); }
 .hero h1 {
   font-family: var(--font-display); font-weight: 900;
   font-size: clamp(2.2rem, 7vw, 5.5rem); line-height: 1.15; letter-spacing: -0.02em;
-  background: linear-gradient(135deg, #fff 0%, #cbd5e1 50%, var(--amber) 100%);
+  background: var(--hero-gradient);
   -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
   margin-bottom: 0.75rem; opacity: 0; animation: fadeUp 0.8s 0.4s forwards;
 }
 .hero-sub {
   font-family: var(--font-mono); font-size: clamp(0.8rem, 1.5vw, 1.05rem);
-  color: var(--slate); margin-bottom: 0.5rem;
+  color: var(--text-secondary); margin-bottom: 0.5rem;
   opacity: 0; animation: fadeUp 0.8s 0.6s forwards;
 }
-.hero-sub span { color: var(--text); padding: 0 0.2em; }
+.hero-sub span { color: var(--text-primary); padding: 0 0.2em; }
 
 .hero-pace-link {
   font-family: var(--font-mono); font-size: 0.7rem;
@@ -192,7 +306,7 @@ nav a:hover, nav a.active { color: var(--amber); }
   opacity: 0; animation: fadeUp 0.8s 0.65s forwards;
   transition: opacity 0.2s;
 }
-.hero-pace-link:hover { color: #fbbf24; }
+.hero-pace-link:hover { opacity: 0.8; }
 
 .hero-stats {
   display: grid; grid-template-columns: repeat(4, 1fr);
@@ -202,9 +316,9 @@ nav a:hover, nav a.active { color: var(--amber); }
 .stat { text-align: center; }
 .stat-value {
   font-family: var(--font-mono); font-size: clamp(1.4rem, 4vw, 2.5rem);
-  font-weight: 600; color: #fff;
+  font-weight: 600; color: var(--text-white);
 }
-.stat-value .unit { font-size: 0.45em; color: var(--slate); font-weight: 400; }
+.stat-value .unit { font-size: 0.45em; color: var(--text-secondary); font-weight: 400; }
 .stat-label { font-size: 0.65rem; color: var(--text-dim); letter-spacing: 0.08em; margin-top: 0.15rem; }
 
 .hero-scroll {
@@ -220,10 +334,11 @@ nav a:hover, nav a.active { color: var(--amber); }
 /* ── Elevation Chart ── */
 .elevation-section { padding: 3rem 1rem 1.5rem; max-width: 1100px; margin: 0 auto; }
 .elevation-chart {
-  width: 100%; height: 140px; position: relative;
-  background: var(--ghost); border-radius: 10px; overflow: hidden;
-  border: 1px solid rgba(255,255,255,0.05);
+  width: 100%; height: 180px; position: relative;
+  background: var(--bg-card); border-radius: 10px; overflow: hidden;
+  border: 1px solid var(--border-faint);
 }
+@media (min-width: 641px) { .elevation-chart { height: 220px; } }
 .elevation-chart svg { width: 100%; height: 100%; }
 
 /* ── Day/Night Bar ── */
@@ -231,18 +346,18 @@ nav a:hover, nav a.active { color: var(--amber); }
 .daynight-track {
   height: 36px; border-radius: 18px;
   background: linear-gradient(90deg, #1e1b4b 0%, #312e81 15%, #4338ca 22%, #f59e0b 26%, #38bdf8 35%, #7dd3fc 50%, #38bdf8 65%, #fb923c 78%, #e11d48 85%, #581c87 92%, #1e1b4b 100%);
-  position: relative; overflow: hidden; border: 1px solid rgba(255,255,255,0.1);
+  position: relative; overflow: hidden; border: 1px solid var(--border-hover);
   cursor: pointer; -webkit-tap-highlight-color: transparent;
 }
 .daynight-markers { position: absolute; inset: 0; display: flex; align-items: center; }
 .dn-marker {
   position: absolute; top: 50%; transform: translate(-50%, -50%);
-  width: 2px; height: 55%; background: rgba(255,255,255,0.6); border-radius: 1px;
+  width: 2px; height: 55%; background: var(--dn-marker-bg); border-radius: 1px;
 }
 .dn-marker::after {
   content: attr(data-label); position: absolute; top: -16px; left: 50%;
   transform: translateX(-50%); font-family: var(--font-mono);
-  font-size: 0.5rem; color: rgba(255,255,255,0.7); white-space: nowrap;
+  font-size: 0.5rem; color: var(--dn-marker-label); white-space: nowrap;
 }
 .daynight-labels {
   display: flex; justify-content: space-between; margin-top: 0.4rem;
@@ -250,9 +365,9 @@ nav a:hover, nav a.active { color: var(--amber); }
 }
 .daynight-tooltip {
   position: absolute; top: -32px; left: 50%; transform: translateX(-50%);
-  background: rgba(10,14,26,0.95); border: 1px solid rgba(255,255,255,0.15);
+  background: var(--toast-bg); border: 1px solid var(--border-hover);
   border-radius: 8px; padding: 4px 10px; font-family: var(--font-mono);
-  font-size: 0.65rem; color: var(--text); white-space: nowrap;
+  font-size: 0.65rem; color: var(--text-primary); white-space: nowrap;
   pointer-events: none; opacity: 0; transition: opacity 0.2s; z-index: 10;
 }
 
@@ -261,8 +376,8 @@ nav a:hover, nav a.active { color: var(--amber); }
   max-width: 900px; margin: 0 auto 2rem; padding: 0 1rem;
 }
 .pace-card {
-  background: linear-gradient(135deg, rgba(245,158,11,0.06), rgba(56,189,248,0.03));
-  border: 1px solid rgba(245,158,11,0.18); border-radius: 14px;
+  background: linear-gradient(135deg, var(--amber-bg), var(--sky-bg));
+  border: 1px solid var(--amber-border); border-radius: 14px;
   padding: 1.25rem; position: relative; overflow: hidden;
 }
 .pace-card::before {
@@ -308,13 +423,13 @@ nav a:hover, nav a.active { color: var(--amber); }
 }
 .month-btn {
   font-family: var(--font-mono); font-size: 0.6rem;
-  padding: 8px 6px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.1);
-  background: rgba(255,255,255,0.04); color: var(--text-dim);
+  padding: 8px 6px; border-radius: 6px; border: 1px solid var(--border);
+  background: var(--bg-card); color: var(--text-dim);
   cursor: pointer; transition: all 0.2s; min-width: 40px; min-height: 36px; text-align: center;
 }
-.month-btn:hover { border-color: rgba(255,255,255,0.2); }
+.month-btn:hover { border-color: var(--border-hover); }
 .month-btn.active {
-  background: rgba(245,158,11,0.15); border-color: var(--amber); color: var(--amber);
+  background: var(--amber-bg); border-color: var(--amber); color: var(--amber);
 }
 .month-sun-info {
   font-family: var(--font-mono); font-size: 0.6rem; color: var(--text-dim);
@@ -326,24 +441,24 @@ nav a:hover, nav a.active { color: var(--amber); }
 }
 .pace-stat {
   text-align: center; padding: 0.6rem; border-radius: 10px;
-  background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.04);
+  background: var(--bg-card); border: 1px solid var(--border-faint);
 }
 .pace-stat-label {
   font-size: 0.6rem; color: var(--text-dim); letter-spacing: 0.06em; margin-bottom: 0.15rem;
 }
 .pace-stat-value {
-  font-family: var(--font-mono); font-size: 1rem; font-weight: 600; color: var(--text);
+  font-family: var(--font-mono); font-size: 1rem; font-weight: 600; color: var(--text-primary);
 }
 .pace-stat-value .unit { font-size: 0.55em; color: var(--text-dim); font-weight: 400; }
 
 /* Smart summary */
 .smart-summary {
   margin-top: 0.75rem; padding: 0.6rem 0.8rem; border-radius: 8px;
-  background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06);
+  background: var(--bg-card); border: 1px solid var(--border);
   font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-dim);
   line-height: 1.7;
 }
-.smart-summary .ss-night { color: #a5b4fc; }
+.smart-summary .ss-night { color: var(--night-phase); }
 .smart-summary .ss-day { color: var(--sky); }
 .smart-summary .ss-headlamp { color: var(--amber); }
 
@@ -363,11 +478,11 @@ nav a:hover, nav a.active { color: var(--amber); }
 .tl-progress-summary {
   display: flex; align-items: center; gap: 12px;
   margin-bottom: 1.5rem; padding: 12px 16px;
-  background: var(--ghost); border-radius: 10px;
-  border: 1px solid rgba(255,255,255,0.06);
+  background: var(--bg-card); border-radius: 10px;
+  border: 1px solid var(--border);
 }
 .tl-progress-bar {
-  flex: 1; height: 8px; background: rgba(255,255,255,0.08);
+  flex: 1; height: 8px; background: var(--range-track);
   border-radius: 4px; overflow: hidden;
 }
 .tl-progress-fill {
@@ -377,15 +492,15 @@ nav a:hover, nav a.active { color: var(--amber); }
 }
 .tl-progress-text {
   font-family: var(--font-mono); font-size: 0.8rem;
-  color: var(--text); white-space: nowrap; min-width: 60px; text-align: right;
+  color: var(--text-primary); white-space: nowrap; min-width: 60px; text-align: right;
 }
 
 .timeline { position: relative; padding-left: 52px; }
 .timeline::before {
   content: ''; position: absolute; left: 20px; top: 0; bottom: 0; width: 2px;
   background: linear-gradient(to bottom,
-    var(--night) 0%, #1e1b4b 5%, #312e81 15%, var(--amber) 25%,
-    var(--sky) 45%, var(--sky) 55%, var(--sunrise) 75%, var(--sunset) 88%, #581c87 95%, var(--night) 100%);
+    var(--bg) 0%, #1e1b4b 5%, #312e81 15%, var(--amber) 25%,
+    var(--sky) 45%, var(--sky) 55%, var(--sunrise) 75%, var(--sunset) 88%, #581c87 95%, var(--bg) 100%);
 }
 
 .tl-item {
@@ -399,10 +514,10 @@ nav a:hover, nav a.active { color: var(--amber); }
 .tl-item::before {
   content: ''; position: absolute; left: -36px; top: 1.1rem;
   width: 10px; height: 10px; border-radius: 50%;
-  border: 2px solid var(--amber); background: var(--night); z-index: 2;
+  border: 2px solid var(--amber); background: var(--timeline-dot-bg); z-index: 2;
   transition: all 0.3s;
 }
-.tl-item[data-phase="night"]::before { border-color: #818cf8; }
+.tl-item[data-phase="night"]::before { border-color: var(--night-phase); }
 .tl-item[data-phase="dawn"]::before { border-color: var(--amber); }
 .tl-item[data-phase="day"]::before { border-color: var(--sky); }
 .tl-item[data-phase="afternoon"]::before { border-color: var(--sunrise); }
@@ -423,8 +538,8 @@ nav a:hover, nav a.active { color: var(--amber); }
 .tl-item.checked .tl-check-icon { opacity: 1; color: var(--ridge); }
 
 .tl-card {
-  background: linear-gradient(135deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01));
-  border: 1px solid rgba(255,255,255,0.06);
+  background: linear-gradient(135deg, var(--bg-card-gradient-a), var(--bg-card-gradient-b));
+  border: 1px solid var(--border);
   border-radius: 12px; padding: 1rem 1rem; position: relative; overflow: hidden;
   transition: border-color 0.3s;
 }
@@ -432,12 +547,12 @@ nav a:hover, nav a.active { color: var(--amber); }
 .tl-card::before {
   content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
 }
-.tl-item[data-phase="night"] .tl-card::before { background: linear-gradient(90deg, #818cf8, transparent); }
+.tl-item[data-phase="night"] .tl-card::before { background: linear-gradient(90deg, var(--night-phase), transparent); }
 .tl-item[data-phase="dawn"] .tl-card::before { background: linear-gradient(90deg, var(--amber), transparent); }
 .tl-item[data-phase="day"] .tl-card::before { background: linear-gradient(90deg, var(--sky), transparent); }
 .tl-item[data-phase="afternoon"] .tl-card::before { background: linear-gradient(90deg, var(--sunrise), transparent); }
 .tl-item[data-phase="dusk"] .tl-card::before { background: linear-gradient(90deg, var(--sunset), transparent); }
-.tl-item[data-phase="transit"] .tl-card { border-style: dashed; background: rgba(255,255,255,0.02); }
+.tl-item[data-phase="transit"] .tl-card { border-style: dashed; background: var(--bg-card); }
 .tl-item[data-phase="finish"] .tl-card::before { background: linear-gradient(90deg, var(--ridge), transparent); }
 
 .tl-header {
@@ -448,7 +563,7 @@ nav a:hover, nav a.active { color: var(--amber); }
 
 .tl-check {
   width: 44px; height: 44px; border-radius: 50%;
-  border: 2px solid rgba(255,255,255,0.15);
+  border: 2px solid var(--border-hover);
   display: flex; align-items: center; justify-content: center;
   cursor: pointer; flex-shrink: 0; transition: all 0.2s;
   -webkit-tap-highlight-color: transparent;
@@ -460,7 +575,7 @@ nav a:hover, nav a.active { color: var(--amber); }
   transition: opacity 0.2s; pointer-events: none;
 }
 .tl-item.checked .tl-check {
-  background: rgba(110,231,183,0.15);
+  background: var(--ridge-bg);
   border-color: var(--ridge);
 }
 
@@ -469,16 +584,16 @@ nav a:hover, nav a.active { color: var(--amber); }
   letter-spacing: 0.12em; padding: 0.15rem 0.5rem;
   border-radius: 4px; font-weight: 600;
 }
-.tl-item[data-phase="night"] .tl-seg { background: rgba(129,140,248,0.15); color: #a5b4fc; }
-.tl-item[data-phase="dawn"] .tl-seg { background: rgba(245,158,11,0.15); color: var(--amber); }
-.tl-item[data-phase="day"] .tl-seg { background: rgba(56,189,248,0.15); color: var(--sky); }
-.tl-item[data-phase="afternoon"] .tl-seg { background: rgba(251,146,60,0.15); color: var(--sunrise); }
-.tl-item[data-phase="dusk"] .tl-seg { background: rgba(225,29,72,0.15); color: var(--sunset); }
-.tl-item[data-phase="transit"] .tl-seg { background: rgba(148,163,184,0.1); color: var(--slate); }
-.tl-item[data-phase="finish"] .tl-seg { background: rgba(110,231,183,0.15); color: var(--ridge); }
+.tl-item[data-phase="night"] .tl-seg { background: var(--night-phase-bg); color: var(--night-phase); }
+.tl-item[data-phase="dawn"] .tl-seg { background: var(--amber-bg); color: var(--amber); }
+.tl-item[data-phase="day"] .tl-seg { background: var(--sky-bg); color: var(--sky); }
+.tl-item[data-phase="afternoon"] .tl-seg { background: var(--sunrise-bg); color: var(--sunrise); }
+.tl-item[data-phase="dusk"] .tl-seg { background: var(--sunset-bg); color: var(--sunset); }
+.tl-item[data-phase="transit"] .tl-seg { background: var(--bg-card); color: var(--slate); }
+.tl-item[data-phase="finish"] .tl-seg { background: var(--ridge-bg); color: var(--ridge); }
 
 .tl-time-badge {
-  font-family: var(--font-mono); font-size: 0.7rem; color: var(--slate);
+  font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-secondary);
 }
 
 .tl-duration {
@@ -509,22 +624,22 @@ nav a:hover, nav a.active { color: var(--amber); }
 
 /* Checkpoint badges */
 .checkpoint-badge { font-family: var(--font-mono); font-size: 0.65rem; padding: 0.3rem 0.6rem; border-radius: 6px; margin-top: 0.5rem; display: inline-block; }
-.cp-ontime { background: rgba(110,231,183,0.1); color: var(--ridge); }
-.cp-late { background: rgba(245,158,11,0.1); color: var(--amber); }
-.cp-early { background: rgba(56,189,248,0.1); color: var(--sky); }
+.cp-ontime { background: var(--ridge-bg); color: var(--ridge); }
+.cp-late { background: var(--amber-bg); color: var(--amber); }
+.cp-early { background: var(--sky-bg); color: var(--sky); }
 
 /* ═══ GATE TIMES ═══ */
 .gates-section { padding: 2.5rem 1rem; max-width: 900px; margin: 0 auto; }
 .gates-grid { display: grid; grid-template-columns: 1fr; gap: 0.5rem; }
 .gate-card {
-  background: var(--ghost); border: 1px solid rgba(255,255,255,0.05);
+  background: var(--bg-card); border: 1px solid var(--border-faint);
   border-radius: 10px; padding: 0.85rem 1rem;
   display: grid; grid-template-columns: auto 1fr auto; gap: 0.75rem; align-items: center;
   transition: border-color 0.3s;
 }
 .gate-card.gate-green { border-color: rgba(110,231,183,0.2); }
-.gate-card.gate-amber { border-color: rgba(245,158,11,0.3); background: rgba(245,158,11,0.04); }
-.gate-card.gate-red { border-color: rgba(225,29,72,0.3); background: rgba(225,29,72,0.04); }
+.gate-card.gate-amber { border-color: rgba(245,158,11,0.3); background: var(--amber-bg); }
+.gate-card.gate-red { border-color: rgba(225,29,72,0.3); background: var(--sunset-bg); }
 .gate-name { font-family: var(--font-display); font-weight: 700; font-size: 0.9rem; }
 .gate-action { font-size: 0.75rem; color: var(--text-dim); line-height: 1.5; margin-top: 0.15rem; }
 .gate-time-col { text-align: center; min-width: 56px; }
@@ -544,28 +659,28 @@ nav a:hover, nav a.active { color: var(--amber); }
 .tracker-btn:active { transform: scale(0.96); }
 .tracker-btn-go {
   background: linear-gradient(135deg, var(--ridge), #34d399);
-  color: var(--night); min-width: 140px;
+  color: var(--bg); min-width: 140px;
 }
 .tracker-btn-custom {
-  background: rgba(255,255,255,0.08); color: var(--text);
-  border: 1px solid rgba(255,255,255,0.15);
+  background: var(--bg-card-hover); color: var(--text-primary);
+  border: 1px solid var(--border-hover);
 }
 .tracker-btn-confirm {
-  background: var(--amber); color: var(--night);
+  background: var(--amber); color: var(--bg);
   padding: 8px 16px; font-size: 0.8rem; min-height: 44px; margin-left: 6px;
 }
 .tracker-btn-stop {
-  background: rgba(225,29,72,0.15); color: #fb7185;
+  background: var(--sunset-bg); color: #fb7185;
   border: 1px solid rgba(225,29,72,0.2); font-size: 0.75rem; padding: 8px 16px;
 }
 .tracker-btn-reset {
-  background: rgba(255,255,255,0.06); color: var(--text-dim);
-  border: 1px solid rgba(255,255,255,0.1); font-size: 0.75rem; padding: 8px 16px;
+  background: var(--bg-card); color: var(--text-dim);
+  border: 1px solid var(--border); font-size: 0.75rem; padding: 8px 16px;
 }
 .tracker-datetime-input {
   padding: 8px 10px; border-radius: 8px;
-  border: 1px solid rgba(255,255,255,0.15); background: rgba(255,255,255,0.06);
-  color: var(--text); font-family: var(--font-mono); font-size: 0.8rem;
+  border: 1px solid var(--border-hover); background: var(--bg-card);
+  color: var(--text-primary); font-family: var(--font-mono); font-size: 0.8rem;
   min-height: 44px;
 }
 
@@ -573,7 +688,7 @@ nav a:hover, nav a.active { color: var(--amber); }
 .segments-section { padding: 2.5rem 1rem; max-width: 900px; margin: 0 auto; }
 
 .seg-card {
-  background: var(--ghost); border: 1px solid rgba(255,255,255,0.05);
+  background: var(--bg-card); border: 1px solid var(--border-faint);
   border-radius: 12px; margin-bottom: 0.75rem; overflow: hidden;
 }
 .seg-header {
@@ -582,17 +697,17 @@ nav a:hover, nav a.active { color: var(--amber); }
   -webkit-tap-highlight-color: transparent;
   min-height: 52px;
 }
-.seg-header:active { background: rgba(255,255,255,0.03); transform: scale(0.97); }
+.seg-header:active { background: var(--bg-card-hover); transform: scale(0.97); }
 .seg-title-group { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
 .seg-badge {
   font-family: var(--font-mono); font-size: 0.6rem;
   letter-spacing: 0.1em; padding: 0.15rem 0.5rem; border-radius: 4px; font-weight: 600;
 }
-.seg-badge.night { background: rgba(129,140,248,0.15); color: #a5b4fc; }
-.seg-badge.dawn { background: rgba(245,158,11,0.15); color: var(--amber); }
-.seg-badge.day { background: rgba(56,189,248,0.15); color: var(--sky); }
-.seg-badge.afternoon { background: rgba(251,146,60,0.15); color: var(--sunrise); }
-.seg-badge.dusk { background: rgba(225,29,72,0.15); color: var(--sunset); }
+.seg-badge.night { background: var(--night-phase-bg); color: var(--night-phase); }
+.seg-badge.dawn { background: var(--amber-bg); color: var(--amber); }
+.seg-badge.day { background: var(--sky-bg); color: var(--sky); }
+.seg-badge.afternoon { background: var(--sunrise-bg); color: var(--sunrise); }
+.seg-badge.dusk { background: var(--sunset-bg); color: var(--sunset); }
 .seg-name { font-family: var(--font-display); font-weight: 700; font-size: 0.95rem; }
 .seg-toggle {
   font-size: 1rem; color: var(--text-dim); transition: transform 0.3s;
@@ -606,35 +721,35 @@ nav a:hover, nav a.active { color: var(--amber); }
 .seg-stats {
   display: flex; flex-wrap: wrap; gap: 0.75rem;
   margin-bottom: 1rem; padding-bottom: 0.75rem;
-  border-bottom: 1px solid rgba(255,255,255,0.05);
+  border-bottom: 1px solid var(--border-faint);
 }
 .seg-stat { font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-dim); }
-.seg-stat strong { color: var(--text); font-weight: 600; }
+.seg-stat strong { color: var(--text-primary); font-weight: 600; }
 
 .seg-subtitle {
   font-family: var(--font-display); font-weight: 700;
-  font-size: 0.85rem; margin: 0.75rem 0 0.35rem; color: var(--text);
+  font-size: 0.85rem; margin: 0.75rem 0 0.35rem; color: var(--text-primary);
 }
 .seg-subtitle:first-of-type { margin-top: 0; }
 .seg-text {
   font-size: 0.8rem; color: var(--text-dim); line-height: 1.65; margin-bottom: 0.35rem;
 }
-.seg-text strong { color: var(--text); }
+.seg-text strong { color: var(--text-primary); }
 
 .seg-warning {
-  background: rgba(245,158,11,0.08); border-left: 3px solid var(--amber);
+  background: var(--amber-bg); border-left: 3px solid var(--amber);
   padding: 0.6rem 0.8rem; border-radius: 0 8px 8px 0; margin: 0.6rem 0;
 }
 .seg-warning p { font-size: 0.75rem; color: var(--amber); line-height: 1.6; }
 
 .seg-danger {
-  background: rgba(225,29,72,0.08); border-left: 3px solid var(--sunset);
+  background: var(--sunset-bg); border-left: 3px solid var(--sunset);
   padding: 0.6rem 0.8rem; border-radius: 0 8px 8px 0; margin: 0.6rem 0;
 }
 .seg-danger p { font-size: 0.75rem; color: #fb7185; line-height: 1.6; }
 
 .seg-info {
-  background: rgba(56,189,248,0.08); border-left: 3px solid var(--sky);
+  background: var(--sky-bg); border-left: 3px solid var(--sky);
   padding: 0.6rem 0.8rem; border-radius: 0 8px 8px 0; margin: 0.6rem 0;
 }
 .seg-info p { font-size: 0.75rem; color: var(--sky); line-height: 1.6; }
@@ -642,22 +757,22 @@ nav a:hover, nav a.active { color: var(--amber); }
 /* Signal info in segments */
 .seg-signal { display: flex; align-items: flex-start; gap: 0.5rem; padding: 0.5rem 0.75rem; border-radius: 8px; margin: 0.5rem 0; font-size: 0.75rem; }
 .sig-icon { font-size: 1rem; flex-shrink: 0; }
-.seg-signal strong { color: var(--text); display: block; margin-bottom: 0.1rem; }
+.seg-signal strong { color: var(--text-primary); display: block; margin-bottom: 0.1rem; }
 .seg-signal p { color: var(--text-dim); margin: 0; line-height: 1.5; }
-.sig-good { background: rgba(110,231,183,0.06); }
-.sig-weak { background: rgba(245,158,11,0.06); }
-.sig-bad { background: rgba(225,29,72,0.06); }
+.sig-good { background: var(--ridge-bg); }
+.sig-weak { background: var(--amber-bg); }
+.sig-bad { background: var(--sunset-bg); }
 
 /* Decision tree (S2) */
 .decision-tree {
-  background: rgba(245,158,11,0.06); border: 1px solid rgba(245,158,11,0.15);
+  background: var(--amber-bg); border: 1px solid var(--amber-border);
   border-radius: 12px; padding: 1rem; margin-bottom: 1rem;
 }
 .decision-title { font-family: var(--font-display); font-weight: 700; font-size: 0.9rem; margin-bottom: 0.75rem; }
 .decision-item { padding: 0.5rem 0.75rem; border-radius: 8px; margin-bottom: 0.5rem; font-size: 0.8rem; line-height: 1.5; }
-.decision-item.go { background: rgba(110,231,183,0.08); border-left: 3px solid var(--ridge); }
-.decision-item.caution { background: rgba(245,158,11,0.08); border-left: 3px solid var(--amber); }
-.decision-item.nogo { background: rgba(225,29,72,0.08); border-left: 3px solid var(--sunset); }
+.decision-item.go { background: var(--ridge-bg); border-left: 3px solid var(--ridge); }
+.decision-item.caution { background: var(--amber-bg); border-left: 3px solid var(--amber); }
+.decision-item.nogo { background: var(--sunset-bg); border-left: 3px solid var(--sunset); }
 .decision-label { font-family: var(--font-mono); font-weight: 700; font-size: 0.75rem; margin-bottom: 0.2rem; }
 .decision-item.go .decision-label { color: var(--ridge); }
 .decision-item.caution .decision-label { color: var(--amber); }
@@ -671,14 +786,14 @@ nav a:hover, nav a.active { color: var(--amber); }
 .supply-grid { display: grid; grid-template-columns: 1fr; gap: 0.6rem; }
 
 .supply-card {
-  background: var(--ghost); border: 1px solid rgba(255,255,255,0.05);
+  background: var(--bg-card); border: 1px solid var(--border-faint);
   border-radius: 10px; padding: 1rem; transition: border-color 0.3s;
   display: grid; grid-template-columns: auto 1fr; gap: 0.75rem; align-items: center;
 }
 .supply-card:active { transform: scale(0.97); }
 .supply-card.major {
   border-color: rgba(110,231,183,0.2);
-  background: linear-gradient(135deg, rgba(110,231,183,0.06), transparent);
+  background: linear-gradient(135deg, var(--ridge-bg), transparent);
 }
 .supply-time-col { text-align: center; min-width: 52px; }
 .supply-time {
@@ -689,15 +804,15 @@ nav a:hover, nav a.active { color: var(--amber); }
 .supply-items { display: flex; flex-wrap: wrap; gap: 0.3rem; }
 .supply-tag {
   font-size: 0.65rem; padding: 0.15rem 0.5rem; border-radius: 4px;
-  background: rgba(255,255,255,0.06); color: var(--slate);
+  background: var(--bg-card); color: var(--text-secondary);
 }
-.supply-tag.key { background: rgba(110,231,183,0.12); color: var(--ridge); }
+.supply-tag.key { background: var(--ridge-bg); color: var(--ridge); }
 
 /* ═══ ROUTE GAPS ═══ */
 .gaps-section { padding: 2.5rem 1rem; max-width: 900px; margin: 0 auto; }
 .gap-card {
-  background: linear-gradient(135deg, rgba(148,163,184,0.06), transparent);
-  border: 1px dashed rgba(148,163,184,0.2); border-radius: 12px;
+  background: linear-gradient(135deg, var(--bg-card), transparent);
+  border: 1px dashed var(--border-hover); border-radius: 12px;
   padding: 1rem; margin-bottom: 0.75rem;
 }
 .gap-visual {
@@ -708,32 +823,32 @@ nav a:hover, nav a.active { color: var(--amber); }
 .gap-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--slate); }
 .gap-line { width: 30px; height: 2px; background: repeating-linear-gradient(90deg, var(--slate) 0 4px, transparent 4px 8px); }
 .gap-detail { font-size: 0.8rem; color: var(--text-dim); line-height: 1.6; }
-.gap-detail strong { color: var(--text); }
+.gap-detail strong { color: var(--text-primary); }
 
 /* ═══ RETREAT ═══ */
 .retreat-section { padding: 2.5rem 1rem; max-width: 900px; margin: 0 auto; }
 .retreat-card {
-  background: var(--ghost); border: 1px solid rgba(255,255,255,0.05);
+  background: var(--bg-card); border: 1px solid var(--border-faint);
   border-radius: 10px; padding: 0.85rem 1rem; margin-bottom: 0.5rem;
   display: grid; grid-template-columns: auto 1fr; gap: 0.75rem; align-items: start;
 }
 .retreat-seg {
   font-family: var(--font-mono); font-size: 0.65rem;
-  padding: 0.25rem 0.5rem; background: rgba(255,255,255,0.06);
+  padding: 0.25rem 0.5rem; background: var(--bg-card);
   border-radius: 4px; white-space: nowrap; color: var(--slate);
 }
 .retreat-detail { font-size: 0.8rem; color: var(--text-dim); line-height: 1.6; }
-.retreat-detail strong { color: var(--text); }
+.retreat-detail strong { color: var(--text-primary); }
 
 /* ═══ LOGISTICS ═══ */
 .logistics-section { padding: 2.5rem 1rem; max-width: 900px; margin: 0 auto; }
 .logistics-card {
-  background: var(--ghost); border: 1px solid rgba(255,255,255,0.05);
+  background: var(--bg-card); border: 1px solid var(--border-faint);
   border-radius: 10px; padding: 1rem; margin-bottom: 0.75rem;
 }
 .logistics-card-title {
   font-family: var(--font-display); font-weight: 700; font-size: 0.9rem;
-  margin-bottom: 0.5rem; color: var(--text);
+  margin-bottom: 0.5rem; color: var(--text-primary);
 }
 .logistics-list { list-style: none; padding: 0; }
 .logistics-list li {
@@ -743,15 +858,15 @@ nav a:hover, nav a.active { color: var(--amber); }
 .logistics-list li::before {
   content: '\2022'; position: absolute; left: 0; color: var(--amber);
 }
-.logistics-list li strong { color: var(--text); }
+.logistics-list li strong { color: var(--text-primary); }
 
 /* ═══ MILESTONES ═══ */
 .milestones-section { padding: 2.5rem 1rem; max-width: 900px; margin: 0 auto; }
 .milestones-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.6rem; }
 .milestone {
-  padding: 1rem; border-radius: 10px; border-left: 3px solid; background: var(--ghost);
+  padding: 1rem; border-radius: 10px; border-left: 3px solid; background: var(--bg-card);
 }
-.milestone[data-phase="night"] { border-color: #818cf8; }
+.milestone[data-phase="night"] { border-color: var(--night-phase); }
 .milestone[data-phase="dawn"] { border-color: var(--amber); }
 .milestone[data-phase="day"] { border-color: var(--sky); }
 .milestone[data-phase="afternoon"] { border-color: var(--sunrise); }
@@ -767,14 +882,14 @@ nav a:hover, nav a.active { color: var(--amber); }
   display: flex; align-items: center; gap: 10px;
   margin-bottom: 1rem; font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-dim);
 }
-.gear-progress-bar { flex: 1; height: 6px; background: rgba(255,255,255,0.08); border-radius: 3px; overflow: hidden; }
+.gear-progress-bar { flex: 1; height: 6px; background: var(--range-track); border-radius: 3px; overflow: hidden; }
 .gear-progress-fill { height: 100%; border-radius: 3px; background: var(--ridge); transition: width 0.3s; }
 
 .gear-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; }
 .gear-item {
   display: flex; align-items: center; gap: 0.6rem;
-  padding: 0.75rem 0.85rem; background: var(--ghost);
-  border: 1px solid rgba(255,255,255,0.04); border-radius: 10px;
+  padding: 0.75rem 0.85rem; background: var(--bg-card);
+  border: 1px solid var(--border-faint); border-radius: 10px;
   transition: all 0.2s; cursor: pointer;
   -webkit-tap-highlight-color: transparent; user-select: none;
   min-height: 48px;
@@ -789,7 +904,7 @@ nav a:hover, nav a.active { color: var(--amber); }
   background: var(--ridge); border-color: var(--ridge);
 }
 .gear-item.checked .gear-check::after {
-  content: '\2713'; color: var(--night); font-size: 0.7rem; font-weight: 700;
+  content: '\2713'; color: var(--gear-check-after); font-size: 0.7rem; font-weight: 700;
 }
 .gear-item.checked .gear-text { opacity: 0.45; text-decoration: line-through; }
 .gear-text { font-size: 0.8rem; transition: all 0.2s; line-height: 1.3; }
@@ -799,20 +914,20 @@ nav a:hover, nav a.active { color: var(--amber); }
 .weather-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.6rem; }
 .weather-card {
   display: block; text-decoration: none; text-align: center;
-  background: var(--ghost); border: 1px solid rgba(255,255,255,0.05);
+  background: var(--bg-card); border: 1px solid var(--border-faint);
   border-radius: 10px; padding: 1rem; transition: border-color 0.3s, transform 0.2s;
 }
 .weather-card:active { transform: scale(0.97); }
-.weather-card:hover { border-color: rgba(245,158,11,0.3); }
+.weather-card:hover { border-color: var(--amber-border); }
 .weather-icon { font-size: 1.5rem; margin-bottom: 0.35rem; }
-.weather-name { font-family: var(--font-display); font-weight: 700; font-size: 0.85rem; color: var(--text); margin-bottom: 0.15rem; }
+.weather-name { font-family: var(--font-display); font-weight: 700; font-size: 0.85rem; color: var(--text-primary); margin-bottom: 0.15rem; }
 .weather-desc { font-size: 0.7rem; color: var(--text-dim); }
 
 /* ═══ SAFETY ═══ */
 .safety-section { padding: 2.5rem 1rem; max-width: 900px; margin: 0 auto; }
 .safety-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; }
 .safety-card {
-  background: var(--ghost); border: 1px solid rgba(255,255,255,0.05);
+  background: var(--bg-card); border: 1px solid var(--border-faint);
   border-radius: 10px; padding: 1rem;
 }
 .safety-card:active { transform: scale(0.97); }
@@ -824,17 +939,17 @@ nav a:hover, nav a.active { color: var(--amber); }
 .emergency-section { padding: 2.5rem 1rem; max-width: 900px; margin: 0 auto; }
 .emergency-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; }
 .emergency-card {
-  background: rgba(225,29,72,0.06); border: 1px solid rgba(225,29,72,0.15);
+  background: var(--emergency-bg); border: 1px solid var(--emergency-border);
   border-radius: 10px; padding: 0.85rem 1rem;
 }
 .emergency-label { font-size: 0.65rem; color: var(--text-dim); margin-bottom: 0.15rem; }
-.emergency-value { font-family: var(--font-mono); font-size: 0.85rem; color: var(--text); }
-.emergency-value a { color: var(--text); text-decoration: none; }
+.emergency-value { font-family: var(--font-mono); font-size: 0.85rem; color: var(--text-primary); }
+.emergency-value a { color: var(--text-primary); text-decoration: none; }
 
 /* ═══ FOOTER ═══ */
 footer {
   padding: 3rem 1rem calc(2rem + var(--safe-bottom));
-  text-align: center; border-top: 1px solid var(--ghost); margin-top: 2rem;
+  text-align: center; border-top: 1px solid var(--border); margin-top: 2rem;
 }
 footer p { font-size: 0.7rem; color: var(--text-dim); }
 footer a { color: var(--amber); text-decoration: none; }
@@ -843,7 +958,7 @@ footer a { color: var(--amber); text-decoration: none; }
 .share-fab {
   position: fixed; right: 16px; bottom: calc(80px + var(--safe-bottom));
   z-index: 250; width: 44px; height: 44px; border-radius: 50%;
-  background: var(--amber); color: var(--night); border: none;
+  background: var(--amber); color: var(--bg); border: none;
   display: flex; align-items: center; justify-content: center;
   cursor: pointer; box-shadow: 0 4px 16px rgba(245,158,11,0.4);
   transition: transform 0.2s, box-shadow 0.2s;
@@ -855,7 +970,7 @@ footer a { color: var(--amber); text-decoration: none; }
 .toast {
   position: fixed; bottom: calc(140px + var(--safe-bottom));
   left: 50%; transform: translateX(-50%) translateY(20px);
-  background: rgba(10,14,26,0.95); border: 1px solid rgba(255,255,255,0.15);
+  background: var(--toast-bg); border: 1px solid var(--border-hover);
   border-radius: 10px; padding: 10px 20px;
   font-family: var(--font-mono); font-size: 0.75rem; color: var(--ridge);
   pointer-events: none; opacity: 0; z-index: 400;
@@ -866,7 +981,7 @@ footer a { color: var(--amber); text-decoration: none; }
 /* ═══ OFFLINE BANNER ═══ */
 .offline-banner {
   display: none; position: fixed; top: 0; left: 0; right: 0; z-index: 1100;
-  background: rgba(245,158,11,0.9); color: var(--night); text-align: center;
+  background: rgba(245,158,11,0.9); color: var(--bg); text-align: center;
   font-family: var(--font-mono); font-size: 0.75rem; font-weight: 600;
   padding: 6px 12px;
 }
@@ -895,6 +1010,7 @@ footer a { color: var(--amber); text-decoration: none; }
   .share-fab { bottom: 24px; }
   .toast { bottom: 80px; }
   body { padding-bottom: 0 !important; }
+  .theme-toggle { top: 14px; right: 20px; }
 }
 
 /* ═══ MOBILE ═══ */
@@ -904,6 +1020,8 @@ footer a { color: var(--amber); text-decoration: none; }
   .bottom-nav { display: block; }
   .seg-header { padding: 1rem 1.1rem; }
   footer { padding-bottom: calc(80px + var(--safe-bottom)); }
+  .theme-toggle { top: 10px; right: 12px; width: 36px; height: 36px; }
+  .theme-toggle svg { width: 18px; height: 18px; }
 }
 
 /* ═══ SMALL MOBILE ═══ */
@@ -923,8 +1041,8 @@ footer a { color: var(--amber); text-decoration: none; }
   max-width: 900px; margin: 0 auto; padding: 0 1rem 2rem;
 }
 .tracker-card {
-  background: linear-gradient(135deg, rgba(245,158,11,0.08), rgba(56,189,248,0.04));
-  border: 1px solid rgba(245,158,11,0.2); border-radius: 14px;
+  background: linear-gradient(135deg, var(--amber-bg), var(--sky-bg));
+  border: 1px solid var(--amber-border); border-radius: 14px;
   padding: 1.25rem; position: relative; overflow: hidden;
 }
 .tracker-card::before {
@@ -936,7 +1054,7 @@ footer a { color: var(--amber); text-decoration: none; }
   margin-bottom: 0.75rem; flex-wrap: wrap; gap: 0.5rem;
 }
 .tracker-clock {
-  font-family: var(--font-mono); font-size: 1.6rem; font-weight: 600; color: #fff;
+  font-family: var(--font-mono); font-size: 1.6rem; font-weight: 600; color: var(--text-white);
 }
 .tracker-date {
   font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-dim);
@@ -945,9 +1063,9 @@ footer a { color: var(--amber); text-decoration: none; }
   font-family: var(--font-mono); font-size: 0.75rem;
   padding: 0.2rem 0.7rem; border-radius: 20px;
 }
-.tracker-status.before { background: rgba(148,163,184,0.15); color: var(--slate); }
-.tracker-status.active { background: rgba(110,231,183,0.15); color: var(--ridge); animation: pulse 2s infinite; }
-.tracker-status.done { background: rgba(110,231,183,0.15); color: var(--ridge); }
+.tracker-status.before { background: var(--bg-card); color: var(--slate); }
+.tracker-status.active { background: var(--ridge-bg); color: var(--ridge); animation: pulse 2s infinite; }
+.tracker-status.done { background: var(--ridge-bg); color: var(--ridge); }
 
 @keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.6; } }
 
@@ -956,15 +1074,15 @@ footer a { color: var(--amber); text-decoration: none; }
 }
 .tracker-info-item { text-align: center; }
 .tracker-info-label { font-size: 0.6rem; color: var(--text-dim); letter-spacing: 0.08em; margin-bottom: 0.15rem; }
-.tracker-info-value { font-family: var(--font-mono); font-size: 1rem; font-weight: 600; color: var(--text); }
+.tracker-info-value { font-family: var(--font-mono); font-size: 1rem; font-weight: 600; color: var(--text-primary); }
 .tracker-info-value .unit { font-size: 0.6em; color: var(--text-dim); font-weight: 400; }
 
 .tracker-segment {
   margin-top: 0.75rem; padding-top: 0.75rem;
-  border-top: 1px solid rgba(255,255,255,0.06);
+  border-top: 1px solid var(--border);
   font-size: 0.8rem; color: var(--text-dim);
 }
-.tracker-segment strong { color: var(--text); }
+.tracker-segment strong { color: var(--text-primary); }
 .tracker-segment .seg-highlight { color: var(--amber); font-weight: 600; }
 
 /* ═══ CALCULATOR ═══ */
@@ -972,20 +1090,20 @@ footer a { color: var(--amber); text-decoration: none; }
 .calc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
 
 .calc-card {
-  background: var(--ghost); border: 1px solid rgba(255,255,255,0.05);
+  background: var(--bg-card); border: 1px solid var(--border-faint);
   border-radius: 12px; padding: 1.25rem; text-align: center;
 }
 .calc-icon { font-size: 1.5rem; margin-bottom: 0.5rem; }
 .calc-label { font-size: 0.7rem; color: var(--text-dim); margin-bottom: 0.25rem; }
 .calc-value {
-  font-family: var(--font-mono); font-size: 1.5rem; font-weight: 600; color: #fff;
+  font-family: var(--font-mono); font-size: 1.5rem; font-weight: 600; color: var(--text-white);
 }
-.calc-value .unit { font-size: 0.5em; color: var(--slate); font-weight: 400; }
+.calc-value .unit { font-size: 0.5em; color: var(--text-secondary); font-weight: 400; }
 .calc-sub { font-size: 0.65rem; color: var(--text-dim); margin-top: 0.25rem; }
 
 .calc-slider-group {
   grid-column: 1 / -1;
-  background: var(--ghost); border: 1px solid rgba(255,255,255,0.05);
+  background: var(--bg-card); border: 1px solid var(--border-faint);
   border-radius: 12px; padding: 1.25rem;
 }
 .calc-slider-label {
@@ -997,7 +1115,7 @@ footer a { color: var(--amber); text-decoration: none; }
 
 input[type="range"] {
   -webkit-appearance: none; width: 100%; height: 6px;
-  background: rgba(255,255,255,0.1); border-radius: 3px; outline: none;
+  background: var(--range-track); border-radius: 3px; outline: none;
 }
 input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none; width: 22px; height: 22px;
@@ -1007,9 +1125,9 @@ input[type="range"]::-webkit-slider-thumb {
 /* ═══ ELEVATION INTERACTIVE ═══ */
 .elev-tooltip {
   position: absolute; pointer-events: none; opacity: 0;
-  background: rgba(10,14,26,0.9); border: 1px solid rgba(255,255,255,0.15);
+  background: var(--toast-bg); border: 1px solid var(--border-hover);
   border-radius: 8px; padding: 6px 10px; font-family: var(--font-mono);
-  font-size: 0.65rem; color: var(--text); white-space: nowrap;
+  font-size: 0.65rem; color: var(--text-primary); white-space: nowrap;
   transition: opacity 0.15s; z-index: 10;
   transform: translateX(-50%);
 }
@@ -1021,6 +1139,53 @@ input[type="range"]::-webkit-slider-thumb {
   box-shadow: 0 0 8px rgba(245,158,11,0.5);
 }
 
+/* Elevation segment popup */
+.elev-seg-popup {
+  position: absolute; pointer-events: none; opacity: 0;
+  background: var(--toast-bg); border: 1px solid var(--border-hover);
+  border-radius: 8px; padding: 8px 12px; font-family: var(--font-mono);
+  font-size: 0.65rem; color: var(--text-primary); white-space: nowrap;
+  transition: opacity 0.2s; z-index: 9;
+  bottom: 8px; transform: translateX(-50%);
+}
+
+/* Supply triangle markers */
+.elev-supply-marker {
+  position: absolute; bottom: 2px; transform: translateX(-50%);
+  color: var(--ridge); font-size: 8px; line-height: 1;
+  pointer-events: none; z-index: 5;
+}
+
+/* Tracker pulsing dot on elevation */
+.elev-tracker-dot {
+  position: absolute; width: 10px; height: 10px;
+  background: var(--ridge); border-radius: 50%;
+  pointer-events: none; opacity: 0; transition: opacity 0.3s;
+  transform: translate(-50%, -50%); z-index: 11;
+  box-shadow: 0 0 12px rgba(110,231,183,0.6);
+  animation: pulse 2s infinite;
+}
+
+/* Waypoint label on chart */
+.elev-waypoint-label {
+  position: absolute; pointer-events: none;
+  font-family: var(--font-mono); font-size: 7px; white-space: nowrap;
+  transform: translateX(-50%); z-index: 8;
+  opacity: 0; transition: opacity 0.2s;
+}
+.elev-waypoint-label.always-show { opacity: 1; }
+.elevation-chart:hover .elev-waypoint-label { opacity: 1; }
+
+/* Waypoint dot */
+.elev-waypoint-dot {
+  position: absolute; width: 5px; height: 5px;
+  border-radius: 50%; pointer-events: none;
+  transform: translate(-50%, -50%); z-index: 8;
+  opacity: 0; transition: opacity 0.2s;
+}
+.elev-waypoint-dot.always-show { opacity: 1; }
+.elevation-chart:hover .elev-waypoint-dot { opacity: 0.8; }
+
 @media (max-width: 380px) {
   .calc-grid { grid-template-columns: 1fr; }
   .tracker-info { grid-template-columns: repeat(3, 1fr); }
@@ -1030,15 +1195,21 @@ input[type="range"]::-webkit-slider-thumb {
 <body>
 
 <!-- Offline Banner -->
-<div class="offline-banner" id="offlineBanner">📡 離線模式 — 所有資料已快取可用</div>
+<div class="offline-banner" id="offlineBanner">離線模式 -- 所有資料已快取可用</div>
+
+<!-- Theme Toggle -->
+<button class="theme-toggle" id="themeToggle" title="切換深色/淺色模式" aria-label="Toggle theme">
+  <svg id="themeIconSun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+  <svg id="themeIconMoon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+</button>
 
 <div class="topo-bg">
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" preserveAspectRatio="none">
 <defs><pattern id="topo" x="0" y="0" width="200" height="200" patternUnits="userSpaceOnUse">
-<path d="M20 80 Q60 20 100 60 T180 40" fill="none" stroke="#fff" stroke-width="0.5"/>
-<path d="M0 120 Q40 70 90 100 T200 80" fill="none" stroke="#fff" stroke-width="0.3"/>
-<path d="M10 160 Q50 120 110 140 T190 130" fill="none" stroke="#fff" stroke-width="0.5"/>
-<path d="M30 30 Q70 0 120 20 T200 10" fill="none" stroke="#fff" stroke-width="0.3"/>
+<path d="M20 80 Q60 20 100 60 T180 40" fill="none" stroke="var(--topo-stroke)" stroke-width="0.5"/>
+<path d="M0 120 Q40 70 90 100 T200 80" fill="none" stroke="var(--topo-stroke)" stroke-width="0.3"/>
+<path d="M10 160 Q50 120 110 140 T190 130" fill="none" stroke="var(--topo-stroke)" stroke-width="0.5"/>
+<path d="M30 30 Q70 0 120 20 T200 10" fill="none" stroke="var(--topo-stroke)" stroke-width="0.3"/>
 </pattern></defs>
 <rect width="100%" height="100%" fill="url(#topo)"/>
 </svg>
@@ -1124,23 +1295,8 @@ input[type="range"]::-webkit-slider-thumb {
   <div class="elevation-chart" id="elevChart" style="cursor:crosshair;">
     <div class="elev-tooltip" id="elevTooltip"></div>
     <div class="elev-dot" id="elevDot"></div>
-    <svg viewBox="0 0 1000 200" preserveAspectRatio="none">
-      <defs>
-        <linearGradient id="eg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="rgba(110,231,183,0.3)"/><stop offset="100%" stop-color="rgba(110,231,183,0)"/></linearGradient>
-        <linearGradient id="lg" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#818cf8"/><stop offset="25%" stop-color="#f59e0b"/><stop offset="50%" stop-color="#38bdf8"/><stop offset="75%" stop-color="#fb923c"/><stop offset="100%" stop-color="#e11d48"/></linearGradient>
-      </defs>
-      <path d="M0 180 L20 170 60 130 100 80 130 50 150 65 170 40 200 55 230 70 260 35 290 30 310 55 340 80 370 60 400 90 430 100 460 120 490 140 510 130 530 145 550 120 570 110 590 130 620 140 640 150 660 130 680 120 700 100 720 110 740 130 760 120 780 90 800 80 820 100 850 110 870 90 890 100 910 80 930 100 960 130 980 150 1000 170 L1000 200 L0 200 Z" fill="url(#eg)"/>
-      <path d="M0 180 L20 170 60 130 100 80 130 50 150 65 170 40 200 55 230 70 260 35 290 30 310 55 340 80 370 60 400 90 430 100 460 120 490 140 510 130 530 145 550 120 570 110 590 130 620 140 640 150 660 130 680 120 700 100 720 110 740 130 760 120 780 90 800 80 820 100 850 110 870 90 890 100 910 80 930 100 960 130 980 150 1000 170" fill="none" stroke="url(#lg)" stroke-width="2"/>
-      <text x="130" y="40" fill="#f59e0b" font-family="JetBrains Mono" font-size="9" text-anchor="middle">大屯山 1092m</text>
-      <text x="290" y="20" fill="#38bdf8" font-family="JetBrains Mono" font-size="9" text-anchor="middle">七星山 1120m</text>
-      <text x="75" y="195" fill="rgba(255,255,255,0.3)" font-family="JetBrains Mono" font-size="8" text-anchor="middle">S1</text>
-      <text x="185" y="195" fill="rgba(255,255,255,0.3)" font-family="JetBrains Mono" font-size="8" text-anchor="middle">S2</text>
-      <text x="320" y="195" fill="rgba(255,255,255,0.3)" font-family="JetBrains Mono" font-size="8" text-anchor="middle">S3</text>
-      <text x="460" y="195" fill="rgba(255,255,255,0.3)" font-family="JetBrains Mono" font-size="8" text-anchor="middle">S4</text>
-      <text x="600" y="195" fill="rgba(255,255,255,0.3)" font-family="JetBrains Mono" font-size="8" text-anchor="middle">S5</text>
-      <text x="750" y="195" fill="rgba(255,255,255,0.3)" font-family="JetBrains Mono" font-size="8" text-anchor="middle">S6</text>
-      <text x="900" y="195" fill="rgba(255,255,255,0.3)" font-family="JetBrains Mono" font-size="8" text-anchor="middle">S7</text>
-    </svg>
+    <div class="elev-tracker-dot" id="elevTrackerDot"></div>
+    <!-- SVG generated by JS -->
   </div>
 </section>
 
@@ -1192,7 +1348,7 @@ input[type="range"]::-webkit-slider-thumb {
     </div>
 
     <!-- Fatigue toggle -->
-    <div class="config-row" style="padding-top:0.5rem;border-top:1px solid rgba(255,255,255,0.06);">
+    <div class="config-row" style="padding-top:0.5rem;border-top:1px solid var(--border);">
       <label class="fatigue-toggle">
         <input type="checkbox" id="fatigueToggle" onchange="onConfigChange()" checked>
         <span class="fatigue-toggle-text">考慮體能衰退（12hr後+15%、18hr後+30%）</span>
@@ -1658,12 +1814,12 @@ input[type="range"]::-webkit-slider-thumb {
 </section>
 
 <div style="max-width:900px;margin:2rem auto;padding:0 1rem;">
-  <div style="background:rgba(245,158,11,0.06);border:1px solid rgba(245,158,11,0.15);border-radius:10px;padding:1rem 1.25rem;">
+  <div style="background:var(--amber-bg);border:1px solid var(--amber-border);border-radius:10px;padding:1rem 1.25rem;">
     <div style="font-family:var(--font-mono);font-size:0.65rem;color:var(--amber);letter-spacing:0.15em;margin-bottom:0.35rem;">DISCLAIMER ── 2026.04.05 更新</div>
     <div style="font-size:0.75rem;color:var(--text-dim);line-height:1.7;">
-      <strong style="color:var(--text);">時間估算：</strong>上河時間非精確值，各段使用官方/健行筆記參考時間推算 ×0.6。實際時間受天氣、體能、路況影響甚大。<br>
-      <strong style="color:var(--text);">路線資訊：</strong>已交叉比對官網、健行筆記、維基百科、Mobile01 及多位山友實走紀錄。路線可能因施工、天災隨時變更，<strong>出發前務必查詢<a href="https://taipeigrandtrail.gov.taipei/" target="_blank" style="color:var(--amber)">官網</a>及<a href="https://www.ymsnp.gov.tw/YMSNP_HighwayCondition.aspx?n=17910&csn=5239" target="_blank" style="color:var(--amber)">陽管處步道開放資訊</a></strong>。<br>
-      <strong style="color:var(--text);">已知注意事項：</strong>七星山區曾發生大火（~50公頃），步道已巡檢重開但植被受損。S2 大屯山西峰/南峰雨後極危險，需評估是否搭108公車繞過。S4 官方終點為中華科大（含道路段），一日完走在大湖公園站搭車即可。S6/S7 在世界山莊有路段重疊。貓纜除每月第一個週一外週一公休。
+      <strong style="color:var(--text-primary);">時間估算：</strong>上河時間非精確值，各段使用官方/健行筆記參考時間推算 ×0.6。實際時間受天氣、體能、路況影響甚大。<br>
+      <strong style="color:var(--text-primary);">路線資訊：</strong>已交叉比對官網、健行筆記、維基百科、Mobile01 及多位山友實走紀錄。路線可能因施工、天災隨時變更，<strong>出發前務必查詢<a href="https://taipeigrandtrail.gov.taipei/" target="_blank" style="color:var(--amber)">官網</a>及<a href="https://www.ymsnp.gov.tw/YMSNP_HighwayCondition.aspx?n=17910&csn=5239" target="_blank" style="color:var(--amber)">陽管處步道開放資訊</a></strong>。<br>
+      <strong style="color:var(--text-primary);">已知注意事項：</strong>七星山區曾發生大火（~50公頃），步道已巡檢重開但植被受損。S2 大屯山西峰/南峰雨後極危險，需評估是否搭108公車繞過。S4 官方終點為中華科大（含道路段），一日完走在大湖公園站搭車即可。S6/S7 在世界山莊有路段重疊。貓纜除每月第一個週一外週一公休。
     </div>
   </div>
 </div>
@@ -1677,6 +1833,48 @@ input[type="range"]::-webkit-slider-thumb {
 </footer>
 
 <script>
+// ═══ THEME SYSTEM ═══
+(function initTheme() {
+  const saved = localStorage.getItem('tgt_theme');
+  let theme = 'light'; // default
+  if (saved === 'dark' || saved === 'light') {
+    theme = saved;
+  } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    theme = 'dark';
+  }
+  document.documentElement.setAttribute('data-theme', theme);
+  updateThemeIcons(theme);
+  updateThemeColor(theme);
+})();
+
+function updateThemeIcons(theme) {
+  const sunIcon = document.getElementById('themeIconSun');
+  const moonIcon = document.getElementById('themeIconMoon');
+  if (theme === 'dark') {
+    sunIcon.style.display = '';
+    moonIcon.style.display = 'none';
+  } else {
+    sunIcon.style.display = 'none';
+    moonIcon.style.display = '';
+  }
+}
+
+function updateThemeColor(theme) {
+  const meta = document.querySelector('meta[name="theme-color"]');
+  if (meta) meta.content = theme === 'dark' ? '#0a0e1a' : '#f8fafc';
+}
+
+document.getElementById('themeToggle').addEventListener('click', () => {
+  const current = document.documentElement.getAttribute('data-theme');
+  const next = current === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', next);
+  localStorage.setItem('tgt_theme', next);
+  updateThemeIcons(next);
+  updateThemeColor(next);
+  // Re-render elevation chart for new theme colors
+  if (typeof renderElevationChart === 'function') renderElevationChart();
+});
+
 // ═══ STATE ═══
 const STATE_KEY = 'tgt_state';
 function loadState() { try { return JSON.parse(localStorage.getItem(STATE_KEY)) || {}; } catch { return {}; } }
@@ -1867,6 +2065,17 @@ function getPhaseColor(phase) {
   }
 }
 
+// Segment colors for elevation chart
+const SEG_COLORS = {
+  s1: { dark: 'rgba(129,140,248,0.12)', light: 'rgba(129,140,248,0.10)' },
+  s2: { dark: 'rgba(245,158,11,0.12)', light: 'rgba(217,119,6,0.08)' },
+  s3: { dark: 'rgba(56,189,248,0.12)', light: 'rgba(2,132,199,0.08)' },
+  s4: { dark: 'rgba(56,189,248,0.08)', light: 'rgba(2,132,199,0.06)' },
+  s5: { dark: 'rgba(251,146,60,0.10)', light: 'rgba(234,88,12,0.06)' },
+  s6: { dark: 'rgba(251,146,60,0.12)', light: 'rgba(234,88,12,0.08)' },
+  s7: { dark: 'rgba(225,29,72,0.12)', light: 'rgba(190,18,60,0.08)' },
+};
+
 function isDark(clockMin, sunrise, sunset) {
   clockMin = normMin(clockMin);
   return clockMin < sunrise || clockMin > sunset;
@@ -1941,6 +2150,315 @@ if (initTrackerStart) {
 // ═══ SCHEDULE DATA (mutable, rebuilt by applyConfig) ═══
 const SCHEDULE = [];
 let TOTAL_MIN_CURRENT = 1270;
+
+// ═══ ELEVATION CHART DATA ═══
+const elevData = [
+  {x:0,h:30,label:'關渡',seg:'s1',supply:false,major:false},
+  {x:30,h:224,label:'忠義山',seg:'s1',supply:false,major:false},
+  {x:55,h:120,label:'貴子坑',seg:'s1',supply:false,major:false},
+  {x:75,h:400,label:'',seg:'s1',supply:false,major:false},
+  {x:90,h:540,label:'清天宮',seg:'s1',supply:true,major:false},
+  {x:130,h:1092,label:'大屯山',seg:'s1',supply:false,major:true},
+  {x:155,h:984,label:'大屯西峰',seg:'s2',supply:false,major:false},
+  {x:170,h:959,label:'大屯南峰',seg:'s2',supply:false,major:false},
+  {x:200,h:1077,label:'',seg:'s2',supply:false,major:false},
+  {x:230,h:684,label:'二子坪',seg:'s2',supply:true,major:false},
+  {x:250,h:750,label:'',seg:'s3',supply:false,major:false},
+  {x:260,h:1040,label:'',seg:'s3',supply:false,major:false},
+  {x:290,h:1120,label:'七星山',seg:'s3',supply:false,major:true},
+  {x:320,h:740,label:'冷水坑',seg:'s3',supply:true,major:false},
+  {x:340,h:770,label:'擎天崗',seg:'s3',supply:false,major:false},
+  {x:370,h:680,label:'石梯嶺',seg:'s3',supply:false,major:false},
+  {x:400,h:553,label:'風櫃口',seg:'s4',supply:false,major:false},
+  {x:440,h:350,label:'',seg:'s4',supply:false,major:false},
+  {x:480,h:250,label:'',seg:'s4',supply:false,major:false},
+  {x:510,h:200,label:'',seg:'s4',supply:false,major:false},
+  {x:540,h:100,label:'',seg:'s4',supply:false,major:false},
+  {x:580,h:30,label:'大湖公園',seg:'s4',supply:true,major:false},
+  {x:600,h:10,label:'',seg:'s5',supply:false,major:false},
+  {x:620,h:150,label:'',seg:'s5',supply:false,major:false},
+  {x:640,h:220,label:'碧山巖',seg:'s5',supply:false,major:false},
+  {x:660,h:327,label:'大崙頭山',seg:'s5',supply:false,major:false},
+  {x:700,h:200,label:'',seg:'s5',supply:false,major:false},
+  {x:720,h:30,label:'',seg:'s6',supply:false,major:false},
+  {x:740,h:375,label:'九五峰',seg:'s6',supply:false,major:false},
+  {x:760,h:280,label:'',seg:'s6',supply:false,major:false},
+  {x:790,h:120,label:'',seg:'s6',supply:false,major:false},
+  {x:830,h:30,label:'麟光',seg:'s6',supply:true,major:false},
+  {x:850,h:100,label:'',seg:'s7',supply:false,major:false},
+  {x:870,h:285,label:'指南宮',seg:'s7',supply:false,major:false},
+  {x:900,h:308,label:'貓空',seg:'s7',supply:false,major:false},
+  {x:950,h:150,label:'',seg:'s7',supply:false,major:false},
+  {x:1000,h:50,label:'政大',seg:'s7',supply:false,major:false},
+];
+const maxH = 1120;
+
+// Segment x boundaries (derived from elevData)
+const SEG_BOUNDARIES = {
+  s1: { x0: 0, x1: 145 },
+  s2: { x0: 145, x1: 240 },
+  s3: { x0: 240, x1: 400 },
+  s4: { x0: 400, x1: 590 },
+  s5: { x0: 590, x1: 710 },
+  s6: { x0: 710, x1: 840 },
+  s7: { x0: 840, x1: 1000 },
+};
+
+// Supply positions on the x-axis (approximate)
+const SUPPLY_X_POSITIONS = [
+  { x: 90, name: '清天宮' },
+  { x: 230, name: '二子坪' },
+  { x: 250, name: '小油坑' },
+  { x: 320, name: '冷水坑' },
+  { x: 580, name: '大湖公園' },
+  { x: 600, name: '劍潭' },
+  { x: 700, name: '碧山巖' },
+  { x: 830, name: '麟光' },
+];
+
+function renderElevationChart() {
+  const chartEl = document.getElementById('elevChart');
+  if (!chartEl) return;
+
+  const theme = document.documentElement.getAttribute('data-theme') || 'light';
+  const rect = chartEl.getBoundingClientRect();
+  const W = 1000;
+  const H = 200;
+  const padTop = 22;
+  const padBottom = 18;
+  const padLeft = 28;
+  const chartH = H - padTop - padBottom;
+
+  function hToY(h) {
+    return padTop + chartH * (1 - h / maxH);
+  }
+
+  function xToSvg(x) {
+    return padLeft + (x / 1000) * (W - padLeft);
+  }
+
+  // Build SVG
+  let svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ' + W + ' ' + H + '" preserveAspectRatio="none">';
+
+  // Defs
+  svg += '<defs>';
+  svg += '<linearGradient id="elevFill" x1="0" y1="0" x2="0" y2="1">';
+  svg += '<stop offset="0%" stop-color="var(--elev-fill-top)"/>';
+  svg += '<stop offset="100%" stop-color="var(--elev-fill-bottom)"/>';
+  svg += '</linearGradient>';
+  svg += '<linearGradient id="elevStroke" x1="0" y1="0" x2="1" y2="0">';
+  svg += '<stop offset="0%" stop-color="' + (theme === 'dark' ? '#818cf8' : '#818cf8') + '"/>';
+  svg += '<stop offset="15%" stop-color="' + (theme === 'dark' ? '#f59e0b' : '#d97706') + '"/>';
+  svg += '<stop offset="35%" stop-color="' + (theme === 'dark' ? '#38bdf8' : '#0284c7') + '"/>';
+  svg += '<stop offset="55%" stop-color="' + (theme === 'dark' ? '#38bdf8' : '#0284c7') + '"/>';
+  svg += '<stop offset="75%" stop-color="' + (theme === 'dark' ? '#fb923c' : '#ea580c') + '"/>';
+  svg += '<stop offset="100%" stop-color="' + (theme === 'dark' ? '#e11d48' : '#be123c') + '"/>';
+  svg += '</linearGradient>';
+  svg += '</defs>';
+
+  // Horizontal grid lines
+  const gridLevels = [200, 400, 600, 800, 1000];
+  gridLevels.forEach(lv => {
+    const y = hToY(lv);
+    svg += '<line x1="' + padLeft + '" y1="' + y + '" x2="' + W + '" y2="' + y + '" stroke="var(--chart-grid)" stroke-width="0.5" stroke-dasharray="4,4"/>';
+    svg += '<text x="' + (padLeft - 3) + '" y="' + (y + 3) + '" fill="var(--chart-label)" font-family="JetBrains Mono" font-size="7" text-anchor="end">' + lv + '</text>';
+  });
+
+  // Segment background regions
+  const segIds = ['s1','s2','s3','s4','s5','s6','s7'];
+  segIds.forEach(sid => {
+    const b = SEG_BOUNDARIES[sid];
+    const sx0 = xToSvg(b.x0);
+    const sx1 = xToSvg(b.x1);
+    const col = SEG_COLORS[sid][theme];
+    svg += '<rect x="' + sx0 + '" y="' + padTop + '" width="' + (sx1 - sx0) + '" height="' + chartH + '" fill="' + col + '" class="elev-seg-region" data-seg="' + sid + '"/>';
+    // Segment boundary dashed line
+    if (sid !== 's1') {
+      svg += '<line x1="' + sx0 + '" y1="' + padTop + '" x2="' + sx0 + '" y2="' + (H - padBottom) + '" stroke="var(--chart-grid)" stroke-width="0.5" stroke-dasharray="3,3"/>';
+    }
+    // Segment label at bottom
+    const midX = (sx0 + sx1) / 2;
+    svg += '<text x="' + midX + '" y="' + (H - 4) + '" fill="var(--chart-label)" font-family="JetBrains Mono" font-size="8" text-anchor="middle">' + sid.toUpperCase() + '</text>';
+  });
+
+  // Build path from elevData
+  let pathD = '';
+  let fillD = '';
+  elevData.forEach((pt, i) => {
+    const sx = xToSvg(pt.x);
+    const sy = hToY(pt.h);
+    if (i === 0) {
+      pathD += 'M' + sx + ' ' + sy;
+      fillD += 'M' + sx + ' ' + sy;
+    } else {
+      pathD += ' L' + sx + ' ' + sy;
+      fillD += ' L' + sx + ' ' + sy;
+    }
+  });
+  // Close fill
+  const lastPt = elevData[elevData.length - 1];
+  const firstPt = elevData[0];
+  fillD += ' L' + xToSvg(lastPt.x) + ' ' + (H - padBottom) + ' L' + xToSvg(firstPt.x) + ' ' + (H - padBottom) + ' Z';
+
+  svg += '<path d="' + fillD + '" fill="url(#elevFill)"/>';
+  svg += '<path d="' + pathD + '" fill="none" stroke="url(#elevStroke)" stroke-width="2"/>';
+
+  // Supply triangle markers
+  SUPPLY_X_POSITIONS.forEach(sp => {
+    const sx = xToSvg(sp.x);
+    const by = H - padBottom + 1;
+    svg += '<polygon points="' + sx + ',' + (by - 6) + ' ' + (sx - 3) + ',' + by + ' ' + (sx + 3) + ',' + by + '" fill="var(--ridge)" opacity="0.7" class="elev-supply-tri" data-supply-name="' + sp.name + '"/>';
+  });
+
+  svg += '</svg>';
+
+  // Remove old SVG and overlays (keep tooltip, dot, tracker dot)
+  const existingSvg = chartEl.querySelector('svg');
+  if (existingSvg) existingSvg.remove();
+  chartEl.querySelectorAll('.elev-waypoint-label,.elev-waypoint-dot').forEach(el => el.remove());
+
+  chartEl.insertAdjacentHTML('afterbegin', svg);
+
+  // Add waypoint dots and labels as HTML overlays
+  elevData.forEach(pt => {
+    if (!pt.label) return;
+    const xPct = (xToSvg(pt.x) / W) * 100;
+    const yPct = (hToY(pt.h) / H) * 100;
+
+    // Dot
+    const dotEl = document.createElement('div');
+    dotEl.className = 'elev-waypoint-dot' + (pt.major ? ' always-show' : '');
+    dotEl.style.left = xPct + '%';
+    dotEl.style.top = yPct + '%';
+    dotEl.style.background = pt.major ? 'var(--amber)' : 'var(--text-secondary)';
+    chartEl.appendChild(dotEl);
+
+    // Label
+    const labelEl = document.createElement('div');
+    labelEl.className = 'elev-waypoint-label' + (pt.major ? ' always-show' : '');
+    labelEl.style.left = xPct + '%';
+    labelEl.style.top = Math.max(2, yPct - 8) + '%';
+    labelEl.style.color = pt.major ? 'var(--amber)' : 'var(--text-secondary)';
+    labelEl.textContent = pt.label + (pt.h > 0 ? ' ' + pt.h + 'm' : '');
+    chartEl.appendChild(labelEl);
+  });
+}
+
+// ═══ ELEVATION CHART INTERACTIVE ═══
+const chartEl = document.getElementById('elevChart');
+const tooltip = document.getElementById('elevTooltip');
+const dot = document.getElementById('elevDot');
+
+function getElevAtX(xPct) {
+  const xVal = xPct * 1000;
+  let prev = elevData[0], next = elevData[elevData.length-1];
+  for (let i = 0; i < elevData.length - 1; i++) {
+    if (xVal >= elevData[i].x && xVal <= elevData[i+1].x) {
+      prev = elevData[i]; next = elevData[i+1]; break;
+    }
+  }
+  const t = next.x === prev.x ? 0 : (xVal - prev.x) / (next.x - prev.x);
+  const h = prev.h + t * (next.h - prev.h);
+  const nearest = (Math.abs(xVal - prev.x) < Math.abs(xVal - next.x)) ? prev : next;
+  const label = nearest.label ? nearest.label + ' ' + nearest.h + 'm' : nearest.seg.toUpperCase() + ' ' + Math.round(h) + 'm';
+  return { h: Math.round(h), label: label, seg: nearest.seg };
+}
+
+// Touch hold support
+let touchTimeout = null;
+chartEl.addEventListener('pointermove', (e) => {
+  const rect = chartEl.getBoundingClientRect();
+  const xPct = (e.clientX - rect.left) / rect.width;
+  if (xPct < 0 || xPct > 1) return;
+  const info = getElevAtX(xPct);
+  const padTop = 22, padBottom = 18, chartH = 200 - padTop - padBottom, padLeft = 28;
+  const dotYPct = (padTop + chartH * (1 - info.h / maxH)) / 200 * 100;
+  const dotXPct = (padLeft + xPct * (1000 - padLeft)) / 1000 * 100;
+
+  tooltip.style.left = dotXPct + '%';
+  tooltip.style.top = Math.max(0, dotYPct - 15) + '%';
+  tooltip.textContent = info.label + ' (' + info.h + 'm)';
+  tooltip.style.opacity = '1';
+  dot.style.left = dotXPct + '%';
+  dot.style.top = dotYPct + '%';
+  dot.style.opacity = '1';
+});
+chartEl.addEventListener('pointerleave', () => {
+  tooltip.style.opacity = '0';
+  dot.style.opacity = '0';
+});
+
+// Mobile: tap and hold
+chartEl.addEventListener('touchstart', (e) => {
+  const touch = e.touches[0];
+  const rect = chartEl.getBoundingClientRect();
+  const xPct = (touch.clientX - rect.left) / rect.width;
+  if (xPct < 0 || xPct > 1) return;
+  touchTimeout = setTimeout(() => {
+    const info = getElevAtX(xPct);
+    const padTop = 22, padBottom = 18, chartH = 200 - padTop - padBottom, padLeft = 28;
+    const dotYPct = (padTop + chartH * (1 - info.h / maxH)) / 200 * 100;
+    const dotXPct = (padLeft + xPct * (1000 - padLeft)) / 1000 * 100;
+    tooltip.style.left = dotXPct + '%';
+    tooltip.style.top = Math.max(0, dotYPct - 15) + '%';
+    tooltip.textContent = info.label + ' (' + info.h + 'm)';
+    tooltip.style.opacity = '1';
+    dot.style.left = dotXPct + '%';
+    dot.style.top = dotYPct + '%';
+    dot.style.opacity = '1';
+  }, 300);
+}, { passive: true });
+chartEl.addEventListener('touchend', () => {
+  clearTimeout(touchTimeout);
+  setTimeout(() => {
+    tooltip.style.opacity = '0';
+    dot.style.opacity = '0';
+  }, 1500);
+}, { passive: true });
+chartEl.addEventListener('touchmove', (e) => {
+  clearTimeout(touchTimeout);
+  const touch = e.touches[0];
+  const rect = chartEl.getBoundingClientRect();
+  const xPct = (touch.clientX - rect.left) / rect.width;
+  if (xPct < 0 || xPct > 1) return;
+  const info = getElevAtX(xPct);
+  const padTop = 22, padBottom = 18, chartH = 200 - padTop - padBottom, padLeft = 28;
+  const dotYPct = (padTop + chartH * (1 - info.h / maxH)) / 200 * 100;
+  const dotXPct = (padLeft + xPct * (1000 - padLeft)) / 1000 * 100;
+  tooltip.style.left = dotXPct + '%';
+  tooltip.style.top = Math.max(0, dotYPct - 15) + '%';
+  tooltip.textContent = info.label + ' (' + info.h + 'm)';
+  tooltip.style.opacity = '1';
+  dot.style.left = dotXPct + '%';
+  dot.style.top = dotYPct + '%';
+  dot.style.opacity = '1';
+}, { passive: true });
+
+// Update tracker dot on elevation chart
+function updateElevTrackerDot() {
+  const trackerDot = document.getElementById('elevTrackerDot');
+  if (!trackerDot || !state.startTime || state.trackerStopped) {
+    if (trackerDot) trackerDot.style.opacity = '0';
+    return;
+  }
+  const now = Date.now();
+  const diffMin = (now - state.startTime) / 60000;
+  const totalMin = TOTAL_MIN_CURRENT;
+  if (diffMin < 0 || diffMin >= totalMin) {
+    trackerDot.style.opacity = '0';
+    return;
+  }
+  // Map diffMin to x position (0-1000)
+  const pct = diffMin / totalMin;
+  const xVal = pct * 1000;
+  const info = getElevAtX(pct);
+  const padTop = 22, padBottom = 18, chartH = 200 - padTop - padBottom, padLeft = 28;
+  const dotXPct = (padLeft + pct * (1000 - padLeft)) / 1000 * 100;
+  const dotYPct = (padTop + chartH * (1 - info.h / maxH)) / 200 * 100;
+  trackerDot.style.left = dotXPct + '%';
+  trackerDot.style.top = dotYPct + '%';
+  trackerDot.style.opacity = '1';
+}
 
 // ═══ MAIN CONFIG APPLY ═══
 function applyConfig() {
@@ -2147,6 +2665,9 @@ function applyConfig() {
   const footer = document.getElementById('footerLine');
   if (footer) footer.textContent = '台北大縱走 一日完走計畫 ── 上河 \u00d7' + pace.toFixed(2) + ' ── 2026';
 
+  // Re-render elevation chart
+  renderElevationChart();
+
   updateURL();
 }
 
@@ -2239,12 +2760,10 @@ function updateDaynightBar(startMin, totalMin, sun) {
       case 'dawn': color = '#f59e0b'; break;
       case 'day': color = (clockMin <= 660) ? '#38bdf8' : '#7dd3fc'; break;
       case 'afternoon': {
-        // Gradual transition afternoon → dusk approach
         const distToSunset = sun.set - 30 - clockMin;
         const totalAfternoon = sun.set - 30 - 840;
         if (totalAfternoon > 0 && distToSunset >= 0) {
           const t = 1 - distToSunset / totalAfternoon;
-          // interpolate from #38bdf8 to #fb923c
           const r = Math.round(56 + t * (251 - 56));
           const g = Math.round(189 + t * (146 - 189));
           const b = Math.round(248 + t * (60 - 248));
@@ -2278,7 +2797,7 @@ function updateDaynightBar(startMin, totalMin, sun) {
   // Start marker
   addMarker(0, '起登');
 
-  // Sunrise marker: find when sunrise enters the journey
+  // Sunrise marker
   for (let day = -1; day <= 2; day++) {
     const srAbs = sun.rise + day * 1440;
     const elapsed = srAbs - startMin;
@@ -2316,7 +2835,6 @@ function updateSmartSummary(segs, startMin, totalMin, sun) {
 
   for (const seg of segs) {
     if (seg.id === 'fin' || seg.id === 't1' || seg.id === 't2') continue;
-    // Sample segment at multiple points
     const samples = 10;
     let segNight = 0;
     let segDay = 0;
@@ -2351,7 +2869,6 @@ function onConfigChange() {
   currentPace = parseInt(document.getElementById('paceSlider').value) / 100;
   currentStartMin = parseInt(document.getElementById('startSlider').value);
   fatigueEnabled = document.getElementById('fatigueToggle').checked;
-  // Month is handled by button click
   applyConfig();
   updateCalc();
 }
@@ -2495,7 +3012,6 @@ function startNow() {
 function showCustomStart() {
   const wrap = document.getElementById('customStartWrap');
   wrap.style.display = wrap.style.display === 'none' ? 'block' : 'none';
-  // Pre-fill with current planning time
   if (!document.getElementById('startTimeInput').value) {
     const now = new Date();
     const pad = n => String(n).padStart(2,'0');
@@ -2513,7 +3029,7 @@ function setCustomStart() {
 function stopTracker() {
   state.trackerStopped = true;
   saveState(state);
-  showTrackerActive(); // stays in active view but stops updating
+  showTrackerActive();
 }
 
 function resetTracker() {
@@ -2522,7 +3038,6 @@ function resetTracker() {
   delete state.checkpoints;
   state.timeline = {};
   saveState(state);
-  // Uncheck all timeline items
   document.querySelectorAll('.tl-item.checked').forEach(item => {
     item.classList.remove('checked');
     const badge = item.querySelector('.checkpoint-badge');
@@ -2568,13 +3083,15 @@ function updateTracker() {
   if (!state.startTime) {
     gateEl.style.display = 'none';
     updateGateColors();
+    updateElevTrackerDot();
     return;
   }
 
-  // Stopped state: show last known data but don't update
+  // Stopped state
   if (state.trackerStopped) {
     statusEl.className = 'tracker-status before';
     statusEl.textContent = '已暫停';
+    updateElevTrackerDot();
     return;
   }
 
@@ -2595,6 +3112,7 @@ function updateTracker() {
     segEl.innerHTML = '距離出發還有 <strong>' + untilH + '小時' + untilM + '分</strong>';
     gateEl.style.display = 'none';
     updateGateColors();
+    updateElevTrackerDot();
     return;
   }
 
@@ -2609,6 +3127,7 @@ function updateTracker() {
     segEl.innerHTML = '🏁 <strong>恭喜完走！</strong>全程 ' + finH + ' 小時' + (finM > 0 ? ' ' + finM + ' 分' : '');
     gateEl.style.display = 'none';
     updateGateColors();
+    updateElevTrackerDot();
     return;
   }
 
@@ -2662,6 +3181,7 @@ function updateTracker() {
 
   updateGateColors();
   updateCheckpointDisplay();
+  updateElevTrackerDot();
 
   const pillSeg = document.getElementById('pillSeg');
   if (pillSeg) pillSeg.textContent = current.name.split(' ')[0];
@@ -2698,57 +3218,6 @@ function updateCalc() {
   document.getElementById('calcSalt').innerHTML = totalSalt + '<span class="unit">顆</span>';
   document.getElementById('calcGel').innerHTML = totalGel + '<span class="unit">包</span>';
 }
-
-// ═══ ELEVATION CHART INTERACTIVE ═══
-const elevData = [
-  {x:0,h:30,seg:'S1起 關渡 30m'},{x:75,h:500,seg:'S1 忠義山~貴子坑'},{x:130,h:1092,seg:'大屯山主峰 1092m'},
-  {x:170,h:800,seg:'S2 大屯山西峰'},{x:200,h:1077,seg:'S2 大屯山'},{x:230,h:684,seg:'二子坪 684m'},
-  {x:260,h:1040,seg:'S3 七星山東峰'},{x:290,h:1120,seg:'S3 七星山主峰 1120m'},
-  {x:330,h:740,seg:'S3 擎天崗'},{x:370,h:680,seg:'S3 石梯嶺'},{x:400,h:553,seg:'風櫃口 553m'},
-  {x:460,h:350,seg:'S4 五指山'},{x:510,h:200,seg:'S4 碧山路'},{x:550,h:100,seg:'S4 圓覺瀑布'},
-  {x:580,h:30,seg:'大湖公園 30m'},{x:620,h:150,seg:'S5 劍潭山'},{x:660,h:327,seg:'S5 大崙頭山 327m'},
-  {x:700,h:200,seg:'S5 碧山巖'},{x:740,h:375,seg:'S6 九五峰 375m'},{x:770,h:280,seg:'S6 拇指山'},
-  {x:800,h:120,seg:'S6 福州山'},{x:830,h:30,seg:'麟光 30m'},{x:870,h:285,seg:'S7 指南宮'},
-  {x:910,h:308,seg:'S7 貓空 308m'},{x:960,h:150,seg:'S7 飛龍步道'},{x:1000,h:50,seg:'政大 50m 🏁'},
-];
-const chartEl = document.getElementById('elevChart');
-const tooltip = document.getElementById('elevTooltip');
-const dot = document.getElementById('elevDot');
-const maxH = 1120;
-
-function getElevAtX(xPct) {
-  const xVal = xPct * 1000;
-  let prev = elevData[0], next = elevData[elevData.length-1];
-  for (let i = 0; i < elevData.length - 1; i++) {
-    if (xVal >= elevData[i].x && xVal <= elevData[i+1].x) {
-      prev = elevData[i]; next = elevData[i+1]; break;
-    }
-  }
-  const t = next.x === prev.x ? 0 : (xVal - prev.x) / (next.x - prev.x);
-  const h = prev.h + t * (next.h - prev.h);
-  const nearest = (Math.abs(xVal - prev.x) < Math.abs(xVal - next.x)) ? prev : next;
-  return { h: Math.round(h), label: nearest.seg };
-}
-
-chartEl.addEventListener('pointermove', (e) => {
-  const rect = chartEl.getBoundingClientRect();
-  const xPct = (e.clientX - rect.left) / rect.width;
-  if (xPct < 0 || xPct > 1) return;
-  const info = getElevAtX(xPct);
-  const dotY = rect.height * (1 - info.h / maxH * 0.85 - 0.08);
-
-  tooltip.style.left = (xPct * 100) + '%';
-  tooltip.style.top = Math.max(0, dotY - 30) + 'px';
-  tooltip.textContent = info.label + ' (' + info.h + 'm)';
-  tooltip.style.opacity = '1';
-  dot.style.left = (xPct * 100) + '%';
-  dot.style.top = dotY + 'px';
-  dot.style.opacity = '1';
-});
-chartEl.addEventListener('pointerleave', () => {
-  tooltip.style.opacity = '0';
-  dot.style.opacity = '0';
-});
 
 // ═══ DAY/NIGHT BAR TAP ═══
 const daynightTrack = document.getElementById('daynightTrack');
