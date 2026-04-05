@@ -187,12 +187,12 @@ nav a:hover, nav a.active { color: var(--amber); }
 
 .hero-pace-link {
   font-family: var(--font-mono); font-size: 0.7rem;
-  color: var(--amber); text-decoration: none; opacity: 0.7;
+  color: var(--amber); text-decoration: none;
   margin-bottom: 1.5rem; display: inline-block;
   opacity: 0; animation: fadeUp 0.8s 0.65s forwards;
   transition: opacity 0.2s;
 }
-.hero-pace-link:hover { opacity: 1; }
+.hero-pace-link:hover { color: #fbbf24; }
 
 .hero-stats {
   display: grid; grid-template-columns: repeat(4, 1fr);
@@ -308,9 +308,9 @@ nav a:hover, nav a.active { color: var(--amber); }
 }
 .month-btn {
   font-family: var(--font-mono); font-size: 0.6rem;
-  padding: 4px 8px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.1);
+  padding: 8px 6px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.1);
   background: rgba(255,255,255,0.04); color: var(--text-dim);
-  cursor: pointer; transition: all 0.2s; min-width: 36px; text-align: center;
+  cursor: pointer; transition: all 0.2s; min-width: 40px; min-height: 36px; text-align: center;
 }
 .month-btn:hover { border-color: rgba(255,255,255,0.2); }
 .month-btn.active {
@@ -1700,17 +1700,6 @@ const GATES = [
   { id: 'g7', name: '麟光站', segId: 's7', baseMin: 1124, action: '最後補給點，天黑後需頭燈完成S7' },
 ];
 
-// ═══ SIGNAL DATA ═══
-const SIGNAL_INFO = {
-  s1: { level: 'weak', text: '間歇（谷地斷訊）', tip: '清天宮附近有訊號' },
-  s2: { level: 'bad', text: '差（谷地死角）', tip: '最危險段卻最沒訊號，務必離線GPX' },
-  s3: { level: 'good', text: '好（稜線高處）', tip: '冷水坑、擎天崗收訊穩定' },
-  s4: { level: 'bad', text: '差（雙溪溝古道段）', tip: '白石湖後恢復' },
-  s5: { level: 'good', text: '好（靠近市區）', tip: '全段收訊穩定' },
-  s6: { level: 'good', text: '好（靠近市區）', tip: '全段收訊穩定' },
-  s7: { level: 'good', text: '好', tip: '指南宮、貓空地區收訊穩定' },
-};
-
 // ═══ FATIGUE MODEL ═══
 const FATIGUE_MODEL = [
   { afterHr: 0,  multiplier: 1.0 },
@@ -1881,7 +1870,8 @@ function getInitialTrackerStart() {
 currentPace = getInitialPace();
 currentStartMin = getInitialStartMin();
 currentMonth = getInitialMonth();
-fatigueEnabled = (state.fatigue !== undefined) ? state.fatigue : true;
+const urlFatigue = new URLSearchParams(window.location.search).get('fatigue');
+fatigueEnabled = urlFatigue !== null ? urlFatigue === '1' : (state.fatigue !== undefined) ? state.fatigue : true;
 document.getElementById('fatigueToggle').checked = fatigueEnabled;
 
 const initTrackerStart = getInitialTrackerStart();
@@ -2329,17 +2319,21 @@ function onConfigChange() {
 // Backward compat
 function onPaceChange() { onConfigChange(); }
 
-function updateURL() {
+function buildShareURL() {
   const url = new URL(window.location);
   url.searchParams.set('pace', currentPace.toFixed(2));
   url.searchParams.set('start', String(currentStartMin));
   url.searchParams.set('month', String(currentMonth));
+  url.searchParams.set('fatigue', fatigueEnabled ? '1' : '0');
   if (state.startTime) {
     const d = new Date(state.startTime);
     const pad = n => String(n).padStart(2,'0');
     url.searchParams.set('trackerStart', d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate())+'T'+pad(d.getHours())+':'+pad(d.getMinutes()));
   }
-  window.history.replaceState({}, '', url);
+  return url;
+}
+function updateURL() {
+  window.history.replaceState({}, '', buildShareURL());
 }
 
 // ═══ TIMELINE CHECK (with checkpoint recording) ═══
@@ -2746,16 +2740,7 @@ document.getElementById('heroPaceLink').addEventListener('click', e => {
 
 // ═══ SHARE ═══
 document.getElementById('shareBtn').addEventListener('click', async () => {
-  const url = new URL(window.location);
-  url.searchParams.set('pace', currentPace.toFixed(2));
-  url.searchParams.set('start', String(currentStartMin));
-  url.searchParams.set('month', String(currentMonth));
-  if (state.startTime) {
-    const d = new Date(state.startTime);
-    const pad = n => String(n).padStart(2,'0');
-    url.searchParams.set('trackerStart', d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate())+'T'+pad(d.getHours())+':'+pad(d.getMinutes()));
-  }
-  const shareUrl = url.toString();
+  const shareUrl = buildShareURL().toString();
   const shareData = {
     title: '台北大縱走 一日完走計畫',
     text: '上河 \u00d7' + currentPace.toFixed(2) + ' 配速，' + minToHHMM(currentStartMin) + ' 起登，預估 ' + minToDurStr(TOTAL_MIN_CURRENT),
