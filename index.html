@@ -1,0 +1,1037 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>台北大縱走 一日完走計畫</title>
+<meta name="theme-color" content="#0a0e1a">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700;900&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --night: #0a0e1a;
+  --amber: #f59e0b;
+  --sky: #38bdf8;
+  --sunrise: #fb923c;
+  --sunset: #e11d48;
+  --ridge: #6ee7b7;
+  --slate: #94a3b8;
+  --ghost: rgba(255,255,255,0.06);
+  --text: #e2e8f0;
+  --text-dim: #64748b;
+  --font-display: 'Noto Serif TC', serif;
+  --font-body: 'Zen Kaku Gothic New', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+
+body {
+  background: var(--night);
+  color: var(--text);
+  font-family: var(--font-body);
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Topo BG ── */
+.topo-bg { position: fixed; inset: 0; z-index: 0; opacity: 0.04; pointer-events: none; }
+.topo-bg svg { width: 100%; height: 100%; }
+
+/* ── Progress Bar (top) ── */
+.scroll-progress {
+  position: fixed; top: 0; left: 0; height: 3px; z-index: 1001;
+  background: linear-gradient(90deg, var(--amber), var(--sky), var(--sunrise), var(--sunset));
+  transition: width 0.1s linear;
+}
+
+/* ── Floating Progress Pill (mobile) ── */
+.progress-pill {
+  position: fixed;
+  bottom: calc(16px + var(--safe-bottom));
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 200;
+  background: rgba(10,14,26,0.92);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 50px;
+  padding: 8px 18px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text);
+  box-shadow: 0 4px 24px rgba(0,0,0,0.5);
+  transition: opacity 0.3s;
+}
+
+.progress-pill .pill-bar {
+  width: 80px; height: 6px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 3px; overflow: hidden;
+}
+
+.progress-pill .pill-fill {
+  height: 100%; border-radius: 3px;
+  background: linear-gradient(90deg, var(--amber), var(--ridge));
+  transition: width 0.3s;
+}
+
+.progress-pill .pill-text { white-space: nowrap; }
+
+/* ── Nav ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  padding: 0 0; backdrop-filter: blur(20px);
+  background: rgba(10,14,26,0.85);
+  border-bottom: 1px solid var(--ghost);
+  transform: translateY(-100%); transition: transform 0.3s ease;
+}
+nav.visible { transform: translateY(0); }
+
+.nav-inner {
+  display: flex; gap: 0; overflow-x: auto; -webkit-overflow-scrolling: touch;
+  scrollbar-width: none; padding: 0 4px;
+}
+.nav-inner::-webkit-scrollbar { display: none; }
+
+nav a {
+  color: var(--slate); text-decoration: none; font-size: 0.75rem;
+  letter-spacing: 0.06em; transition: color 0.2s;
+  padding: 12px 14px; white-space: nowrap; flex-shrink: 0;
+}
+nav a:hover, nav a.active { color: var(--amber); }
+
+/* ── Section Commons ── */
+.section-label {
+  font-family: var(--font-mono); font-size: 0.65rem;
+  color: var(--amber); letter-spacing: 0.25em; text-transform: uppercase;
+  margin-bottom: 0.35rem;
+}
+.section-title {
+  font-family: var(--font-display); font-size: clamp(1.3rem, 4vw, 2rem);
+  font-weight: 700; margin-bottom: 1.5rem;
+}
+.divider {
+  max-width: 900px; margin: 0 auto; padding: 0 1rem;
+  height: 1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
+}
+
+/* ── Hero ── */
+.hero {
+  min-height: 100svh; display: flex; flex-direction: column;
+  justify-content: center; align-items: center; position: relative;
+  padding: 2rem 1.25rem; text-align: center;
+}
+.hero::before {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(ellipse 80% 50% at 50% 40%, rgba(245,158,11,0.08), transparent),
+              radial-gradient(ellipse 60% 40% at 30% 70%, rgba(56,189,248,0.05), transparent);
+}
+.hero-eyebrow {
+  font-family: var(--font-mono); font-size: 0.7rem; color: var(--amber);
+  letter-spacing: 0.3em; margin-bottom: 1.25rem;
+  opacity: 0; animation: fadeUp 0.8s 0.2s forwards;
+}
+.hero h1 {
+  font-family: var(--font-display); font-weight: 900;
+  font-size: clamp(2.2rem, 7vw, 5.5rem); line-height: 1.15; letter-spacing: -0.02em;
+  background: linear-gradient(135deg, #fff 0%, #cbd5e1 50%, var(--amber) 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  margin-bottom: 0.75rem; opacity: 0; animation: fadeUp 0.8s 0.4s forwards;
+}
+.hero-sub {
+  font-family: var(--font-mono); font-size: clamp(0.8rem, 1.5vw, 1.05rem);
+  color: var(--slate); margin-bottom: 2rem;
+  opacity: 0; animation: fadeUp 0.8s 0.6s forwards;
+}
+.hero-sub span { color: var(--text); padding: 0 0.2em; }
+
+.hero-stats {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 1rem; width: 100%; max-width: 500px;
+  opacity: 0; animation: fadeUp 0.8s 0.8s forwards;
+}
+.stat { text-align: center; }
+.stat-value {
+  font-family: var(--font-mono); font-size: clamp(1.4rem, 4vw, 2.5rem);
+  font-weight: 600; color: #fff;
+}
+.stat-value .unit { font-size: 0.45em; color: var(--slate); font-weight: 400; }
+.stat-label { font-size: 0.65rem; color: var(--text-dim); letter-spacing: 0.08em; margin-top: 0.15rem; }
+
+.hero-scroll {
+  position: absolute; bottom: 1.5rem;
+  opacity: 0; animation: fadeUp 0.8s 1.2s forwards;
+}
+.hero-scroll span {
+  display: block; width: 1px; height: 32px;
+  background: linear-gradient(to bottom, var(--amber), transparent);
+  margin: 0.4rem auto 0; animation: scrollPulse 2s infinite;
+}
+
+/* ── Elevation Chart ── */
+.elevation-section { padding: 3rem 1rem 1.5rem; max-width: 1100px; margin: 0 auto; }
+.elevation-chart {
+  width: 100%; height: 140px; position: relative;
+  background: var(--ghost); border-radius: 10px; overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.05);
+}
+.elevation-chart svg { width: 100%; height: 100%; }
+
+/* ── Day/Night Bar ── */
+.daynight-bar { max-width: 900px; margin: 0 auto 2rem; padding: 0 1rem; }
+.daynight-track {
+  height: 36px; border-radius: 18px;
+  background: linear-gradient(90deg, #1e1b4b 0%, #312e81 15%, #4338ca 22%, #f59e0b 26%, #38bdf8 35%, #7dd3fc 50%, #38bdf8 65%, #fb923c 78%, #e11d48 85%, #581c87 92%, #1e1b4b 100%);
+  position: relative; overflow: hidden; border: 1px solid rgba(255,255,255,0.1);
+}
+.daynight-markers { position: absolute; inset: 0; display: flex; align-items: center; }
+.dn-marker {
+  position: absolute; top: 50%; transform: translate(-50%, -50%);
+  width: 2px; height: 55%; background: rgba(255,255,255,0.6); border-radius: 1px;
+}
+.dn-marker::after {
+  content: attr(data-label); position: absolute; top: -16px; left: 50%;
+  transform: translateX(-50%); font-family: var(--font-mono);
+  font-size: 0.5rem; color: rgba(255,255,255,0.7); white-space: nowrap;
+}
+.daynight-labels {
+  display: flex; justify-content: space-between; margin-top: 0.4rem;
+  font-family: var(--font-mono); font-size: 0.6rem; color: var(--text-dim);
+}
+
+/* ═══ MAIN TIMELINE (checkable) ═══ */
+.timeline-section { padding: 2.5rem 1rem; max-width: 900px; margin: 0 auto; position: relative; }
+
+.tl-progress-summary {
+  display: flex; align-items: center; gap: 12px;
+  margin-bottom: 1.5rem; padding: 12px 16px;
+  background: var(--ghost); border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.06);
+}
+.tl-progress-bar {
+  flex: 1; height: 8px; background: rgba(255,255,255,0.08);
+  border-radius: 4px; overflow: hidden;
+}
+.tl-progress-fill {
+  height: 100%; border-radius: 4px;
+  background: linear-gradient(90deg, var(--amber), var(--ridge));
+  transition: width 0.4s ease;
+}
+.tl-progress-text {
+  font-family: var(--font-mono); font-size: 0.8rem;
+  color: var(--text); white-space: nowrap; min-width: 60px; text-align: right;
+}
+
+.timeline { position: relative; padding-left: 52px; }
+.timeline::before {
+  content: ''; position: absolute; left: 20px; top: 0; bottom: 0; width: 2px;
+  background: linear-gradient(to bottom,
+    var(--night) 0%, #1e1b4b 5%, #312e81 15%, var(--amber) 25%,
+    var(--sky) 45%, var(--sky) 55%, var(--sunrise) 75%, var(--sunset) 88%, #581c87 95%, var(--night) 100%);
+}
+
+.tl-item {
+  position: relative; padding: 0.5rem 0;
+  opacity: 0; transform: translateX(-12px);
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.tl-item.visible { opacity: 1; transform: translateX(0); }
+
+/* Dot */
+.tl-item::before {
+  content: ''; position: absolute; left: -36px; top: 1.1rem;
+  width: 10px; height: 10px; border-radius: 50%;
+  border: 2px solid var(--amber); background: var(--night); z-index: 2;
+  transition: all 0.3s;
+}
+.tl-item[data-phase="night"]::before { border-color: #818cf8; }
+.tl-item[data-phase="dawn"]::before { border-color: var(--amber); }
+.tl-item[data-phase="day"]::before { border-color: var(--sky); }
+.tl-item[data-phase="afternoon"]::before { border-color: var(--sunrise); }
+.tl-item[data-phase="dusk"]::before { border-color: var(--sunset); }
+.tl-item[data-phase="transit"]::before { border-color: var(--slate); border-style: dashed; }
+.tl-item[data-phase="finish"]::before {
+  border-color: var(--ridge); background: var(--ridge);
+  box-shadow: 0 0 12px rgba(110,231,183,0.5);
+}
+
+/* Checked state */
+.tl-item.checked::before {
+  background: var(--ridge) !important;
+  border-color: var(--ridge) !important;
+  box-shadow: 0 0 8px rgba(110,231,183,0.4);
+}
+.tl-item.checked .tl-card { border-color: rgba(110,231,183,0.2); }
+.tl-item.checked .tl-check-icon { opacity: 1; color: var(--ridge); }
+
+.tl-card {
+  background: linear-gradient(135deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01));
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 12px; padding: 1rem 1rem; position: relative; overflow: hidden;
+  transition: border-color 0.3s;
+}
+.tl-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+}
+.tl-item[data-phase="night"] .tl-card::before { background: linear-gradient(90deg, #818cf8, transparent); }
+.tl-item[data-phase="dawn"] .tl-card::before { background: linear-gradient(90deg, var(--amber), transparent); }
+.tl-item[data-phase="day"] .tl-card::before { background: linear-gradient(90deg, var(--sky), transparent); }
+.tl-item[data-phase="afternoon"] .tl-card::before { background: linear-gradient(90deg, var(--sunrise), transparent); }
+.tl-item[data-phase="dusk"] .tl-card::before { background: linear-gradient(90deg, var(--sunset), transparent); }
+.tl-item[data-phase="transit"] .tl-card { border-style: dashed; background: rgba(255,255,255,0.02); }
+.tl-item[data-phase="finish"] .tl-card::before { background: linear-gradient(90deg, var(--ridge), transparent); }
+
+.tl-header {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 0.35rem; gap: 0.5rem;
+}
+.tl-header-left { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
+
+.tl-check {
+  width: 28px; height: 28px; border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.15);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; flex-shrink: 0; transition: all 0.2s;
+  -webkit-tap-highlight-color: transparent;
+}
+.tl-check:hover { border-color: var(--ridge); }
+.tl-check:active { transform: scale(0.9); }
+.tl-check-icon {
+  opacity: 0; font-size: 0.85rem; color: var(--ridge);
+  transition: opacity 0.2s; pointer-events: none;
+}
+.tl-item.checked .tl-check {
+  background: rgba(110,231,183,0.15);
+  border-color: var(--ridge);
+}
+
+.tl-seg {
+  font-family: var(--font-mono); font-size: 0.6rem;
+  letter-spacing: 0.12em; padding: 0.15rem 0.5rem;
+  border-radius: 4px; font-weight: 600;
+}
+.tl-item[data-phase="night"] .tl-seg { background: rgba(129,140,248,0.15); color: #a5b4fc; }
+.tl-item[data-phase="dawn"] .tl-seg { background: rgba(245,158,11,0.15); color: var(--amber); }
+.tl-item[data-phase="day"] .tl-seg { background: rgba(56,189,248,0.15); color: var(--sky); }
+.tl-item[data-phase="afternoon"] .tl-seg { background: rgba(251,146,60,0.15); color: var(--sunrise); }
+.tl-item[data-phase="dusk"] .tl-seg { background: rgba(225,29,72,0.15); color: var(--sunset); }
+.tl-item[data-phase="transit"] .tl-seg { background: rgba(148,163,184,0.1); color: var(--slate); }
+.tl-item[data-phase="finish"] .tl-seg { background: rgba(110,231,183,0.15); color: var(--ridge); }
+
+.tl-time-badge {
+  font-family: var(--font-mono); font-size: 0.7rem; color: var(--slate);
+}
+
+.tl-duration {
+  font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-dim);
+}
+
+.tl-route {
+  font-family: var(--font-display); font-size: 1.05rem; font-weight: 700;
+  margin-bottom: 0.25rem;
+}
+.tl-route .arrow { color: var(--text-dim); font-weight: 400; padding: 0 0.1em; }
+
+.tl-note { font-size: 0.8rem; color: var(--text-dim); line-height: 1.5; }
+.tl-note .highlight { color: var(--amber); font-weight: 500; }
+
+.tl-meta {
+  display: flex; gap: 0.75rem; margin-top: 0.5rem; flex-wrap: wrap;
+}
+.tl-meta-item {
+  font-family: var(--font-mono); font-size: 0.65rem;
+  color: var(--text-dim); display: flex; align-items: center; gap: 0.2rem;
+}
+
+/* ═══ SEGMENT DETAILS (accordion) ═══ */
+.segments-section { padding: 2.5rem 1rem; max-width: 900px; margin: 0 auto; }
+
+.seg-card {
+  background: var(--ghost); border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 12px; margin-bottom: 0.75rem; overflow: hidden;
+}
+.seg-header {
+  padding: 1rem 1rem; display: flex; justify-content: space-between;
+  align-items: center; cursor: pointer; user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.seg-header:active { background: rgba(255,255,255,0.03); }
+.seg-title-group { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
+.seg-badge {
+  font-family: var(--font-mono); font-size: 0.6rem;
+  letter-spacing: 0.1em; padding: 0.15rem 0.5rem; border-radius: 4px; font-weight: 600;
+}
+.seg-badge.night { background: rgba(129,140,248,0.15); color: #a5b4fc; }
+.seg-badge.dawn { background: rgba(245,158,11,0.15); color: var(--amber); }
+.seg-badge.day { background: rgba(56,189,248,0.15); color: var(--sky); }
+.seg-badge.afternoon { background: rgba(251,146,60,0.15); color: var(--sunrise); }
+.seg-badge.dusk { background: rgba(225,29,72,0.15); color: var(--sunset); }
+.seg-name { font-family: var(--font-display); font-weight: 700; font-size: 0.95rem; }
+.seg-toggle {
+  font-size: 1rem; color: var(--text-dim); transition: transform 0.3s;
+  flex-shrink: 0; padding: 0 4px;
+}
+.seg-card.open .seg-toggle { transform: rotate(180deg); }
+.seg-body { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; }
+.seg-card.open .seg-body { max-height: 3000px; }
+.seg-content { padding: 0 1rem 1.25rem; }
+
+.seg-stats {
+  display: flex; flex-wrap: wrap; gap: 0.75rem;
+  margin-bottom: 1rem; padding-bottom: 0.75rem;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+.seg-stat { font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-dim); }
+.seg-stat strong { color: var(--text); font-weight: 600; }
+
+.seg-subtitle {
+  font-family: var(--font-display); font-weight: 700;
+  font-size: 0.85rem; margin: 0.75rem 0 0.35rem; color: var(--text);
+}
+.seg-subtitle:first-of-type { margin-top: 0; }
+.seg-text {
+  font-size: 0.8rem; color: var(--text-dim); line-height: 1.65; margin-bottom: 0.35rem;
+}
+.seg-text strong { color: var(--text); }
+
+.seg-warning {
+  background: rgba(245,158,11,0.08); border-left: 3px solid var(--amber);
+  padding: 0.6rem 0.8rem; border-radius: 0 8px 8px 0; margin: 0.6rem 0;
+}
+.seg-warning p { font-size: 0.75rem; color: var(--amber); line-height: 1.6; }
+
+.seg-danger {
+  background: rgba(225,29,72,0.08); border-left: 3px solid var(--sunset);
+  padding: 0.6rem 0.8rem; border-radius: 0 8px 8px 0; margin: 0.6rem 0;
+}
+.seg-danger p { font-size: 0.75rem; color: #fb7185; line-height: 1.6; }
+
+.seg-info {
+  background: rgba(56,189,248,0.08); border-left: 3px solid var(--sky);
+  padding: 0.6rem 0.8rem; border-radius: 0 8px 8px 0; margin: 0.6rem 0;
+}
+.seg-info p { font-size: 0.75rem; color: var(--sky); line-height: 1.6; }
+
+/* ═══ SUPPLY ═══ */
+.supply-section { padding: 2.5rem 1rem; max-width: 900px; margin: 0 auto; }
+.supply-grid { display: grid; grid-template-columns: 1fr; gap: 0.6rem; }
+
+.supply-card {
+  background: var(--ghost); border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 10px; padding: 1rem; transition: border-color 0.3s;
+  display: grid; grid-template-columns: auto 1fr; gap: 0.75rem; align-items: center;
+}
+.supply-card.major {
+  border-color: rgba(110,231,183,0.2);
+  background: linear-gradient(135deg, rgba(110,231,183,0.06), transparent);
+}
+.supply-time-col { text-align: center; min-width: 52px; }
+.supply-time {
+  font-family: var(--font-mono); font-size: 0.75rem; color: var(--amber); font-weight: 600;
+}
+.supply-seg-label { font-size: 0.6rem; color: var(--text-dim); margin-top: 2px; }
+.supply-name { font-family: var(--font-display); font-weight: 700; font-size: 0.95rem; margin-bottom: 0.3rem; }
+.supply-items { display: flex; flex-wrap: wrap; gap: 0.3rem; }
+.supply-tag {
+  font-size: 0.65rem; padding: 0.15rem 0.5rem; border-radius: 4px;
+  background: rgba(255,255,255,0.06); color: var(--slate);
+}
+.supply-tag.key { background: rgba(110,231,183,0.12); color: var(--ridge); }
+
+/* ═══ ROUTE GAPS ═══ */
+.gaps-section { padding: 2.5rem 1rem; max-width: 900px; margin: 0 auto; }
+.gap-card {
+  background: linear-gradient(135deg, rgba(148,163,184,0.06), transparent);
+  border: 1px dashed rgba(148,163,184,0.2); border-radius: 12px;
+  padding: 1rem; margin-bottom: 0.75rem;
+}
+.gap-visual {
+  display: flex; align-items: center; gap: 0.5rem;
+  font-family: var(--font-display); font-weight: 700; font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+}
+.gap-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--slate); }
+.gap-line { width: 30px; height: 2px; background: repeating-linear-gradient(90deg, var(--slate) 0 4px, transparent 4px 8px); }
+.gap-detail { font-size: 0.8rem; color: var(--text-dim); line-height: 1.6; }
+.gap-detail strong { color: var(--text); }
+
+/* ═══ RETREAT ═══ */
+.retreat-section { padding: 2.5rem 1rem; max-width: 900px; margin: 0 auto; }
+.retreat-card {
+  background: var(--ghost); border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 10px; padding: 0.85rem 1rem; margin-bottom: 0.5rem;
+  display: grid; grid-template-columns: auto 1fr; gap: 0.75rem; align-items: start;
+}
+.retreat-seg {
+  font-family: var(--font-mono); font-size: 0.65rem;
+  padding: 0.25rem 0.5rem; background: rgba(255,255,255,0.06);
+  border-radius: 4px; white-space: nowrap; color: var(--slate);
+}
+.retreat-detail { font-size: 0.8rem; color: var(--text-dim); line-height: 1.6; }
+.retreat-detail strong { color: var(--text); }
+
+/* ═══ MILESTONES ═══ */
+.milestones-section { padding: 2.5rem 1rem; max-width: 900px; margin: 0 auto; }
+.milestones-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.6rem; }
+.milestone {
+  padding: 1rem; border-radius: 10px; border-left: 3px solid; background: var(--ghost);
+}
+.milestone[data-phase="night"] { border-color: #818cf8; }
+.milestone[data-phase="dawn"] { border-color: var(--amber); }
+.milestone[data-phase="day"] { border-color: var(--sky); }
+.milestone[data-phase="afternoon"] { border-color: var(--sunrise); }
+.milestone[data-phase="dusk"] { border-color: var(--sunset); }
+.milestone[data-phase="finish"] { border-color: var(--ridge); }
+.milestone-time { font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-dim); margin-bottom: 0.15rem; }
+.milestone-title { font-family: var(--font-display); font-weight: 700; font-size: 0.9rem; margin-bottom: 0.15rem; }
+.milestone-desc { font-size: 0.75rem; color: var(--text-dim); }
+
+/* ═══ GEAR (checkable) ═══ */
+.gear-section { padding: 2.5rem 1rem; max-width: 900px; margin: 0 auto; }
+.gear-progress {
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 1rem; font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-dim);
+}
+.gear-progress-bar { flex: 1; height: 6px; background: rgba(255,255,255,0.08); border-radius: 3px; overflow: hidden; }
+.gear-progress-fill { height: 100%; border-radius: 3px; background: var(--ridge); transition: width 0.3s; }
+
+.gear-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; }
+.gear-item {
+  display: flex; align-items: center; gap: 0.6rem;
+  padding: 0.75rem 0.85rem; background: var(--ghost);
+  border: 1px solid rgba(255,255,255,0.04); border-radius: 10px;
+  transition: all 0.2s; cursor: pointer;
+  -webkit-tap-highlight-color: transparent; user-select: none;
+}
+.gear-item:active { transform: scale(0.97); }
+.gear-check {
+  width: 22px; height: 22px; border: 2px solid var(--text-dim);
+  border-radius: 6px; flex-shrink: 0; display: flex;
+  align-items: center; justify-content: center; transition: all 0.2s;
+}
+.gear-item.checked .gear-check {
+  background: var(--ridge); border-color: var(--ridge);
+}
+.gear-item.checked .gear-check::after {
+  content: '✓'; color: var(--night); font-size: 0.7rem; font-weight: 700;
+}
+.gear-item.checked .gear-text { opacity: 0.45; text-decoration: line-through; }
+.gear-text { font-size: 0.8rem; transition: all 0.2s; line-height: 1.3; }
+
+/* ═══ SAFETY ═══ */
+.safety-section { padding: 2.5rem 1rem; max-width: 900px; margin: 0 auto; }
+.safety-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; }
+.safety-card {
+  background: var(--ghost); border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 10px; padding: 1rem;
+}
+.safety-icon { font-size: 1.3rem; margin-bottom: 0.35rem; }
+.safety-title { font-family: var(--font-display); font-weight: 700; font-size: 0.85rem; margin-bottom: 0.35rem; }
+.safety-desc { font-size: 0.75rem; color: var(--text-dim); line-height: 1.65; }
+
+/* ═══ EMERGENCY ═══ */
+.emergency-section { padding: 2.5rem 1rem; max-width: 900px; margin: 0 auto; }
+.emergency-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; }
+.emergency-card {
+  background: rgba(225,29,72,0.06); border: 1px solid rgba(225,29,72,0.15);
+  border-radius: 10px; padding: 0.85rem 1rem;
+}
+.emergency-label { font-size: 0.65rem; color: var(--text-dim); margin-bottom: 0.15rem; }
+.emergency-value { font-family: var(--font-mono); font-size: 0.85rem; color: var(--text); }
+.emergency-value a { color: var(--text); text-decoration: none; }
+
+/* ═══ FOOTER ═══ */
+footer {
+  padding: 3rem 1rem calc(2rem + var(--safe-bottom));
+  text-align: center; border-top: 1px solid var(--ghost); margin-top: 2rem;
+}
+footer p { font-size: 0.7rem; color: var(--text-dim); }
+footer a { color: var(--amber); text-decoration: none; }
+
+/* ═══ ANIMATIONS ═══ */
+@keyframes fadeUp { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:translateY(0); } }
+@keyframes scrollPulse { 0%,100% { opacity:0.3; } 50% { opacity:1; } }
+
+/* ═══ DESKTOP ═══ */
+@media (min-width: 641px) {
+  .supply-grid { grid-template-columns: repeat(2, 1fr); }
+  .milestones-grid { grid-template-columns: repeat(3, 1fr); }
+  .gear-grid { grid-template-columns: repeat(3, 1fr); }
+  .safety-grid { grid-template-columns: repeat(3, 1fr); }
+  .emergency-grid { grid-template-columns: repeat(4, 1fr); }
+  .timeline { padding-left: 72px; }
+  .timeline::before { left: 30px; }
+  .tl-item::before { left: -46px; }
+  .tl-card { padding: 1.25rem; }
+  .tl-route { font-size: 1.15rem; }
+  .progress-pill { display: none; }
+}
+
+/* ═══ SMALL MOBILE ═══ */
+@media (max-width: 380px) {
+  .hero-stats { grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
+  .gear-grid { grid-template-columns: 1fr; }
+  .safety-grid { grid-template-columns: 1fr; }
+  .milestones-grid { grid-template-columns: 1fr; }
+  .emergency-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<div class="topo-bg">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" preserveAspectRatio="none">
+<defs><pattern id="topo" x="0" y="0" width="200" height="200" patternUnits="userSpaceOnUse">
+<path d="M20 80 Q60 20 100 60 T180 40" fill="none" stroke="#fff" stroke-width="0.5"/>
+<path d="M0 120 Q40 70 90 100 T200 80" fill="none" stroke="#fff" stroke-width="0.3"/>
+<path d="M10 160 Q50 120 110 140 T190 130" fill="none" stroke="#fff" stroke-width="0.5"/>
+<path d="M30 30 Q70 0 120 20 T200 10" fill="none" stroke="#fff" stroke-width="0.3"/>
+</pattern></defs>
+<rect width="100%" height="100%" fill="url(#topo)"/>
+</svg>
+</div>
+
+<div class="scroll-progress" id="scrollProgress"></div>
+
+<!-- Floating Progress Pill (mobile) -->
+<div class="progress-pill" id="progressPill">
+  <div class="pill-bar"><div class="pill-fill" id="pillFill"></div></div>
+  <span class="pill-text" id="pillText">0 / 9</span>
+</div>
+
+<!-- Nav -->
+<nav id="mainNav">
+  <div class="nav-inner">
+    <a href="#hero">首頁</a>
+    <a href="#timeline">時程</a>
+    <a href="#segments">路況</a>
+    <a href="#supply">補給</a>
+    <a href="#retreat">撤退</a>
+    <a href="#milestones">里程碑</a>
+    <a href="#gear">裝備</a>
+    <a href="#safety">安全</a>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero" id="hero">
+  <div class="hero-eyebrow">ONE DAY CHALLENGE ── 2026</div>
+  <h1>台北大縱走<br>一日完走</h1>
+  <div class="hero-sub">上河<span>×0.6</span>｜<span>00:00</span>起登｜北<span>→</span>南</div>
+  <div class="hero-stats">
+    <div class="stat"><div class="stat-value">92<span class="unit">km</span></div><div class="stat-label">山徑總長</div></div>
+    <div class="stat"><div class="stat-value">5,000<span class="unit">m</span></div><div class="stat-label">累計爬升</div></div>
+    <div class="stat"><div class="stat-value">~21<span class="unit">hr</span></div><div class="stat-label">預估總時</div></div>
+    <div class="stat"><div class="stat-value">7<span class="unit">段</span></div><div class="stat-label">山徑路線</div></div>
+  </div>
+  <div class="hero-scroll"><span></span></div>
+</section>
+
+<!-- Elevation -->
+<section class="elevation-section">
+  <div class="section-label">ELEVATION</div>
+  <div class="section-title">高程剖面</div>
+  <div class="elevation-chart">
+    <svg viewBox="0 0 1000 200" preserveAspectRatio="none">
+      <defs>
+        <linearGradient id="eg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="rgba(110,231,183,0.3)"/><stop offset="100%" stop-color="rgba(110,231,183,0)"/></linearGradient>
+        <linearGradient id="lg" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#818cf8"/><stop offset="25%" stop-color="#f59e0b"/><stop offset="50%" stop-color="#38bdf8"/><stop offset="75%" stop-color="#fb923c"/><stop offset="100%" stop-color="#e11d48"/></linearGradient>
+      </defs>
+      <path d="M0 180 L20 170 60 130 100 80 130 50 150 65 170 40 200 55 230 70 260 35 290 30 310 55 340 80 370 60 400 90 430 100 460 120 490 140 510 130 530 145 550 120 570 110 590 130 620 140 640 150 660 130 680 120 700 100 720 110 740 130 760 120 780 90 800 80 820 100 850 110 870 90 890 100 910 80 930 100 960 130 980 150 1000 170 L1000 200 L0 200 Z" fill="url(#eg)"/>
+      <path d="M0 180 L20 170 60 130 100 80 130 50 150 65 170 40 200 55 230 70 260 35 290 30 310 55 340 80 370 60 400 90 430 100 460 120 490 140 510 130 530 145 550 120 570 110 590 130 620 140 640 150 660 130 680 120 700 100 720 110 740 130 760 120 780 90 800 80 820 100 850 110 870 90 890 100 910 80 930 100 960 130 980 150 1000 170" fill="none" stroke="url(#lg)" stroke-width="2"/>
+      <text x="130" y="40" fill="#f59e0b" font-family="JetBrains Mono" font-size="9" text-anchor="middle">大屯山 1092m</text>
+      <text x="290" y="20" fill="#38bdf8" font-family="JetBrains Mono" font-size="9" text-anchor="middle">七星山 1120m</text>
+      <text x="75" y="195" fill="rgba(255,255,255,0.3)" font-family="JetBrains Mono" font-size="8" text-anchor="middle">S1</text>
+      <text x="185" y="195" fill="rgba(255,255,255,0.3)" font-family="JetBrains Mono" font-size="8" text-anchor="middle">S2</text>
+      <text x="320" y="195" fill="rgba(255,255,255,0.3)" font-family="JetBrains Mono" font-size="8" text-anchor="middle">S3</text>
+      <text x="460" y="195" fill="rgba(255,255,255,0.3)" font-family="JetBrains Mono" font-size="8" text-anchor="middle">S4</text>
+      <text x="600" y="195" fill="rgba(255,255,255,0.3)" font-family="JetBrains Mono" font-size="8" text-anchor="middle">S5</text>
+      <text x="750" y="195" fill="rgba(255,255,255,0.3)" font-family="JetBrains Mono" font-size="8" text-anchor="middle">S6</text>
+      <text x="900" y="195" fill="rgba(255,255,255,0.3)" font-family="JetBrains Mono" font-size="8" text-anchor="middle">S7</text>
+    </svg>
+  </div>
+</section>
+
+<!-- Day/Night -->
+<section class="daynight-bar">
+  <div class="section-label">DAY / NIGHT</div>
+  <div class="section-title" style="margin-bottom:0.75rem;">日夜週期</div>
+  <div class="daynight-track">
+    <div class="daynight-markers">
+      <div class="dn-marker" style="left:0%" data-label="00:00"></div>
+      <div class="dn-marker" style="left:25.9%" data-label="天亮"></div>
+      <div class="dn-marker" style="left:58.6%" data-label="過半"></div>
+      <div class="dn-marker" style="left:86.2%" data-label="日落"></div>
+      <div class="dn-marker" style="left:100%" data-label="完走"></div>
+    </div>
+  </div>
+  <div class="daynight-labels"><span>00:00</span><span>06:00</span><span>12:00</span><span>18:00</span><span>21:10</span></div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══ TIMELINE ═══ -->
+<section class="timeline-section" id="timeline">
+  <div class="section-label">SCHEDULE</div>
+  <div class="section-title">行程時間表</div>
+
+  <div class="tl-progress-summary">
+    <div class="tl-progress-bar"><div class="tl-progress-fill" id="tlProgressFill"></div></div>
+    <div class="tl-progress-text" id="tlProgressText">0 / 9 完成</div>
+  </div>
+
+  <div class="timeline" id="timelineList">
+    <!-- S1 --><div class="tl-item" data-phase="night" data-id="s1"><div class="tl-card"><div class="tl-header"><div class="tl-header-left"><div class="tl-check" onclick="toggleCheck(this)"><span class="tl-check-icon">✓</span></div><span class="tl-seg">S1</span><span class="tl-time-badge">00:00</span></div><span class="tl-duration">3h18m</span></div><div class="tl-route">關渡<span class="arrow">→</span>二子坪</div><div class="tl-note">夜間摸黑起登，經忠義山、貴子坑，攀上<span class="highlight">大屯山 1092m</span></div><div class="tl-meta"><span class="tl-meta-item">📏 11~13km</span><span class="tl-meta-item">⬆ +950m</span><span class="tl-meta-item">🌙 全程夜走</span></div></div></div>
+    <!-- S2 --><div class="tl-item" data-phase="dawn" data-id="s2"><div class="tl-card"><div class="tl-header"><div class="tl-header-left"><div class="tl-check" onclick="toggleCheck(this)"><span class="tl-check-icon">✓</span></div><span class="tl-seg">S2</span><span class="tl-time-badge">03:20</span></div><span class="tl-duration">2h42m</span></div><div class="tl-route">面天坪<span class="arrow">→</span>小油坑</div><div class="tl-note"><span class="highlight">最難路段！</span>大屯山西峰/南峰泥濘拉繩。天色漸亮</div><div class="tl-meta"><span class="tl-meta-item">📏 12km</span><span class="tl-meta-item">⬆ +600m</span><span class="tl-meta-item">⚠️ 濕滑拉繩</span></div></div></div>
+    <!-- S3 --><div class="tl-item" data-phase="day" data-id="s3"><div class="tl-card"><div class="tl-header"><div class="tl-header-left"><div class="tl-check" onclick="toggleCheck(this)"><span class="tl-check-icon">✓</span></div><span class="tl-seg">S3</span><span class="tl-time-badge">06:00</span></div><span class="tl-duration">3h18m</span></div><div class="tl-route">小油坑<span class="arrow">→</span>風櫃口</div><div class="tl-note">登<span class="highlight">七星山 1120m</span> 全程最高！擎天崗大草原、石梯嶺</div><div class="tl-meta"><span class="tl-meta-item">📏 13km</span><span class="tl-meta-item">⬆ +700m</span><span class="tl-meta-item">🌅 日出</span></div></div></div>
+    <!-- S4 --><div class="tl-item" data-phase="day" data-id="s4"><div class="tl-card"><div class="tl-header"><div class="tl-header-left"><div class="tl-check" onclick="toggleCheck(this)"><span class="tl-check-icon">✓</span></div><span class="tl-seg">S4</span><span class="tl-time-badge">09:20</span></div><span class="tl-duration">3h00m</span></div><div class="tl-route">風櫃口<span class="arrow">→</span>大湖公園</div><div class="tl-note">一路下降至市區。<span class="highlight">陽明山段結束！過半</span>（官方終點為中華科大，含道路段）</div><div class="tl-meta"><span class="tl-meta-item">📏 ~13km 步道</span><span class="tl-meta-item">⬇ -800m</span><span class="tl-meta-item">✅ 過半</span></div></div></div>
+    <!-- Transit 1 --><div class="tl-item" data-phase="transit" data-id="t1"><div class="tl-card"><div class="tl-header"><div class="tl-header-left"><div class="tl-check" onclick="toggleCheck(this)"><span class="tl-check-icon">✓</span></div><span class="tl-seg">接駁</span><span class="tl-time-badge">12:20</span></div><span class="tl-duration">~20m</span></div><div class="tl-route">大湖公園<span class="arrow">→</span>劍潭</div><div class="tl-note">搭捷運。<span class="highlight">便利商店大補給！</span></div></div></div>
+    <!-- S5 --><div class="tl-item" data-phase="afternoon" data-id="s5"><div class="tl-card"><div class="tl-header"><div class="tl-header-left"><div class="tl-check" onclick="toggleCheck(this)"><span class="tl-check-icon">✓</span></div><span class="tl-seg">S5</span><span class="tl-time-badge">12:40</span></div><span class="tl-duration">3h00m</span></div><div class="tl-route">劍潭<span class="arrow">→</span>碧山巖</div><div class="tl-note">老地方觀機平台、大崙頭山。<span class="highlight">午後最熱，岔路多注意導航</span></div><div class="tl-meta"><span class="tl-meta-item">📏 12km</span><span class="tl-meta-item">⬆ +317m</span><span class="tl-meta-item">🌡️ 防曬</span></div></div></div>
+    <!-- Transit 2 --><div class="tl-item" data-phase="transit" data-id="t2"><div class="tl-card"><div class="tl-header"><div class="tl-header-left"><div class="tl-check" onclick="toggleCheck(this)"><span class="tl-check-icon">✓</span></div><span class="tl-seg">接駁</span><span class="tl-time-badge">15:40</span></div><span class="tl-duration">~40m</span></div><div class="tl-route">碧山巖<span class="arrow">→</span>中華科大</div><div class="tl-note">小2公車→捷運內湖站→南港。補給休息</div></div></div>
+    <!-- S6 --><div class="tl-item" data-phase="afternoon" data-id="s6"><div class="tl-card"><div class="tl-header"><div class="tl-header-left"><div class="tl-check" onclick="toggleCheck(this)"><span class="tl-check-icon">✓</span></div><span class="tl-seg">S6</span><span class="tl-time-badge">16:20</span></div><span class="tl-duration">2h24m</span></div><div class="tl-route">中華科大<span class="arrow">→</span>麟光</div><div class="tl-note"><span class="highlight">九五峰眺望101</span>，糶米古道。最後補給在麟光站</div><div class="tl-meta"><span class="tl-meta-item">📏 11km</span><span class="tl-meta-item">⬆ +500m</span><span class="tl-meta-item">🌇 夕陽</span></div></div></div>
+    <!-- S7 --><div class="tl-item" data-phase="dusk" data-id="s7"><div class="tl-card"><div class="tl-header"><div class="tl-header-left"><div class="tl-check" onclick="toggleCheck(this)"><span class="tl-check-icon">✓</span></div><span class="tl-seg">S7</span><span class="tl-time-badge">18:44</span></div><span class="tl-duration">2h24m</span></div><div class="tl-route">麟光<span class="arrow">→</span>指南宮<span class="arrow">→</span>政大</div><div class="tl-note">經世界山莊→和平東路→指南宮千階→貓空。<span class="highlight">最後衝刺！</span>天黑需頭燈</div><div class="tl-meta"><span class="tl-meta-item">📏 13km</span><span class="tl-meta-item">⬆ +282m</span><span class="tl-meta-item">🔦 頭燈</span></div></div></div>
+    <!-- Finish --><div class="tl-item" data-phase="finish" data-id="fin"><div class="tl-card"><div class="tl-header"><div class="tl-header-left"><div class="tl-check" onclick="toggleCheck(this)"><span class="tl-check-icon">✓</span></div><span class="tl-seg">完走</span><span class="tl-time-badge">~21:10</span></div></div><div class="tl-route" style="font-size:1.2rem;">🏁 完走！</div><div class="tl-note">全程 <strong>~21 小時</strong>・92km・+5000m</div></div></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══ SEGMENTS ═══ -->
+<section class="segments-section" id="segments">
+  <div class="section-label">DEEP DIVE</div>
+  <div class="section-title">各段路況詳解</div>
+
+  <div class="seg-card"><div class="seg-header" onclick="this.parentElement.classList.toggle('open')"><div class="seg-title-group"><span class="seg-badge night">S1・00:00</span><span class="seg-name">關渡→二子坪</span></div><span class="seg-toggle">&#9662;</span></div><div class="seg-body"><div class="seg-content">
+    <div class="seg-stats"><span class="seg-stat"><strong>11~13km</strong></span><span class="seg-stat"><strong>30~1092m</strong></span><span class="seg-stat"><strong>+950m</strong></span><span class="seg-stat"><strong>3h18m</strong></span></div>
+    <div class="seg-subtitle">路況</div>
+    <p class="seg-text"><strong>忠義山步道：</strong>原始路況，部分需拉繩。凌晨全黑行走注意腳下。</p>
+    <p class="seg-text"><strong>貴子坑→清天宮：</strong>一般道路段，凌晨車少但仍注意安全。路燈少。</p>
+    <p class="seg-text"><strong>清天宮→大屯山：</strong>開始陡峭爬升，消耗體能最大。摸黑上坡格外小心。</p>
+    <div class="seg-warning"><p><strong>夜間：</strong>頭燈充飽電。陽明山有蛇出沒，登山杖打草驚蛇。道路段注意來車。</p></div>
+    <div class="seg-subtitle">補給</div>
+    <p class="seg-text"><strong>清天宮</strong>（~01:30）飲水機＋廁所｜<strong>二子坪</strong>（~03:20）販賣機24hr＋廁所</p>
+  </div></div></div>
+
+  <div class="seg-card"><div class="seg-header" onclick="this.parentElement.classList.toggle('open')"><div class="seg-title-group"><span class="seg-badge dawn">S2・03:20</span><span class="seg-name">面天坪→小油坑</span></div><span class="seg-toggle">&#9662;</span></div><div class="seg-body"><div class="seg-content">
+    <div class="seg-stats"><span class="seg-stat"><strong>12km</strong></span><span class="seg-stat"><strong>684~1077m</strong></span><span class="seg-stat"><strong>+600m</strong></span><span class="seg-stat"><strong>2h42m</strong></span></div>
+    <div class="seg-warning"><p><strong>注意：</strong>官方起點為面天坪涼亭。從二子坪出發需經二子坪步道走約10分鐘銜接。</p></div>
+    <div class="seg-danger"><p><strong>全程最難！</strong>大屯山西峰/南峰泥濘陡攀，需持續拉繩。跨距大、路窄。雨後極危險。</p></div>
+    <div class="seg-subtitle">危險路段</div>
+    <p class="seg-text"><strong>西峰：</strong>上下都非常難走，路面常年泥濘，需攀繩。</p>
+    <p class="seg-text"><strong>南峰：</strong>多個陡攀段+泥濘。小油坑→主峰方向相對好走。</p>
+    <div class="seg-warning"><p><strong>穿越野跑鞋或雨鞋，帶工作手套。</strong>前幾天有雨可搭108公車從二子坪直達小油坑跳過此段。</p></div>
+    <div class="seg-subtitle">撤退</div>
+    <p class="seg-text">面天坪退回二子坪｜大屯山鞍部有108公車站｜竹子湖有公車下山</p>
+  </div></div></div>
+
+  <div class="seg-card"><div class="seg-header" onclick="this.parentElement.classList.toggle('open')"><div class="seg-title-group"><span class="seg-badge day">S3・06:00</span><span class="seg-name">小油坑→風櫃口</span></div><span class="seg-toggle">&#9662;</span></div><div class="seg-body"><div class="seg-content">
+    <div class="seg-stats"><span class="seg-stat"><strong>13km</strong></span><span class="seg-stat"><strong>553~1120m</strong></span><span class="seg-stat"><strong>+700m</strong></span><span class="seg-stat"><strong>3h18m</strong></span></div>
+    <div class="seg-info"><p><strong>全程最高點！</strong>七星山 1120m。~06:30 登頂有機會看日出。</p></div>
+    <div class="seg-warning"><p><strong>火災後路況：</strong>七星山區曾發生山林大火（約50公頃），經巡檢已重新開放，但部分路段植被受損、路況可能與過去不同。出發前請查詢<a href="https://www.ymsnp.gov.tw/YMSNP_HighwayCondition.aspx?n=17910&csn=5239" target="_blank" style="color:var(--amber);text-decoration:underline;">陽管處步道開放資訊</a>。</p></div>
+    <div class="seg-subtitle">路況</div>
+    <p class="seg-text"><strong>小油坑→七星山：</strong>安山岩階梯，路況佳。遮蔭少，注意防曬補水。山頂風大體感驟降。</p>
+    <p class="seg-text"><strong>擎天崗→風櫃口：</strong>青苔多濕滑。雨後石階奇滑。多處曝曬。</p>
+    <div class="seg-warning"><p><strong>山頂可能低於10°C+強風。</strong>備薄風衣。午後常有雷陣雨。</p></div>
+    <div class="seg-subtitle">補給</div>
+    <p class="seg-text"><strong>冷水坑</strong>（~07:30）販賣機＋廁所｜<strong>擎天崗</strong> 廁所、小15公車可至劍潭（撤退用）</p>
+  </div></div></div>
+
+  <div class="seg-card"><div class="seg-header" onclick="this.parentElement.classList.toggle('open')"><div class="seg-title-group"><span class="seg-badge day">S4・09:20</span><span class="seg-name">風櫃口→大湖公園</span></div><span class="seg-toggle">&#9662;</span></div><div class="seg-body"><div class="seg-content">
+    <div class="seg-stats"><span class="seg-stat"><strong>~13km 步道</strong></span><span class="seg-stat"><strong>30~553m</strong></span><span class="seg-stat"><strong>-800m</strong></span><span class="seg-stat"><strong>3h00m</strong></span></div>
+    <div class="seg-subtitle">路況</div>
+    <p class="seg-text"><strong>雙溪溝古道：</strong>溪畔路段，泥濘濕滑。雲霧中易失方向。</p>
+    <p class="seg-text"><strong>白石湖→圓覺寺：</strong>柏油＋石板，好走。白石湖有咖啡廳。</p>
+    <p class="seg-text"><strong>圓覺瀑布→大溝溪：</strong>全程最清涼路段之一。</p>
+    <div class="seg-warning"><p><strong>官方終點是中華科大</strong>（含大湖公園→中華科大的道路段約5km）。一日完走在大湖公園站搭捷運即可，不需走到中華科大。</p></div>
+    <div class="seg-info"><p><strong>過半！</strong>陽明山段結束。大湖公園站便利商店大補給。建議換襪子、充分補食。</p></div>
+  </div></div></div>
+
+  <div class="seg-card"><div class="seg-header" onclick="this.parentElement.classList.toggle('open')"><div class="seg-title-group"><span class="seg-badge afternoon">S5・12:40</span><span class="seg-name">劍潭→碧山巖</span></div><span class="seg-toggle">&#9662;</span></div><div class="seg-body"><div class="seg-content">
+    <div class="seg-stats"><span class="seg-stat"><strong>12km</strong></span><span class="seg-stat"><strong>10~327m</strong></span><span class="seg-stat"><strong>+317m</strong></span><span class="seg-stat"><strong>3h00m</strong></span></div>
+    <div class="seg-subtitle">路況</div>
+    <p class="seg-text">難度「易」，坡度有限。但<strong>步道網極複雜，岔路多，最容易迷路的一段！</strong>務必跟緊GPX。</p>
+    <p class="seg-text">午後最熱，部分路段無遮蔽。途中經過墳墓區域。</p>
+    <div class="seg-warning"><p><strong>迷路風險高。</strong>全程對照GPX導航，不要憑感覺走。</p></div>
+    <div class="seg-subtitle">補給</div>
+    <p class="seg-text"><strong>鄭成功廟</strong>有飲水機｜<strong>碧山巖</strong>（~15:40）飲水機＋廁所</p>
+    <p class="seg-text"><strong>撤退：</strong>沿途多下切口至市區，離文明最近的一段。</p>
+  </div></div></div>
+
+  <div class="seg-card"><div class="seg-header" onclick="this.parentElement.classList.toggle('open')"><div class="seg-title-group"><span class="seg-badge afternoon">S6・16:20</span><span class="seg-name">中華科大→麟光</span></div><span class="seg-toggle">&#9662;</span></div><div class="seg-body"><div class="seg-content">
+    <div class="seg-stats"><span class="seg-stat"><strong>11km</strong></span><span class="seg-stat"><strong>30~375m</strong></span><span class="seg-stat"><strong>+500m</strong></span><span class="seg-stat"><strong>2h24m</strong></span></div>
+    <div class="seg-subtitle">路況</div>
+    <p class="seg-text"><strong>中華科大→九五峰：</strong>全程樓梯上坡，林蔭少注意防曬。九五峰巨石眺望101。</p>
+    <p class="seg-text"><strong>拇指山：</strong>短但陡，需拉繩。</p>
+    <p class="seg-text"><strong>糶米古道→富陽：</strong>原生步道林蔭佳，下降至麟光站。</p>
+    <div class="seg-subtitle">補給</div>
+    <p class="seg-text"><strong>安祿宮</strong>飲水機（冰溫熱）＋廁所｜<strong>麟光站</strong>（~18:44）便利商店，<strong>最後補給！</strong></p>
+  </div></div></div>
+
+  <div class="seg-card"><div class="seg-header" onclick="this.parentElement.classList.toggle('open')"><div class="seg-title-group"><span class="seg-badge dusk">S7・18:44</span><span class="seg-name">麟光→政大</span></div><span class="seg-toggle">&#9662;</span></div><div class="seg-body"><div class="seg-content">
+    <div class="seg-stats"><span class="seg-stat"><strong>13km</strong></span><span class="seg-stat"><strong>26~308m</strong></span><span class="seg-stat"><strong>+282m</strong></span><span class="seg-stat"><strong>2h24m</strong></span></div>
+    <div class="seg-subtitle">路況</div>
+    <div class="seg-warning"><p><strong>路線銜接：</strong>官方 S7 起點為世界山莊（S6 途經點）。從麟光的完整路線：麟光→富陽→世界山莊→和平東路→萬壽橋→指南宮千階。與 S6 有部分重疊屬正常。</p></div>
+    <p class="seg-text"><strong>指南宮千階：</strong>石階陡升，天黑後頭燈行走。</p>
+    <p class="seg-text"><strong>指南宮→貓空：</strong>下切山谷再翻上。茶展中心步道<strong>容易迷路</strong>，避免走小路。</p>
+    <p class="seg-text"><strong>貓空→飛龍步道：</strong>平緩好走，經茶園。</p>
+    <div class="seg-warning"><p><strong>終點≠政大校門！</strong>飛龍步道登山口後還需走20-30分鐘穿越校園到校門口。21:00後公車班次少，備好叫車APP。</p></div>
+    <div class="seg-subtitle">撤退</div>
+    <p class="seg-text"><strong>貓纜指南宮站/貓空站</strong>可搭纜車或公車（平日末班21:00/假日22:00，每月除第一個週一外其餘週一公休）｜<strong>樟山寺</strong>棕15公車</p>
+    <div class="seg-subtitle">完走後</div>
+    <p class="seg-text">政大校門口：公車 236區/237/282/530/611/676/棕6/綠1。或叫 Uber/計程車。</p>
+  </div></div></div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══ SUPPLY ═══ -->
+<section class="supply-section" id="supply">
+  <div class="section-label">RESUPPLY</div>
+  <div class="section-title">補給點</div>
+  <div class="supply-grid">
+    <div class="supply-card"><div class="supply-time-col"><div class="supply-time">01:30</div><div class="supply-seg-label">S1途中</div></div><div><div class="supply-name">清天宮</div><div class="supply-items"><span class="supply-tag">飲水機</span><span class="supply-tag">廁所</span></div></div></div>
+    <div class="supply-card"><div class="supply-time-col"><div class="supply-time">03:20</div><div class="supply-seg-label">S1終/S2起</div></div><div><div class="supply-name">二子坪遊客中心</div><div class="supply-items"><span class="supply-tag">販賣機24hr</span><span class="supply-tag">廁所</span><span class="supply-tag">小商店</span></div></div></div>
+    <div class="supply-card"><div class="supply-time-col"><div class="supply-time">06:00</div><div class="supply-seg-label">S2終/S3起</div></div><div><div class="supply-name">小油坑遊客中心</div><div class="supply-items"><span class="supply-tag">遊客中心</span><span class="supply-tag">廁所</span></div></div></div>
+    <div class="supply-card"><div class="supply-time-col"><div class="supply-time">07:30</div><div class="supply-seg-label">S3途中</div></div><div><div class="supply-name">冷水坑</div><div class="supply-items"><span class="supply-tag">販賣機</span><span class="supply-tag">廁所</span></div></div></div>
+    <div class="supply-card major"><div class="supply-time-col"><div class="supply-time">12:20</div><div class="supply-seg-label">接駁</div></div><div><div class="supply-name">大湖公園站 ⭐</div><div class="supply-items"><span class="supply-tag key">便利商店</span><span class="supply-tag key">熱食</span><span class="supply-tag">廁所</span></div></div></div>
+    <div class="supply-card major"><div class="supply-time-col"><div class="supply-time">12:40</div><div class="supply-seg-label">S5起</div></div><div><div class="supply-name">劍潭站 ⭐</div><div class="supply-items"><span class="supply-tag key">便利商店</span><span class="supply-tag key">熱食</span></div></div></div>
+    <div class="supply-card"><div class="supply-time-col"><div class="supply-time">15:40</div><div class="supply-seg-label">接駁</div></div><div><div class="supply-name">碧山巖/接駁途中</div><div class="supply-items"><span class="supply-tag">便利商店</span></div></div></div>
+    <div class="supply-card major"><div class="supply-time-col"><div class="supply-time">18:44</div><div class="supply-seg-label">S6終/S7起</div></div><div><div class="supply-name">麟光站 ⭐ 最後補給</div><div class="supply-items"><span class="supply-tag key">便利商店</span><span class="supply-tag">飲料</span></div></div></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══ GAPS ═══ -->
+<section class="gaps-section">
+  <div class="section-label">CONNECTIONS</div>
+  <div class="section-title">路線斷點接駁</div>
+  <div class="gap-card"><div class="gap-visual"><span>S4終</span><div class="gap-dot"></div><div class="gap-line"></div><div class="gap-dot"></div><span>S5起</span></div><div class="gap-detail">大湖公園→劍潭｜<strong>~6km</strong>｜捷運 <strong>~15-20分</strong><br><span style="color:var(--ridge);">文湖線→淡水信義線（中山站轉）</span></div></div>
+  <div class="gap-card"><div class="gap-visual"><span>S5終</span><div class="gap-dot"></div><div class="gap-line"></div><div class="gap-dot"></div><span>S6起</span></div><div class="gap-detail">碧山巖→中華科大｜<strong>~8km</strong>｜公車+捷運 <strong>~30-40分</strong><br><span style="color:var(--ridge);">小2公車→捷運內湖站→南港</span></div></div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══ RETREAT ═══ -->
+<section class="retreat-section" id="retreat">
+  <div class="section-label">ESCAPE ROUTES</div>
+  <div class="section-title">各段撤退路線</div>
+  <div class="retreat-card"><span class="retreat-seg">S1</span><div class="retreat-detail"><strong>貴子坑</strong>走回關渡｜<strong>清天宮</strong>有產業道路通車</div></div>
+  <div class="retreat-card"><span class="retreat-seg">S2</span><div class="retreat-detail"><strong>面天坪</strong>退回二子坪｜<strong>鞍部</strong> 108公車站下山｜<strong>竹子湖</strong>多班公車</div></div>
+  <div class="retreat-card"><span class="retreat-seg">S3</span><div class="retreat-detail"><strong>冷水坑</strong>遊客中心+公車｜<strong>擎天崗</strong>小15至劍潭｜<strong>風櫃口</strong>市民小巴1（班次少！）</div></div>
+  <div class="retreat-card"><span class="retreat-seg">S4</span><div class="retreat-detail"><strong>碧山路</strong>岔路下內湖｜<strong>白石湖</strong>咖啡廳+公車｜<strong>圓覺寺</strong>步行至大湖公園站</div></div>
+  <div class="retreat-card"><span class="retreat-seg">S5</span><div class="retreat-detail">沿途多下切口：<strong>劍潭山/文間山/鄭成功廟/圓明寺/忠勇山</strong>。全段離市區最近，撤退最方便</div></div>
+  <div class="retreat-card"><span class="retreat-seg">S6</span><div class="retreat-detail"><strong>九五峰</strong>退往象山下信義區｜<strong>糶米古道</strong>下至吳興街｜<strong>福州山</strong>直下麟光站</div></div>
+  <div class="retreat-card"><span class="retreat-seg">S7</span><div class="retreat-detail"><strong>指南宮/貓空</strong>搭貓纜或公車（平日末班21:00/假日22:00，除每月第一個週一外週一公休）｜<strong>樟山寺</strong>棕15公車</div></div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══ MILESTONES ═══ -->
+<section class="milestones-section" id="milestones">
+  <div class="section-label">MILESTONES</div>
+  <div class="section-title">關鍵里程碑</div>
+  <div class="milestones-grid">
+    <div class="milestone" data-phase="night"><div class="milestone-time">00:00</div><div class="milestone-title">關渡起登</div><div class="milestone-desc">摸黑 3+ 小時</div></div>
+    <div class="milestone" data-phase="dawn"><div class="milestone-time">~05:30</div><div class="milestone-title">天亮</div><div class="milestone-desc">結束夜走</div></div>
+    <div class="milestone" data-phase="day"><div class="milestone-time">~06:30</div><div class="milestone-title">七星山頂</div><div class="milestone-desc">最高點 1120m</div></div>
+    <div class="milestone" data-phase="day"><div class="milestone-time">~12:20</div><div class="milestone-title">S4 完成</div><div class="milestone-desc">陽明山段結束</div></div>
+    <div class="milestone" data-phase="dusk"><div class="milestone-time">~18:30</div><div class="milestone-title">日落</div><div class="milestone-desc">S6 尾聲</div></div>
+    <div class="milestone" data-phase="finish"><div class="milestone-time">~21:00</div><div class="milestone-title">完走！</div><div class="milestone-desc">政大終點</div></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══ GEAR ═══ -->
+<section class="gear-section" id="gear">
+  <div class="section-label">GEAR CHECKLIST</div>
+  <div class="section-title">裝備清單</div>
+  <div class="gear-progress"><div class="gear-progress-bar"><div class="gear-progress-fill" id="gearFill"></div></div><span id="gearText">0 / 12</span></div>
+  <div class="gear-grid" id="gearGrid">
+    <div class="gear-item" onclick="toggleGear(this)"><div class="gear-check"></div><div class="gear-text">頭燈×2＋備用電池</div></div>
+    <div class="gear-item" onclick="toggleGear(this)"><div class="gear-check"></div><div class="gear-text">越野跑鞋</div></div>
+    <div class="gear-item" onclick="toggleGear(this)"><div class="gear-check"></div><div class="gear-text">輕量水袋背包</div></div>
+    <div class="gear-item" onclick="toggleGear(this)"><div class="gear-check"></div><div class="gear-text">手機＋離線GPX</div></div>
+    <div class="gear-item" onclick="toggleGear(this)"><div class="gear-check"></div><div class="gear-text">輕量雨衣/風衣</div></div>
+    <div class="gear-item" onclick="toggleGear(this)"><div class="gear-check"></div><div class="gear-text">鹽錠/電解質</div></div>
+    <div class="gear-item" onclick="toggleGear(this)"><div class="gear-check"></div><div class="gear-text">能量膠/能量棒</div></div>
+    <div class="gear-item" onclick="toggleGear(this)"><div class="gear-check"></div><div class="gear-text">水 至少2L</div></div>
+    <div class="gear-item" onclick="toggleGear(this)"><div class="gear-check"></div><div class="gear-text">行動電源 10000+</div></div>
+    <div class="gear-item" onclick="toggleGear(this)"><div class="gear-check"></div><div class="gear-text">防曬/袖套</div></div>
+    <div class="gear-item" onclick="toggleGear(this)"><div class="gear-check"></div><div class="gear-text">急救包＋工作手套</div></div>
+    <div class="gear-item" onclick="toggleGear(this)"><div class="gear-check"></div><div class="gear-text">零錢（販賣機）</div></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══ SAFETY ═══ -->
+<section class="safety-section" id="safety">
+  <div class="section-label">SAFETY</div>
+  <div class="section-title">安全須知</div>
+  <div class="safety-grid">
+    <div class="safety-card"><div class="safety-icon">🔦</div><div class="safety-title">頭燈策略</div><div class="safety-desc">300流明+。S1全段＋S7後段需頭燈。備用電池必帶。</div></div>
+    <div class="safety-card"><div class="safety-icon">🐍</div><div class="safety-title">蛇類動物</div><div class="safety-desc">陽明山夜間蛇類活躍。穿長褲、登山杖打草驚蛇。保持距離。</div></div>
+    <div class="safety-card"><div class="safety-icon">🌡️</div><div class="safety-title">20°C溫差</div><div class="safety-desc">凌晨平地18-22°C，七星山頂可能<10°C+強風。備薄風衣。午後30°C+。</div></div>
+    <div class="safety-card"><div class="safety-icon">📱</div><div class="safety-title">導航通訊</div><div class="safety-desc">離線GPX必備。推薦：健行筆記/Hikingbook/綠野遊蹤。開飛航省電。</div></div>
+    <div class="safety-card"><div class="safety-icon">⚡</div><div class="safety-title">電力管理</div><div class="safety-desc">21hr長征手機極耗電。10000mAh+行動電源。降亮度省電模式。</div></div>
+    <div class="safety-card"><div class="safety-icon">🍬</div><div class="safety-title">營養補給</div><div class="safety-desc">每小時200-300kcal。能量膠每45分鐘。鹽錠每小時。不等餓才吃。</div></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══ EMERGENCY ═══ -->
+<section class="emergency-section">
+  <div class="section-label">EMERGENCY</div>
+  <div class="section-title">緊急聯絡</div>
+  <div class="emergency-grid">
+    <div class="emergency-card"><div class="emergency-label">山難救援</div><div class="emergency-value"><a href="tel:119">119</a> / <a href="tel:112">112</a></div></div>
+    <div class="emergency-card"><div class="emergency-label">陽明山管理處</div><div class="emergency-value"><a href="tel:0228613601">02-2861-3601</a></div></div>
+    <div class="emergency-card"><div class="emergency-label">小油坑服務站</div><div class="emergency-value"><a href="tel:0228617024">02-2861-7024</a></div></div>
+    <div class="emergency-card"><div class="emergency-label">冷水坑服務站</div><div class="emergency-value"><a href="tel:0228610036">02-2861-0036</a></div></div>
+  </div>
+</section>
+
+<div style="max-width:900px;margin:2rem auto;padding:0 1rem;">
+  <div style="background:rgba(245,158,11,0.06);border:1px solid rgba(245,158,11,0.15);border-radius:10px;padding:1rem 1.25rem;">
+    <div style="font-family:var(--font-mono);font-size:0.65rem;color:var(--amber);letter-spacing:0.15em;margin-bottom:0.35rem;">DISCLAIMER ── 2026.04.05 更新</div>
+    <div style="font-size:0.75rem;color:var(--text-dim);line-height:1.7;">
+      <strong style="color:var(--text);">時間估算：</strong>上河時間非精確值，各段使用官方/健行筆記參考時間推算 ×0.6。實際時間受天氣、體能、路況影響甚大。<br>
+      <strong style="color:var(--text);">路線資訊：</strong>已交叉比對官網、健行筆記、維基百科、Mobile01 及多位山友實走紀錄。路線可能因施工、天災隨時變更，<strong>出發前務必查詢<a href="https://taipeigrandtrail.gov.taipei/" target="_blank" style="color:var(--amber)">官網</a>及<a href="https://www.ymsnp.gov.tw/YMSNP_HighwayCondition.aspx?n=17910&csn=5239" target="_blank" style="color:var(--amber)">陽管處步道開放資訊</a></strong>。<br>
+      <strong style="color:var(--text);">已知注意事項：</strong>七星山區曾發生大火（~50公頃），步道已巡檢重開但植被受損。S2 大屯山西峰/南峰雨後極危險，需評估是否搭108公車繞過。S4 官方終點為中華科大（含道路段），一日完走在大湖公園站搭車即可。S6/S7 在世界山莊有路段重疊。貓纜除每月第一個週一外週一公休。
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>台北大縱走 一日完走計畫 ── 上河 ×0.6 ── 2026</p>
+  <p style="margin-top:0.5rem;">
+    GPX：<a href="https://taipeigrandtrail.gov.taipei/News_Content.aspx?n=E0B7C742E7BA29C6&s=5A897AA80DB36A12&sms=9681E3755A0FC621" target="_blank">官網下載</a>
+    ｜ 活動：<a href="https://hiking.biji.co/index.php?q=minisite&id=318" target="_blank">健行筆記</a>
+  </p>
+</footer>
+
+<script>
+// ── State (persist to localStorage) ──
+const STATE_KEY = 'tgt_state';
+function loadState() {
+  try { return JSON.parse(localStorage.getItem(STATE_KEY)) || {}; } catch { return {}; }
+}
+function saveState(s) { localStorage.setItem(STATE_KEY, JSON.stringify(s)); }
+
+const state = loadState();
+if (!state.timeline) state.timeline = {};
+if (!state.gear) state.gear = {};
+
+// ── Timeline check ──
+function toggleCheck(el) {
+  const item = el.closest('.tl-item');
+  const id = item.dataset.id;
+  item.classList.toggle('checked');
+  state.timeline[id] = item.classList.contains('checked');
+  saveState(state);
+  updateProgress();
+}
+
+function updateProgress() {
+  const items = document.querySelectorAll('.tl-item');
+  const total = items.length;
+  const checked = document.querySelectorAll('.tl-item.checked').length;
+  const pct = Math.round((checked / total) * 100);
+
+  // Top progress bar
+  document.getElementById('tlProgressFill').style.width = pct + '%';
+  document.getElementById('tlProgressText').textContent = checked + ' / ' + total + ' 完成';
+
+  // Floating pill
+  document.getElementById('pillFill').style.width = pct + '%';
+  document.getElementById('pillText').textContent = checked + ' / ' + total;
+}
+
+// Restore timeline state
+document.querySelectorAll('.tl-item').forEach(item => {
+  if (state.timeline[item.dataset.id]) {
+    item.classList.add('checked');
+  }
+});
+updateProgress();
+
+// ── Gear check ──
+function toggleGear(el) {
+  el.classList.toggle('checked');
+  const idx = Array.from(el.parentElement.children).indexOf(el);
+  state.gear[idx] = el.classList.contains('checked');
+  saveState(state);
+  updateGear();
+}
+
+function updateGear() {
+  const items = document.querySelectorAll('.gear-item');
+  const total = items.length;
+  const checked = document.querySelectorAll('.gear-item.checked').length;
+  const pct = Math.round((checked / total) * 100);
+  document.getElementById('gearFill').style.width = pct + '%';
+  document.getElementById('gearText').textContent = checked + ' / ' + total;
+}
+
+// Restore gear state
+document.querySelectorAll('.gear-item').forEach((item, idx) => {
+  if (state.gear[idx]) item.classList.add('checked');
+});
+updateGear();
+
+// ── Scroll progress ──
+const progressBar = document.getElementById('scrollProgress');
+const nav = document.getElementById('mainNav');
+const pill = document.getElementById('progressPill');
+
+window.addEventListener('scroll', () => {
+  const scrollTop = window.scrollY;
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  const progress = (scrollTop / docHeight) * 100;
+  progressBar.style.width = progress + '%';
+  nav.classList.toggle('visible', scrollTop > window.innerHeight * 0.4);
+  pill.style.opacity = scrollTop > window.innerHeight * 0.5 ? '1' : '0';
+}, { passive: true });
+
+// ── Active nav link ──
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('nav a[href^="#"]');
+const sectionObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      navLinks.forEach(a => a.classList.remove('active'));
+      const link = document.querySelector('nav a[href="#' + e.target.id + '"]');
+      if (link) link.classList.add('active');
+    }
+  });
+}, { threshold: 0.15, rootMargin: '-60px 0px -60% 0px' });
+sections.forEach(s => sectionObserver.observe(s));
+
+// ── Animate timeline items ──
+const fadeObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
+document.querySelectorAll('.tl-item').forEach(i => fadeObserver.observe(i));
+
+// ── Smooth scroll ──
+navLinks.forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    const t = document.querySelector(a.getAttribute('href'));
+    if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+});
+</script>
+</body>
+</html>
