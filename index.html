@@ -431,7 +431,7 @@ nav a:hover, nav a.active { color: var(--amber); }
   font-family: var(--font-mono); font-size: 0.6rem;
   padding: 8px 6px; border-radius: 6px; border: 1px solid var(--border);
   background: var(--bg-card); color: var(--text-dim);
-  cursor: pointer; transition: all 0.2s; min-width: 40px; min-height: 36px; text-align: center;
+  cursor: pointer; transition: all 0.2s; min-width: 40px; min-height: 44px; text-align: center;
 }
 .month-btn:hover { border-color: var(--border-hover); }
 .month-btn.active {
@@ -1026,8 +1026,8 @@ footer a { color: var(--amber); text-decoration: none; }
   .bottom-nav { display: block; }
   .seg-header { padding: 1rem 1.1rem; }
   footer { padding-bottom: calc(80px + var(--safe-bottom)); }
-  .theme-toggle { top: 10px; right: 12px; width: 36px; height: 36px; }
-  .theme-toggle svg { width: 18px; height: 18px; }
+  .theme-toggle { top: 10px; right: 12px; width: 44px; height: 44px; }
+  .theme-toggle svg { width: 20px; height: 20px; }
 }
 
 /* ═══ SMALL MOBILE ═══ */
@@ -1124,8 +1124,9 @@ input[type="range"] {
   background: var(--range-track); border-radius: 3px; outline: none;
 }
 input[type="range"]::-webkit-slider-thumb {
-  -webkit-appearance: none; width: 22px; height: 22px;
+  -webkit-appearance: none; width: 28px; height: 28px;
   background: var(--amber); border-radius: 50%; cursor: pointer;
+  box-shadow: 0 1px 4px var(--shadow);
 }
 
 /* ═══ ELEVATION INTERACTIVE ═══ */
@@ -1274,7 +1275,7 @@ input[type="range"]::-webkit-slider-thumb {
 </div>
 
 <!-- Share FAB -->
-<button class="share-fab" id="shareBtn" title="分享配速">
+<button class="share-fab" id="shareBtn" title="分享配速" aria-label="分享配速">
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
 </button>
 <div class="toast" id="toast">已複製連結</div>
@@ -1933,7 +1934,7 @@ const SEG_NAMES = {
 };
 const SEG_KM = { s1:11.8, s2:12, s3:13, s4:13, t1:0, s5:12, t2:0, s6:11, s7:13, fin:0 };
 const SEG_ASCENT = { s1:1200, s2:800, s3:950, s4:350, t1:0, s5:550, t2:0, s6:680, s7:500, fin:0 };
-const SEG_HEADER_LABELS = { s1:'S1', s2:'S2', s3:'S3', s4:'S4', s5:'S5', s6:'S6', s7:'S7' };
+
 
 // ═══ GATE TIMES DATA ═══
 const GATES = [
@@ -2037,19 +2038,11 @@ function minToClockWithDay(absMin) {
   return days >= 1 ? str + ' +' + days + 'd' : str;
 }
 
-function minToClockHHMM(elapsedMin) {
-  return minToHHMM(currentStartMin + elapsedMin);
-}
-
 function minToDurStr(min) {
   const h = Math.floor(min / 60);
   const m = Math.round(min % 60);
   if (h === 0) return m + 'm';
   return h + 'h' + String(m).padStart(2,'0') + 'm';
-}
-
-function minToApproxHr(min) {
-  return '~' + Math.floor(min / 60);
 }
 
 // ═══ PHASE SYSTEM ═══
@@ -2060,17 +2053,6 @@ function getPhase(clockMin, sunrise, sunset) {
   if (clockMin > sunrise + 30 && clockMin <= 840) return 'day';
   if (clockMin > 840 && clockMin <= sunset - 30) return 'afternoon';
   return 'night';
-}
-
-function getPhaseColor(phase) {
-  switch (phase) {
-    case 'night': return '#1e1b4b';
-    case 'dawn': return '#f59e0b';
-    case 'day': return '#7dd3fc';
-    case 'afternoon': return '#38bdf8';
-    case 'dusk': return '#e11d48';
-    default: return '#1e1b4b';
-  }
 }
 
 // Segment colors for elevation chart
@@ -2891,8 +2873,7 @@ function onConfigChange() {
   updateCalc();
 }
 
-// Backward compat
-function onPaceChange() { onConfigChange(); }
+
 
 function buildShareURL() {
   const url = new URL(window.location);
