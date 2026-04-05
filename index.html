@@ -583,6 +583,114 @@ footer a { color: var(--amber); text-decoration: none; }
   .milestones-grid { grid-template-columns: 1fr; }
   .emergency-grid { grid-template-columns: 1fr; }
 }
+
+/* ═══ LIVE TRACKER ═══ */
+.tracker {
+  max-width: 900px; margin: 0 auto; padding: 0 1rem 2rem;
+}
+.tracker-card {
+  background: linear-gradient(135deg, rgba(245,158,11,0.08), rgba(56,189,248,0.04));
+  border: 1px solid rgba(245,158,11,0.2); border-radius: 14px;
+  padding: 1.25rem; position: relative; overflow: hidden;
+}
+.tracker-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, var(--amber), var(--sky), var(--ridge));
+}
+.tracker-header {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 0.75rem; flex-wrap: wrap; gap: 0.5rem;
+}
+.tracker-clock {
+  font-family: var(--font-mono); font-size: 1.6rem; font-weight: 600; color: #fff;
+}
+.tracker-date {
+  font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-dim);
+}
+.tracker-status {
+  font-family: var(--font-mono); font-size: 0.75rem;
+  padding: 0.2rem 0.7rem; border-radius: 20px;
+}
+.tracker-status.before { background: rgba(148,163,184,0.15); color: var(--slate); }
+.tracker-status.active { background: rgba(110,231,183,0.15); color: var(--ridge); animation: pulse 2s infinite; }
+.tracker-status.done { background: rgba(110,231,183,0.15); color: var(--ridge); }
+
+@keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.6; } }
+
+.tracker-info {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem;
+}
+.tracker-info-item { text-align: center; }
+.tracker-info-label { font-size: 0.6rem; color: var(--text-dim); letter-spacing: 0.08em; margin-bottom: 0.15rem; }
+.tracker-info-value { font-family: var(--font-mono); font-size: 1rem; font-weight: 600; color: var(--text); }
+.tracker-info-value .unit { font-size: 0.6em; color: var(--text-dim); font-weight: 400; }
+
+.tracker-segment {
+  margin-top: 0.75rem; padding-top: 0.75rem;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  font-size: 0.8rem; color: var(--text-dim);
+}
+.tracker-segment strong { color: var(--text); }
+.tracker-segment .seg-highlight { color: var(--amber); font-weight: 600; }
+
+/* ═══ CALCULATOR ═══ */
+.calc-section { padding: 2.5rem 1rem; max-width: 900px; margin: 0 auto; }
+.calc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+
+.calc-card {
+  background: var(--ghost); border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 12px; padding: 1.25rem; text-align: center;
+}
+.calc-icon { font-size: 1.5rem; margin-bottom: 0.5rem; }
+.calc-label { font-size: 0.7rem; color: var(--text-dim); margin-bottom: 0.25rem; }
+.calc-value {
+  font-family: var(--font-mono); font-size: 1.5rem; font-weight: 600; color: #fff;
+}
+.calc-value .unit { font-size: 0.5em; color: var(--slate); font-weight: 400; }
+.calc-sub { font-size: 0.65rem; color: var(--text-dim); margin-top: 0.25rem; }
+
+.calc-slider-group {
+  grid-column: 1 / -1;
+  background: var(--ghost); border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 12px; padding: 1.25rem;
+}
+.calc-slider-label {
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 0.8rem; margin-bottom: 0.5rem;
+}
+.calc-slider-label span { color: var(--text-dim); }
+.calc-slider-label strong { font-family: var(--font-mono); color: var(--amber); }
+
+input[type="range"] {
+  -webkit-appearance: none; width: 100%; height: 6px;
+  background: rgba(255,255,255,0.1); border-radius: 3px; outline: none;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none; width: 22px; height: 22px;
+  background: var(--amber); border-radius: 50%; cursor: pointer;
+}
+
+/* ═══ ELEVATION INTERACTIVE ═══ */
+.elev-tooltip {
+  position: absolute; pointer-events: none; opacity: 0;
+  background: rgba(10,14,26,0.9); border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 8px; padding: 6px 10px; font-family: var(--font-mono);
+  font-size: 0.65rem; color: var(--text); white-space: nowrap;
+  transition: opacity 0.15s; z-index: 10;
+  transform: translateX(-50%);
+}
+.elev-dot {
+  position: absolute; width: 8px; height: 8px;
+  background: var(--amber); border-radius: 50%;
+  pointer-events: none; opacity: 0; transition: opacity 0.15s;
+  transform: translate(-50%, -50%); z-index: 10;
+  box-shadow: 0 0 8px rgba(245,158,11,0.5);
+}
+
+@media (max-width: 380px) {
+  .calc-grid { grid-template-columns: 1fr; }
+  .tracker-info { grid-template-columns: repeat(3, 1fr); }
+}
 </style>
 </head>
 <body>
@@ -617,6 +725,7 @@ footer a { color: var(--amber); text-decoration: none; }
     <a href="#retreat">撤退</a>
     <a href="#milestones">里程碑</a>
     <a href="#gear">裝備</a>
+    <a href="#calc">計算</a>
     <a href="#safety">安全</a>
   </div>
 </nav>
@@ -639,7 +748,9 @@ footer a { color: var(--amber); text-decoration: none; }
 <section class="elevation-section">
   <div class="section-label">ELEVATION</div>
   <div class="section-title">高程剖面</div>
-  <div class="elevation-chart">
+  <div class="elevation-chart" id="elevChart" style="cursor:crosshair;">
+    <div class="elev-tooltip" id="elevTooltip"></div>
+    <div class="elev-dot" id="elevDot"></div>
     <svg viewBox="0 0 1000 200" preserveAspectRatio="none">
       <defs>
         <linearGradient id="eg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="rgba(110,231,183,0.3)"/><stop offset="100%" stop-color="rgba(110,231,183,0)"/></linearGradient>
@@ -676,6 +787,49 @@ footer a { color: var(--amber); text-decoration: none; }
   <div class="daynight-labels"><span>00:00</span><span>06:00</span><span>12:00</span><span>18:00</span><span>21:10</span></div>
 </section>
 
+<!-- ═══ LIVE TRACKER ═══ -->
+<section class="tracker" id="tracker">
+  <div class="tracker-card">
+    <div class="tracker-header">
+      <div>
+        <div class="tracker-clock" id="trackerClock">--:--:--</div>
+        <div class="tracker-date" id="trackerDate"></div>
+      </div>
+      <div class="tracker-status before" id="trackerStatus">尚未開始</div>
+    </div>
+    <div class="tracker-info">
+      <div class="tracker-info-item">
+        <div class="tracker-info-label">已經過</div>
+        <div class="tracker-info-value" id="trackerElapsed">--<span class="unit">hr</span></div>
+      </div>
+      <div class="tracker-info-item">
+        <div class="tracker-info-label">預估剩餘</div>
+        <div class="tracker-info-value" id="trackerRemain">~21<span class="unit">hr</span></div>
+      </div>
+      <div class="tracker-info-item">
+        <div class="tracker-info-label">預估完成</div>
+        <div class="tracker-info-value" id="trackerETA">21:10</div>
+      </div>
+    </div>
+    <div class="tracker-segment" id="trackerSeg">
+      設定出發日期後，會自動追蹤你目前應該在哪一段。點擊下方「設定出發時間」開始。
+    </div>
+    <div style="margin-top:0.75rem;text-align:center;">
+      <label style="font-size:0.7rem;color:var(--text-dim);">出發日期時間：</label><br>
+      <input type="datetime-local" id="startTimeInput" style="
+        margin-top:4px; padding:6px 10px; border-radius:8px;
+        border:1px solid rgba(255,255,255,0.15); background:rgba(255,255,255,0.06);
+        color:var(--text); font-family:var(--font-mono); font-size:0.8rem;
+      ">
+      <button onclick="setStartTime()" style="
+        margin-left:6px; padding:6px 14px; border-radius:8px; border:none;
+        background:var(--amber); color:var(--night); font-weight:600;
+        font-size:0.75rem; cursor:pointer;
+      ">設定</button>
+    </div>
+  </div>
+</section>
+
 <div class="divider"></div>
 
 <!-- ═══ TIMELINE ═══ -->
@@ -689,7 +843,7 @@ footer a { color: var(--amber); text-decoration: none; }
   </div>
 
   <div class="timeline" id="timelineList">
-    <!-- S1 --><div class="tl-item" data-phase="night" data-id="s1"><div class="tl-card"><div class="tl-header"><div class="tl-header-left"><div class="tl-check" onclick="toggleCheck(this)"><span class="tl-check-icon">✓</span></div><span class="tl-seg">S1</span><span class="tl-time-badge">00:00</span></div><span class="tl-duration">3h18m</span></div><div class="tl-route">關渡<span class="arrow">→</span>二子坪</div><div class="tl-note">夜間摸黑起登，經忠義山、貴子坑，攀上<span class="highlight">大屯山 1092m</span></div><div class="tl-meta"><span class="tl-meta-item">📏 11~13km</span><span class="tl-meta-item">⬆ +950m</span><span class="tl-meta-item">🌙 全程夜走</span></div></div></div>
+    <!-- S1 --><div class="tl-item" data-phase="night" data-id="s1"><div class="tl-card"><div class="tl-header"><div class="tl-header-left"><div class="tl-check" onclick="toggleCheck(this)"><span class="tl-check-icon">✓</span></div><span class="tl-seg">S1</span><span class="tl-time-badge">00:00</span></div><span class="tl-duration">3h18m</span></div><div class="tl-route">關渡<span class="arrow">→</span>二子坪</div><div class="tl-note">夜間摸黑起登，經忠義山、貴子坑，攀上<span class="highlight">大屯山 1092m</span></div><div class="tl-meta"><span class="tl-meta-item">📏 11.8km</span><span class="tl-meta-item">⬆ +941m</span><span class="tl-meta-item">🌙 全程夜走</span></div></div></div>
     <!-- S2 --><div class="tl-item" data-phase="dawn" data-id="s2"><div class="tl-card"><div class="tl-header"><div class="tl-header-left"><div class="tl-check" onclick="toggleCheck(this)"><span class="tl-check-icon">✓</span></div><span class="tl-seg">S2</span><span class="tl-time-badge">03:20</span></div><span class="tl-duration">2h42m</span></div><div class="tl-route">面天坪<span class="arrow">→</span>小油坑</div><div class="tl-note"><span class="highlight">最難路段！</span>大屯山西峰/南峰泥濘拉繩。天色漸亮</div><div class="tl-meta"><span class="tl-meta-item">📏 12km</span><span class="tl-meta-item">⬆ +600m</span><span class="tl-meta-item">⚠️ 濕滑拉繩</span></div></div></div>
     <!-- S3 --><div class="tl-item" data-phase="day" data-id="s3"><div class="tl-card"><div class="tl-header"><div class="tl-header-left"><div class="tl-check" onclick="toggleCheck(this)"><span class="tl-check-icon">✓</span></div><span class="tl-seg">S3</span><span class="tl-time-badge">06:00</span></div><span class="tl-duration">3h18m</span></div><div class="tl-route">小油坑<span class="arrow">→</span>風櫃口</div><div class="tl-note">登<span class="highlight">七星山 1120m</span> 全程最高！擎天崗大草原、石梯嶺</div><div class="tl-meta"><span class="tl-meta-item">📏 13km</span><span class="tl-meta-item">⬆ +700m</span><span class="tl-meta-item">🌅 日出</span></div></div></div>
     <!-- S4 --><div class="tl-item" data-phase="day" data-id="s4"><div class="tl-card"><div class="tl-header"><div class="tl-header-left"><div class="tl-check" onclick="toggleCheck(this)"><span class="tl-check-icon">✓</span></div><span class="tl-seg">S4</span><span class="tl-time-badge">09:20</span></div><span class="tl-duration">3h00m</span></div><div class="tl-route">風櫃口<span class="arrow">→</span>大湖公園</div><div class="tl-note">一路下降至市區。<span class="highlight">陽明山段結束！過半</span>（官方終點為中華科大，含道路段）</div><div class="tl-meta"><span class="tl-meta-item">📏 ~13km 步道</span><span class="tl-meta-item">⬇ -800m</span><span class="tl-meta-item">✅ 過半</span></div></div></div>
@@ -874,6 +1028,48 @@ footer a { color: var(--amber); text-decoration: none; }
 
 <div class="divider"></div>
 
+<!-- ═══ CALCULATOR ═══ -->
+<section class="calc-section" id="calc">
+  <div class="section-label">CALCULATOR</div>
+  <div class="section-title">補給計算機</div>
+  <div class="calc-grid">
+    <div class="calc-slider-group">
+      <div class="calc-slider-label"><span>體重</span><strong id="weightVal">70 kg</strong></div>
+      <input type="range" id="weightSlider" min="40" max="100" value="70" oninput="updateCalc()">
+    </div>
+    <div class="calc-slider-group">
+      <div class="calc-slider-label"><span>預估氣溫</span><strong id="tempVal">22°C</strong></div>
+      <input type="range" id="tempSlider" min="5" max="38" value="22" oninput="updateCalc()">
+    </div>
+    <div class="calc-card">
+      <div class="calc-icon">💧</div>
+      <div class="calc-label">建議總飲水量</div>
+      <div class="calc-value" id="calcWater">6.3<span class="unit">L</span></div>
+      <div class="calc-sub" id="calcWaterSub">每小時 ~300ml</div>
+    </div>
+    <div class="calc-card">
+      <div class="calc-icon">🔥</div>
+      <div class="calc-label">預估總消耗熱量</div>
+      <div class="calc-value" id="calcCal">6,300<span class="unit">kcal</span></div>
+      <div class="calc-sub" id="calcCalSub">每小時 ~300kcal</div>
+    </div>
+    <div class="calc-card">
+      <div class="calc-icon">🧂</div>
+      <div class="calc-label">建議鹽錠</div>
+      <div class="calc-value" id="calcSalt">21<span class="unit">顆</span></div>
+      <div class="calc-sub">每小時 1 顆</div>
+    </div>
+    <div class="calc-card">
+      <div class="calc-icon">⚡</div>
+      <div class="calc-label">建議能量膠</div>
+      <div class="calc-value" id="calcGel">14<span class="unit">包</span></div>
+      <div class="calc-sub">每 90 分鐘 1 包</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
 <!-- ═══ SAFETY ═══ -->
 <section class="safety-section" id="safety">
   <div class="section-label">SAFETY</div>
@@ -922,51 +1118,53 @@ footer a { color: var(--amber); text-decoration: none; }
 </footer>
 
 <script>
-// ── State (persist to localStorage) ──
+// ═══ STATE ═══
 const STATE_KEY = 'tgt_state';
-function loadState() {
-  try { return JSON.parse(localStorage.getItem(STATE_KEY)) || {}; } catch { return {}; }
-}
+function loadState() { try { return JSON.parse(localStorage.getItem(STATE_KEY)) || {}; } catch { return {}; } }
 function saveState(s) { localStorage.setItem(STATE_KEY, JSON.stringify(s)); }
-
 const state = loadState();
 if (!state.timeline) state.timeline = {};
 if (!state.gear) state.gear = {};
 
-// ── Timeline check ──
+// ═══ SCHEDULE DATA ═══
+const SCHEDULE = [
+  { id:'s1', name:'S1 關渡→二子坪', startMin:0, durMin:198, km:11.8, ascent:941 },
+  { id:'s2', name:'S2 面天坪→小油坑', startMin:198, durMin:162, km:12, ascent:600 },
+  { id:'s3', name:'S3 小油坑→風櫃口', startMin:360, durMin:198, km:13, ascent:700 },
+  { id:'s4', name:'S4 風櫃口→大湖公園', startMin:560, durMin:180, km:13, ascent:0 },
+  { id:'t1', name:'接駁 大湖公園→劍潭', startMin:740, durMin:20, km:0, ascent:0 },
+  { id:'s5', name:'S5 劍潭→碧山巖', startMin:760, durMin:180, km:12, ascent:317 },
+  { id:'t2', name:'接駁 碧山巖→中華科大', startMin:940, durMin:40, km:0, ascent:0 },
+  { id:'s6', name:'S6 中華科大→麟光', startMin:980, durMin:144, km:11, ascent:500 },
+  { id:'s7', name:'S7 麟光→政大', startMin:1124, durMin:144, km:13, ascent:282 },
+  { id:'fin', name:'🏁 完走！', startMin:1270, durMin:0, km:0, ascent:0 },
+];
+const TOTAL_MIN = 1270;
+const TOTAL_KM = 85.3;
+
+// ═══ TIMELINE CHECK ═══
 function toggleCheck(el) {
   const item = el.closest('.tl-item');
-  const id = item.dataset.id;
   item.classList.toggle('checked');
-  state.timeline[id] = item.classList.contains('checked');
+  state.timeline[item.dataset.id] = item.classList.contains('checked');
   saveState(state);
   updateProgress();
 }
-
 function updateProgress() {
-  const items = document.querySelectorAll('.tl-item');
-  const total = items.length;
+  const total = document.querySelectorAll('.tl-item').length;
   const checked = document.querySelectorAll('.tl-item.checked').length;
   const pct = Math.round((checked / total) * 100);
-
-  // Top progress bar
   document.getElementById('tlProgressFill').style.width = pct + '%';
   document.getElementById('tlProgressText').textContent = checked + ' / ' + total + ' 完成';
-
-  // Floating pill
   document.getElementById('pillFill').style.width = pct + '%';
   document.getElementById('pillText').textContent = checked + ' / ' + total;
 }
-
-// Restore timeline state
 document.querySelectorAll('.tl-item').forEach(item => {
-  if (state.timeline[item.dataset.id]) {
-    item.classList.add('checked');
-  }
+  if (state.timeline[item.dataset.id]) item.classList.add('checked');
 });
 updateProgress();
 
-// ── Gear check ──
+// ═══ GEAR CHECK ═══
 function toggleGear(el) {
   el.classList.toggle('checked');
   const idx = Array.from(el.parentElement.children).indexOf(el);
@@ -974,23 +1172,203 @@ function toggleGear(el) {
   saveState(state);
   updateGear();
 }
-
 function updateGear() {
-  const items = document.querySelectorAll('.gear-item');
-  const total = items.length;
+  const total = document.querySelectorAll('.gear-item').length;
   const checked = document.querySelectorAll('.gear-item.checked').length;
   const pct = Math.round((checked / total) * 100);
   document.getElementById('gearFill').style.width = pct + '%';
   document.getElementById('gearText').textContent = checked + ' / ' + total;
 }
-
-// Restore gear state
 document.querySelectorAll('.gear-item').forEach((item, idx) => {
   if (state.gear[idx]) item.classList.add('checked');
 });
 updateGear();
 
-// ── Scroll progress ──
+// ═══ LIVE TRACKER ═══
+function setStartTime() {
+  const input = document.getElementById('startTimeInput');
+  if (!input.value) return;
+  state.startTime = new Date(input.value).getTime();
+  saveState(state);
+  updateTracker();
+}
+// Restore start time
+if (state.startTime) {
+  const d = new Date(state.startTime);
+  const pad = n => String(n).padStart(2,'0');
+  document.getElementById('startTimeInput').value =
+    d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate())+'T'+pad(d.getHours())+':'+pad(d.getMinutes());
+}
+
+function updateTracker() {
+  const now = new Date();
+  const clock = document.getElementById('trackerClock');
+  const dateEl = document.getElementById('trackerDate');
+  const statusEl = document.getElementById('trackerStatus');
+  const elapsedEl = document.getElementById('trackerElapsed');
+  const remainEl = document.getElementById('trackerRemain');
+  const etaEl = document.getElementById('trackerETA');
+  const segEl = document.getElementById('trackerSeg');
+
+  const pad = n => String(n).padStart(2,'0');
+  clock.textContent = pad(now.getHours())+':'+pad(now.getMinutes())+':'+pad(now.getSeconds());
+  dateEl.textContent = now.getFullYear()+'/'+pad(now.getMonth()+1)+'/'+pad(now.getDate())+' '+ ['日','一','二','三','四','五','六'][now.getDay()];
+
+  if (!state.startTime) {
+    statusEl.className = 'tracker-status before';
+    statusEl.textContent = '尚未設定';
+    segEl.innerHTML = '設定出發日期時間後，即時追蹤你在哪一段、已走多久、預估剩餘時間。';
+    return;
+  }
+
+  const start = new Date(state.startTime);
+  const diffMs = now - start;
+  const diffMin = diffMs / 60000;
+
+  if (diffMin < 0) {
+    const untilH = Math.floor(-diffMin / 60);
+    const untilM = Math.floor(-diffMin % 60);
+    statusEl.className = 'tracker-status before';
+    statusEl.textContent = '倒數中';
+    elapsedEl.innerHTML = '-' + untilH + '<span class="unit">hr</span>';
+    remainEl.innerHTML = '~21<span class="unit">hr</span>';
+    const eta = new Date(start.getTime() + TOTAL_MIN * 60000);
+    etaEl.textContent = pad(eta.getHours()) + ':' + pad(eta.getMinutes());
+    segEl.innerHTML = '距離出發還有 <strong>' + untilH + '小時' + untilM + '分</strong>';
+    return;
+  }
+
+  if (diffMin >= TOTAL_MIN) {
+    statusEl.className = 'tracker-status done';
+    statusEl.textContent = '已完走！';
+    elapsedEl.innerHTML = Math.floor(diffMin/60) + '<span class="unit">hr</span>';
+    remainEl.innerHTML = '0<span class="unit">hr</span>';
+    etaEl.textContent = '✓';
+    segEl.innerHTML = '🏁 <strong>恭喜完走！</strong>全程 ' + Math.floor(TOTAL_MIN/60) + ' 小時 ' + (TOTAL_MIN%60) + ' 分';
+    return;
+  }
+
+  // Active
+  statusEl.className = 'tracker-status active';
+  statusEl.textContent = '進行中';
+  const elH = Math.floor(diffMin / 60);
+  const elM = Math.floor(diffMin % 60);
+  elapsedEl.innerHTML = elH + ':' + pad(elM) + '<span class="unit"></span>';
+  const remMin = TOTAL_MIN - diffMin;
+  const remH = Math.floor(remMin / 60);
+  const remM = Math.floor(remMin % 60);
+  remainEl.innerHTML = remH + ':' + pad(remM) + '<span class="unit"></span>';
+  const eta = new Date(start.getTime() + TOTAL_MIN * 60000);
+  etaEl.textContent = pad(eta.getHours()) + ':' + pad(eta.getMinutes());
+
+  // Find current segment
+  let current = SCHEDULE[SCHEDULE.length - 1];
+  let kmDone = 0;
+  for (let i = 0; i < SCHEDULE.length; i++) {
+    const s = SCHEDULE[i];
+    if (diffMin < s.startMin + s.durMin) { current = s; break; }
+    kmDone += s.km;
+  }
+  const segProgress = current.durMin > 0 ? Math.min(100, Math.round(((diffMin - current.startMin) / current.durMin) * 100)) : 100;
+  const totalPct = Math.round((diffMin / TOTAL_MIN) * 100);
+  kmDone += current.km * (segProgress / 100);
+
+  segEl.innerHTML = '目前應在 <span class="seg-highlight">' + current.name + '</span>（段內 ' + segProgress + '%）<br>' +
+    '總進度 <strong>' + totalPct + '%</strong> ・ 約 ' + kmDone.toFixed(1) + 'km';
+}
+
+setInterval(updateTracker, 1000);
+updateTracker();
+
+// ═══ CALCULATOR ═══
+function updateCalc() {
+  const weight = parseInt(document.getElementById('weightSlider').value);
+  const temp = parseInt(document.getElementById('tempSlider').value);
+  document.getElementById('weightVal').textContent = weight + ' kg';
+  document.getElementById('tempVal').textContent = temp + '°C';
+
+  const hours = 21;
+  // Water: base 5ml/kg/hr, +50% if >30°C, +25% if >25°C
+  let waterPerHr = weight * 5;
+  if (temp > 30) waterPerHr *= 1.5;
+  else if (temp > 25) waterPerHr *= 1.25;
+  else if (temp < 10) waterPerHr *= 0.8;
+  const totalWaterL = (waterPerHr * hours / 1000);
+
+  // Calories: ~5-8 kcal/kg/hr for hiking with heavy elevation
+  let calPerHr = weight * 7;
+  if (temp > 30) calPerHr *= 1.1;
+  const totalCal = Math.round(calPerHr * hours);
+
+  // Salt: 1 per hour base, 1.5 if hot
+  const saltPerHr = temp > 28 ? 1.5 : 1;
+  const totalSalt = Math.ceil(saltPerHr * hours);
+
+  // Gel: 1 per 90 min
+  const totalGel = Math.ceil(hours * 60 / 90);
+
+  document.getElementById('calcWater').innerHTML = totalWaterL.toFixed(1) + '<span class="unit">L</span>';
+  document.getElementById('calcWaterSub').textContent = '每小時 ~' + Math.round(waterPerHr) + 'ml';
+  document.getElementById('calcCal').innerHTML = totalCal.toLocaleString() + '<span class="unit">kcal</span>';
+  document.getElementById('calcCalSub').textContent = '每小時 ~' + Math.round(calPerHr) + 'kcal';
+  document.getElementById('calcSalt').innerHTML = totalSalt + '<span class="unit">顆</span>';
+  document.getElementById('calcGel').innerHTML = totalGel + '<span class="unit">包</span>';
+}
+updateCalc();
+
+// ═══ ELEVATION CHART INTERACTIVE ═══
+const elevData = [
+  {x:0,h:30,seg:'S1起 關渡 30m'},{x:75,h:500,seg:'S1 忠義山~貴子坑'},{x:130,h:1092,seg:'大屯山主峰 1092m'},
+  {x:170,h:800,seg:'S2 大屯山西峰'},{x:200,h:1077,seg:'S2 大屯山'},{x:230,h:684,seg:'二子坪 684m'},
+  {x:260,h:1040,seg:'S3 七星山東峰'},{x:290,h:1120,seg:'S3 七星山主峰 1120m'},
+  {x:330,h:740,seg:'S3 擎天崗'},{x:370,h:680,seg:'S3 石梯嶺'},{x:400,h:553,seg:'風櫃口 553m'},
+  {x:460,h:350,seg:'S4 五指山'},{x:510,h:200,seg:'S4 碧山路'},{x:550,h:100,seg:'S4 圓覺瀑布'},
+  {x:580,h:30,seg:'大湖公園 30m'},{x:620,h:150,seg:'S5 劍潭山'},{x:660,h:327,seg:'S5 大崙頭山 327m'},
+  {x:700,h:200,seg:'S5 碧山巖'},{x:740,h:375,seg:'S6 九五峰 375m'},{x:770,h:280,seg:'S6 拇指山'},
+  {x:800,h:120,seg:'S6 福州山'},{x:830,h:30,seg:'麟光 30m'},{x:870,h:285,seg:'S7 指南宮'},
+  {x:910,h:308,seg:'S7 貓空 308m'},{x:960,h:150,seg:'S7 飛龍步道'},{x:1000,h:50,seg:'政大 50m 🏁'},
+];
+const chartEl = document.getElementById('elevChart');
+const tooltip = document.getElementById('elevTooltip');
+const dot = document.getElementById('elevDot');
+const maxH = 1120;
+
+function getElevAtX(xPct) {
+  const xVal = xPct * 1000;
+  let prev = elevData[0], next = elevData[elevData.length-1];
+  for (let i = 0; i < elevData.length - 1; i++) {
+    if (xVal >= elevData[i].x && xVal <= elevData[i+1].x) {
+      prev = elevData[i]; next = elevData[i+1]; break;
+    }
+  }
+  const t = next.x === prev.x ? 0 : (xVal - prev.x) / (next.x - prev.x);
+  const h = prev.h + t * (next.h - prev.h);
+  const nearest = (Math.abs(xVal - prev.x) < Math.abs(xVal - next.x)) ? prev : next;
+  return { h: Math.round(h), label: nearest.seg };
+}
+
+chartEl.addEventListener('pointermove', (e) => {
+  const rect = chartEl.getBoundingClientRect();
+  const xPct = (e.clientX - rect.left) / rect.width;
+  const yPct = (e.clientY - rect.top) / rect.height;
+  if (xPct < 0 || xPct > 1) return;
+  const info = getElevAtX(xPct);
+  const dotY = rect.height * (1 - info.h / maxH * 0.85 - 0.08);
+
+  tooltip.style.left = (xPct * 100) + '%';
+  tooltip.style.top = Math.max(0, dotY - 30) + 'px';
+  tooltip.textContent = info.label + ' (' + info.h + 'm)';
+  tooltip.style.opacity = '1';
+  dot.style.left = (xPct * 100) + '%';
+  dot.style.top = dotY + 'px';
+  dot.style.opacity = '1';
+});
+chartEl.addEventListener('pointerleave', () => {
+  tooltip.style.opacity = '0';
+  dot.style.opacity = '0';
+});
+
+// ═══ SCROLL / NAV ═══
 const progressBar = document.getElementById('scrollProgress');
 const nav = document.getElementById('mainNav');
 const pill = document.getElementById('progressPill');
@@ -998,13 +1376,11 @@ const pill = document.getElementById('progressPill');
 window.addEventListener('scroll', () => {
   const scrollTop = window.scrollY;
   const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-  const progress = (scrollTop / docHeight) * 100;
-  progressBar.style.width = progress + '%';
+  progressBar.style.width = (scrollTop / docHeight * 100) + '%';
   nav.classList.toggle('visible', scrollTop > window.innerHeight * 0.4);
   pill.style.opacity = scrollTop > window.innerHeight * 0.5 ? '1' : '0';
 }, { passive: true });
 
-// ── Active nav link ──
 const sections = document.querySelectorAll('section[id]');
 const navLinks = document.querySelectorAll('nav a[href^="#"]');
 const sectionObserver = new IntersectionObserver((entries) => {
@@ -1018,13 +1394,11 @@ const sectionObserver = new IntersectionObserver((entries) => {
 }, { threshold: 0.15, rootMargin: '-60px 0px -60% 0px' });
 sections.forEach(s => sectionObserver.observe(s));
 
-// ── Animate timeline items ──
 const fadeObserver = new IntersectionObserver((entries) => {
   entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
 }, { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
 document.querySelectorAll('.tl-item').forEach(i => fadeObserver.observe(i));
 
-// ── Smooth scroll ──
 navLinks.forEach(a => {
   a.addEventListener('click', e => {
     e.preventDefault();
