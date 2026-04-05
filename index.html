@@ -915,6 +915,14 @@ nav a:hover, nav a.active { color: var(--amber); }
 .gear-item.checked .gear-text { opacity: 0.45; text-decoration: line-through; }
 .gear-text { font-size: 0.8rem; transition: all 0.2s; line-height: 1.3; }
 
+.gear-seasonal { margin-top: 1.5rem; }
+.gear-seasonal-title { font-family: var(--font-display); font-weight: 700; font-size: 0.85rem; margin-bottom: 0.5rem; color: var(--amber); }
+.gear-seasonal .gear-item { border-style: dashed; opacity: 0.8; cursor: default; }
+.gear-seasonal .gear-item:active { transform: none; }
+.gear-optional { margin-top: 1rem; }
+.gear-optional .gear-item { border-style: dashed; opacity: 0.8; cursor: default; }
+.gear-optional .gear-item:active { transform: none; }
+
 /* ═══ WEATHER LINKS ═══ */
 .weather-links { padding: 2.5rem 1rem; max-width: 900px; margin: 0 auto; }
 .weather-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.6rem; }
@@ -1549,7 +1557,7 @@ input[type="range"]::-webkit-slider-thumb {
     <p class="seg-text"><strong>清天宮→大屯山：</strong>開始陡峭爬升，消耗體能最大。摸黑上坡格外小心。</p>
     <div class="seg-warning"><p><strong>夜間：</strong>頭燈充飽電。陽明山有蛇出沒，登山杖打草驚蛇。道路段注意來車。</p></div>
     <div class="seg-subtitle">補給</div>
-    <p class="seg-text"><strong>清天宮</strong>（~01:30）飲水機＋廁所｜<strong>二子坪</strong>（~03:20）販賣機24hr＋廁所</p>
+    <p class="seg-text"><strong>清天宮</strong>（~01:30）飲水機＋廁所｜<strong>二子坪</strong>（~03:20）販賣機（服務站9:00-16:30）＋廁所</p>
     <div class="seg-gpx"><a href="https://taipeigrandtrail.gov.taipei/News_Content.aspx?n=E0B7C742E7BA29C6&s=5A897AA80DB36A12&sms=9681E3755A0FC621" target="_blank" class="gpx-btn">📥 下載 GPX（官方）</a><span class="gpx-hint">出發前一天下載！山上網速極慢</span></div>
   </div></div></div>
 
@@ -1570,8 +1578,8 @@ input[type="range"]::-webkit-slider-thumb {
         <div class="decision-text">前 2-3 天有大雨 或 降雨機率 >70% 或 濃霧 → 搭 108 公車從二子坪直達小油坑</div>
       </div>
       <div class="decision-links">
-        <a href="https://www.cwa.gov.tw/V8/C/W/Mountain/Mountain.html?PID=N002" target="_blank">中央氣象署山區預報</a>
-        <a href="https://www.ymsnp.gov.tw/YMSNP_HighwayCondition.aspx?n=17910&csn=5239" target="_blank">陽管處步道資訊</a>
+        <a href="https://www.cwa.gov.tw/V8/C/L/Mountain/Mountain.html?PID=D102" target="_blank">中央氣象署山區預報</a>
+        <a href="https://www.ymsnp.gov.tw/YMSNP_HighwayCondition.aspx?n=17910&sms=13477" target="_blank">陽管處步道資訊</a>
       </div>
     </div>
     <div class="seg-signal sig-bad"><span class="sig-icon">📵</span><div><strong>收訊：差（谷地死角）</strong><p>最危險段卻最沒訊號，務必離線GPX</p></div></div>
@@ -1590,7 +1598,7 @@ input[type="range"]::-webkit-slider-thumb {
     <div class="seg-stats"><span class="seg-stat"><strong>13km</strong></span><span class="seg-stat"><strong>553~1120m</strong></span><span class="seg-stat"><strong>+950m</strong></span><span class="seg-stat"><strong data-seg-dur="s3">3h20m</strong></span></div>
     <div class="seg-signal sig-good"><span class="sig-icon">📶</span><div><strong>收訊：好（稜線高處）</strong><p>冷水坑、擎天崗收訊穩定</p></div></div>
     <div class="seg-info"><p><strong>全程最高點！</strong>七星山 1120m。~06:30 登頂有機會看日出。</p></div>
-    <div class="seg-warning"><p><strong>火災後路況：</strong>七星山區曾發生山林大火（約50公頃），經巡檢已重新開放，但部分路段植被受損、路況可能與過去不同。出發前請查詢<a href="https://www.ymsnp.gov.tw/YMSNP_HighwayCondition.aspx?n=17910&csn=5239" target="_blank" style="color:var(--amber);text-decoration:underline;">陽管處步道開放資訊</a>。</p></div>
+    <div class="seg-warning"><p><strong>火災後路況：</strong>七星山區曾發生山林大火（約50公頃），經巡檢已重新開放，但部分路段植被受損、路況可能與過去不同。出發前請查詢<a href="https://www.ymsnp.gov.tw/YMSNP_HighwayCondition.aspx?n=17910&sms=13477" target="_blank" style="color:var(--amber);text-decoration:underline;">陽管處步道開放資訊</a>。</p></div>
     <div class="seg-subtitle">路況</div>
     <p class="seg-text"><strong>小油坑→七星山：</strong>安山岩階梯，路況佳。遮蔭少，注意防曬補水。山頂風大體感驟降。</p>
     <p class="seg-text"><strong>擎天崗→風櫃口：</strong>青苔多濕滑。雨後石階奇滑。多處曝曬。</p>
@@ -1675,13 +1683,19 @@ input[type="range"]::-webkit-slider-thumb {
   <div class="section-title">補給點</div>
   <div class="supply-grid" id="supplyGrid">
     <div class="supply-card" data-supply-idx="0"><div class="supply-time-col"><div class="supply-time" data-supply-time="0">01:30</div><div class="supply-seg-label">S1途中</div></div><div><div class="supply-name">清天宮</div><div class="supply-items"><span class="supply-tag">飲水機</span><span class="supply-tag">廁所</span></div></div></div>
-    <div class="supply-card" data-supply-idx="1"><div class="supply-time-col"><div class="supply-time" data-supply-time="1">03:20</div><div class="supply-seg-label">S1終/S2起</div></div><div><div class="supply-name">二子坪遊客中心</div><div class="supply-items"><span class="supply-tag">販賣機24hr</span><span class="supply-tag">廁所</span><span class="supply-tag">小商店</span></div></div></div>
-    <div class="supply-card" data-supply-idx="2"><div class="supply-time-col"><div class="supply-time" data-supply-time="2">06:00</div><div class="supply-seg-label">S2終/S3起</div></div><div><div class="supply-name">小油坑遊客中心</div><div class="supply-items"><span class="supply-tag">遊客中心</span><span class="supply-tag">廁所</span></div></div></div>
-    <div class="supply-card" data-supply-idx="3"><div class="supply-time-col"><div class="supply-time" data-supply-time="3">07:30</div><div class="supply-seg-label">S3途中</div></div><div><div class="supply-name">冷水坑</div><div class="supply-items"><span class="supply-tag">販賣機</span><span class="supply-tag">廁所</span></div></div></div>
-    <div class="supply-card major" data-supply-idx="4"><div class="supply-time-col"><div class="supply-time" data-supply-time="4">12:20</div><div class="supply-seg-label">接駁</div></div><div><div class="supply-name">大湖公園站 ⭐</div><div class="supply-items"><span class="supply-tag key">便利商店</span><span class="supply-tag key">熱食</span><span class="supply-tag">廁所</span></div></div></div>
-    <div class="supply-card major" data-supply-idx="5"><div class="supply-time-col"><div class="supply-time" data-supply-time="5">12:40</div><div class="supply-seg-label">S5起</div></div><div><div class="supply-name">劍潭站 ⭐</div><div class="supply-items"><span class="supply-tag key">便利商店</span><span class="supply-tag key">熱食</span></div></div></div>
-    <div class="supply-card" data-supply-idx="6"><div class="supply-time-col"><div class="supply-time" data-supply-time="6">15:40</div><div class="supply-seg-label">接駁</div></div><div><div class="supply-name">碧山巖/接駁途中</div><div class="supply-items"><span class="supply-tag">便利商店</span></div></div></div>
-    <div class="supply-card major" data-supply-idx="7"><div class="supply-time-col"><div class="supply-time" data-supply-time="7">18:44</div><div class="supply-seg-label">S6終/S7起</div></div><div><div class="supply-name">麟光站 ⭐ 最後補給</div><div class="supply-items"><span class="supply-tag key">便利商店</span><span class="supply-tag">飲料</span></div></div></div>
+    <div class="supply-card" data-supply-idx="1"><div class="supply-time-col"><div class="supply-time" data-supply-time="1">02:30</div><div class="supply-seg-label">S1途中</div></div><div><div class="supply-name">清水宮</div><div class="supply-items"><span class="supply-tag">飲水機</span><span class="supply-tag">桌椅休息</span></div></div></div>
+    <div class="supply-card" data-supply-idx="2"><div class="supply-time-col"><div class="supply-time" data-supply-time="2">03:20</div><div class="supply-seg-label">S1終/S2起</div></div><div><div class="supply-name">二子坪遊客中心</div><div class="supply-items"><span class="supply-tag">販賣機（服務站9:00-16:30）</span><span class="supply-tag">廁所</span><span class="supply-tag">小商店</span></div></div></div>
+    <div class="supply-card" data-supply-idx="3"><div class="supply-time-col"><div class="supply-time" data-supply-time="3">06:00</div><div class="supply-seg-label">S2終/S3起</div></div><div><div class="supply-name">小油坑遊客中心</div><div class="supply-items"><span class="supply-tag">遊客中心</span><span class="supply-tag">廁所</span></div></div></div>
+    <div class="supply-card" data-supply-idx="4"><div class="supply-time-col"><div class="supply-time" data-supply-time="4">07:30</div><div class="supply-seg-label">S3途中</div></div><div><div class="supply-name">冷水坑</div><div class="supply-items"><span class="supply-tag">販賣機</span><span class="supply-tag">廁所</span></div></div></div>
+    <div class="supply-card" data-supply-idx="5"><div class="supply-time-col"><div class="supply-time" data-supply-time="5">08:20</div><div class="supply-seg-label">S3/S4</div></div><div><div class="supply-name">擎天崗遊客中心</div><div class="supply-items"><span class="supply-tag">販賣部</span><span class="supply-tag">咖啡</span><span class="supply-tag">飲水機</span><span class="supply-tag">廁所</span></div></div></div>
+    <div class="supply-card major" data-supply-idx="6"><div class="supply-time-col"><div class="supply-time" data-supply-time="6">12:20</div><div class="supply-seg-label">接駁</div></div><div><div class="supply-name">大湖公園站 ⭐</div><div class="supply-items"><span class="supply-tag key">便利商店</span><span class="supply-tag key">熱食</span><span class="supply-tag">廁所</span></div></div></div>
+    <div class="supply-card major" data-supply-idx="7"><div class="supply-time-col"><div class="supply-time" data-supply-time="7">12:40</div><div class="supply-seg-label">S5起</div></div><div><div class="supply-name">劍潭站 ⭐</div><div class="supply-items"><span class="supply-tag key">便利商店</span><span class="supply-tag key">熱食</span></div></div></div>
+    <div class="supply-card" data-supply-idx="8"><div class="supply-time-col"><div class="supply-time" data-supply-time="8">13:50</div><div class="supply-seg-label">S5途中</div></div><div><div class="supply-name">鄭成功廟</div><div class="supply-items"><span class="supply-tag">飲水機(冰/熱)</span><span class="supply-tag">廁所</span><span class="supply-tag">桌椅</span></div></div></div>
+    <div class="supply-card" data-supply-idx="9"><div class="supply-time-col"><div class="supply-time" data-supply-time="9">15:40</div><div class="supply-seg-label">接駁</div></div><div><div class="supply-name">碧山巖/接駁途中</div><div class="supply-items"><span class="supply-tag">便利商店</span></div></div></div>
+    <div class="supply-card" data-supply-idx="10"><div class="supply-time-col"><div class="supply-time" data-supply-time="10">17:30</div><div class="supply-seg-label">S6途中</div></div><div><div class="supply-name">忠正嶺安祿宮</div><div class="supply-items"><span class="supply-tag">飲水機(冰溫熱)</span><span class="supply-tag">廁所</span></div></div></div>
+    <div class="supply-card major" data-supply-idx="11"><div class="supply-time-col"><div class="supply-time" data-supply-time="11">18:44</div><div class="supply-seg-label">S6終/S7起</div></div><div><div class="supply-name">麟光站 ⭐ 最後補給</div><div class="supply-items"><span class="supply-tag key">便利商店</span><span class="supply-tag">飲料</span></div></div></div>
+    <div class="supply-card" data-supply-idx="12"><div class="supply-time-col"><div class="supply-time" data-supply-time="12">19:50</div><div class="supply-seg-label">S7途中</div></div><div><div class="supply-name">樟山寺</div><div class="supply-items"><span class="supply-tag">奉茶(自備杯)</span><span class="supply-tag">溫水</span><span class="supply-tag">廁所</span></div></div></div>
+    <div class="supply-card" data-supply-idx="13"><div class="supply-time-col"><div class="supply-time" data-supply-time="13">20:10</div><div class="supply-seg-label">S7途中</div></div><div><div class="supply-name">貓空地區</div><div class="supply-items"><span class="supply-tag">茶館</span><span class="supply-tag">餐廳</span><span class="supply-tag">貓纜站</span></div></div></div>
   </div>
 </section>
 
@@ -1702,12 +1716,12 @@ input[type="range"]::-webkit-slider-thumb {
   <div class="section-label">ESCAPE ROUTES</div>
   <div class="section-title">各段撤退路線</div>
   <div class="retreat-card"><span class="retreat-seg">S1</span><div class="retreat-detail"><strong>貴子坑</strong>走回關渡｜<strong>清天宮</strong>有產業道路通車</div></div>
-  <div class="retreat-card"><span class="retreat-seg">S2</span><div class="retreat-detail"><strong>面天坪</strong>退回二子坪｜<strong>鞍部</strong> 108公車站下山｜<strong>竹子湖</strong>多班公車</div></div>
-  <div class="retreat-card"><span class="retreat-seg">S3</span><div class="retreat-detail"><strong>冷水坑</strong>遊客中心+公車｜<strong>擎天崗</strong>小15至劍潭｜<strong>風櫃口</strong>市民小巴1（班次少！）</div></div>
+  <div class="retreat-card"><span class="retreat-seg">S2</span><div class="retreat-detail"><strong>面天坪</strong>退回二子坪｜<strong>鞍部</strong>108公車（末班17:30自陽明山發車）、竹子湖小9公車（末班22:50）｜<strong>竹子湖</strong>多班公車</div></div>
+  <div class="retreat-card"><span class="retreat-seg">S3</span><div class="retreat-detail"><strong>冷水坑</strong>小15公車（平日末班16:20/假日17:30）｜<strong>擎天崗</strong>小15至劍潭（平日末班~16:40）｜<strong>風櫃口</strong>市民小巴1（僅5班/日，末班17:30！）</div></div>
   <div class="retreat-card"><span class="retreat-seg">S4</span><div class="retreat-detail"><strong>碧山路</strong>岔路下內湖｜<strong>白石湖</strong>咖啡廳+公車｜<strong>圓覺寺</strong>步行至大湖公園站</div></div>
   <div class="retreat-card"><span class="retreat-seg">S5</span><div class="retreat-detail">沿途多下切口：<strong>劍潭山/文間山/鄭成功廟/圓明寺/忠勇山</strong>。全段離市區最近，撤退最方便</div></div>
   <div class="retreat-card"><span class="retreat-seg">S6</span><div class="retreat-detail"><strong>九五峰</strong>退往象山下信義區｜<strong>糶米古道</strong>下至吳興街｜<strong>福州山</strong>直下麟光站</div></div>
-  <div class="retreat-card"><span class="retreat-seg">S7</span><div class="retreat-detail"><strong>指南宮/貓空</strong>搭貓纜或公車（平日末班21:00/假日22:00，除每月第一個週一外週一公休）｜<strong>樟山寺</strong>棕15公車</div></div>
+  <div class="retreat-card"><span class="retreat-seg">S7</span><div class="retreat-detail"><strong>指南宮/貓空</strong>搭貓纜或公車（平日末班21:00/假日22:00，除每月第一個週一外週一公休）｜<strong>樟山寺</strong>棕15公車（平日末班23:00/假日00:00）</div></div>
 </section>
 
 <div class="divider"></div>
@@ -1817,20 +1831,33 @@ input[type="range"]::-webkit-slider-thumb {
 <section class="gear-section" id="gear">
   <div class="section-label">GEAR CHECKLIST</div>
   <div class="section-title">裝備清單</div>
-  <div class="gear-progress"><div class="gear-progress-bar"><div class="gear-progress-fill" id="gearFill"></div></div><span id="gearText">0 / 12</span></div>
+  <div class="gear-progress"><div class="gear-progress-bar"><div class="gear-progress-fill" id="gearFill"></div></div><span id="gearText">0 / 17</span></div>
   <div class="gear-grid" id="gearGrid">
-    <div class="gear-item" onclick="toggleGear(this)"><div class="gear-check"></div><div class="gear-text">頭燈×2＋備用電池</div></div>
+    <div class="gear-item" onclick="toggleGear(this)"><div class="gear-check"></div><div class="gear-text">頭燈×2＋備用電池（300流明+）</div></div>
     <div class="gear-item" onclick="toggleGear(this)"><div class="gear-check"></div><div class="gear-text">越野跑鞋</div></div>
     <div class="gear-item" onclick="toggleGear(this)"><div class="gear-check"></div><div class="gear-text">輕量水袋背包</div></div>
-    <div class="gear-item" onclick="toggleGear(this)"><div class="gear-check"></div><div class="gear-text">手機＋離線GPX</div></div>
-    <div class="gear-item" onclick="toggleGear(this)"><div class="gear-check"></div><div class="gear-text">輕量雨衣/風衣</div></div>
+    <div class="gear-item" onclick="toggleGear(this)"><div class="gear-check"></div><div class="gear-text">手機＋離線GPX＋充電線</div></div>
+    <div class="gear-item" onclick="toggleGear(this)"><div class="gear-check"></div><div class="gear-text">防水風衣（含帽）</div></div>
     <div class="gear-item" onclick="toggleGear(this)"><div class="gear-check"></div><div class="gear-text">鹽錠/電解質</div></div>
     <div class="gear-item" onclick="toggleGear(this)"><div class="gear-check"></div><div class="gear-text">能量膠/能量棒</div></div>
-    <div class="gear-item" onclick="toggleGear(this)"><div class="gear-check"></div><div class="gear-text">水 至少2L</div></div>
+    <div class="gear-item" onclick="toggleGear(this)"><div class="gear-check"></div><div class="gear-text">水 2-3L（依季節）</div></div>
     <div class="gear-item" onclick="toggleGear(this)"><div class="gear-check"></div><div class="gear-text">行動電源 10000+</div></div>
     <div class="gear-item" onclick="toggleGear(this)"><div class="gear-check"></div><div class="gear-text">防曬/袖套</div></div>
-    <div class="gear-item" onclick="toggleGear(this)"><div class="gear-check"></div><div class="gear-text">急救包＋工作手套</div></div>
-    <div class="gear-item" onclick="toggleGear(this)"><div class="gear-check"></div><div class="gear-text">零錢（販賣機）</div></div>
+    <div class="gear-item" onclick="toggleGear(this)"><div class="gear-check"></div><div class="gear-text">急救包（OK繃、彈繃、止痛藥）</div></div>
+    <div class="gear-item" onclick="toggleGear(this)"><div class="gear-check"></div><div class="gear-text">工作手套（S2拉繩段）</div></div>
+    <div class="gear-item" onclick="toggleGear(this)"><div class="gear-check"></div><div class="gear-text">零錢/悠遊卡</div></div>
+    <div class="gear-item" onclick="toggleGear(this)"><div class="gear-check"></div><div class="gear-text">哨子（求救用）</div></div>
+    <div class="gear-item" onclick="toggleGear(this)"><div class="gear-check"></div><div class="gear-text">求生毯</div></div>
+    <div class="gear-item" onclick="toggleGear(this)"><div class="gear-check"></div><div class="gear-text">折疊登山杖</div></div>
+    <div class="gear-item" onclick="toggleGear(this)"><div class="gear-check"></div><div class="gear-text">身分證/健保卡＋衛生紙</div></div>
+  </div>
+  <div class="gear-seasonal" id="gearSeasonal">
+    <div class="gear-seasonal-title">📅 <span id="gearSeasonLabel">4月</span>建議</div>
+    <div class="gear-grid" id="gearSeasonalGrid"></div>
+  </div>
+  <div class="gear-optional">
+    <div class="gear-seasonal-title">💡 長距離選配</div>
+    <div class="gear-grid" id="gearOptionalGrid"></div>
   </div>
 </section>
 
@@ -1904,12 +1931,12 @@ input[type="range"]::-webkit-slider-thumb {
   <div class="section-label">WEATHER CHECK</div>
   <div class="section-title">出發前天氣確認</div>
   <div class="weather-grid">
-    <a href="https://www.cwa.gov.tw/V8/C/W/Mountain/Mountain.html?PID=N002" target="_blank" class="weather-card">
+    <a href="https://www.cwa.gov.tw/V8/C/L/Mountain/Mountain.html?PID=D102" target="_blank" class="weather-card">
       <div class="weather-icon">🌤️</div>
       <div class="weather-name">中央氣象署</div>
       <div class="weather-desc">山區天氣預報</div>
     </a>
-    <a href="https://www.ymsnp.gov.tw/YMSNP_HighwayCondition.aspx?n=17910&csn=5239" target="_blank" class="weather-card">
+    <a href="https://www.ymsnp.gov.tw/YMSNP_HighwayCondition.aspx?n=17910&sms=13477" target="_blank" class="weather-card">
       <div class="weather-icon">🏔️</div>
       <div class="weather-name">陽管處</div>
       <div class="weather-desc">步道開放資訊</div>
@@ -1962,7 +1989,7 @@ input[type="range"]::-webkit-slider-thumb {
     <div style="font-family:var(--font-mono);font-size:0.65rem;color:var(--amber);letter-spacing:0.15em;margin-bottom:0.35rem;">DISCLAIMER ── 2026.04.05 更新</div>
     <div style="font-size:0.75rem;color:var(--text-dim);line-height:1.7;">
       <strong style="color:var(--text-primary);">時間估算：</strong>上河時間非精確值，各段使用官方/健行筆記參考時間推算 ×0.6。實際時間受天氣、體能、路況影響甚大。<br>
-      <strong style="color:var(--text-primary);">路線資訊：</strong>已交叉比對官網、健行筆記、維基百科、Mobile01 及多位山友實走紀錄。路線可能因施工、天災隨時變更，<strong>出發前務必查詢<a href="https://taipeigrandtrail.gov.taipei/" target="_blank" style="color:var(--amber)">官網</a>及<a href="https://www.ymsnp.gov.tw/YMSNP_HighwayCondition.aspx?n=17910&csn=5239" target="_blank" style="color:var(--amber)">陽管處步道開放資訊</a></strong>。<br>
+      <strong style="color:var(--text-primary);">路線資訊：</strong>已交叉比對官網、健行筆記、維基百科、Mobile01 及多位山友實走紀錄。路線可能因施工、天災隨時變更，<strong>出發前務必查詢<a href="https://taipeigrandtrail.gov.taipei/" target="_blank" style="color:var(--amber)">官網</a>及<a href="https://www.ymsnp.gov.tw/YMSNP_HighwayCondition.aspx?n=17910&sms=13477" target="_blank" style="color:var(--amber)">陽管處步道開放資訊</a></strong>。<br>
       <strong style="color:var(--text-primary);">已知注意事項：</strong>七星山區曾發生大火（~50公頃），步道已巡檢重開但植被受損。S2 大屯山西峰/南峰雨後極危險，需評估是否搭108公車繞過。S4 官方終點為中華科大（含道路段），一日完走在大湖公園站搭車即可。S6/S7 在世界山莊有路段重疊。貓纜除每月第一個週一外週一公休。
     </div>
   </div>
@@ -2061,7 +2088,7 @@ const BASE_SEGMENTS = [
   { id:'s7', baseDur:146, transit:false },
 ];
 
-const SUPPLY_BASE = [90, 200, 360, 450, 740, 760, 940, 1124];
+const SUPPLY_BASE = [90, 150, 200, 360, 450, 500, 740, 760, 830, 940, 1050, 1124, 1190, 1210];
 const MILESTONE_BASE = [0, 330, 390, 740, 1110, 1270];
 
 const SEG_NAMES = {
@@ -2090,6 +2117,85 @@ const FATIGUE_MODEL = [
   { afterHr: 12, multiplier: 1.15 },
   { afterHr: 18, multiplier: 1.30 },
 ];
+
+// ═══ SEASONAL GEAR ═══
+const SEASONAL_GEAR = {
+  summer: [
+    '遮陽帽（透氣抗UV）',
+    '防蟲液',
+    '涼感毛巾',
+    '備用排汗衣',
+    '水增量至3L+'
+  ],
+  winter: [
+    '保暖中層（刷毛/化纖）',
+    '保暖帽＋頸圍',
+    '保暖手套',
+    '保溫瓶裝熱水',
+    '防水長褲/雨褲'
+  ],
+  rainy: [
+    '完整雨褲',
+    '防水袋（手機/電子設備）',
+    '備用襪子',
+    '綁腿'
+  ],
+  optional: [
+    '凡士林/防磨膏',
+    '壓縮小腿套',
+    '備用襪子（中途更換）'
+  ]
+};
+
+function updateSeasonalGear(month) {
+  const seasonalGrid = document.getElementById('gearSeasonalGrid');
+  const optionalGrid = document.getElementById('gearOptionalGrid');
+  const seasonalSection = document.getElementById('gearSeasonal');
+  const seasonLabel = document.getElementById('gearSeasonLabel');
+  if (!seasonalGrid || !optionalGrid) return;
+
+  seasonLabel.textContent = month + '月';
+
+  // Determine applicable categories
+  const items = [];
+  const summerMonths = [6,7,8,9];
+  const winterMonths = [12,1,2];
+  const rainyMonths = [5,6,7,8,9];
+  const bestMonths = [3,4,10,11];
+
+  if (winterMonths.includes(month)) {
+    items.push(...SEASONAL_GEAR.winter);
+  }
+  if (summerMonths.includes(month)) {
+    items.push(...SEASONAL_GEAR.summer);
+  }
+  if (rainyMonths.includes(month)) {
+    items.push(...SEASONAL_GEAR.rainy);
+  }
+  if (bestMonths.includes(month)) {
+    items.push('最佳季節，基本裝備即可');
+  }
+
+  // Render seasonal items
+  seasonalGrid.innerHTML = '';
+  items.forEach(function(item) {
+    const div = document.createElement('div');
+    div.className = 'gear-item';
+    div.innerHTML = '<div class="gear-check" style="border-color:var(--amber);background:var(--amber-bg);"><span style="font-size:0.7rem;color:var(--amber);">+</span></div><div class="gear-text">' + item + '</div>';
+    seasonalGrid.appendChild(div);
+  });
+
+  seasonalSection.style.display = items.length > 0 ? '' : 'none';
+
+  // Render optional items (always shown)
+  optionalGrid.innerHTML = '';
+  SEASONAL_GEAR.optional.forEach(function(item) {
+    const div = document.createElement('div');
+    div.className = 'gear-item';
+    div.innerHTML = '<div class="gear-check" style="border-color:var(--text-dim);border-style:dashed;"><span style="font-size:0.6rem;color:var(--text-dim);">?</span></div><div class="gear-text">' + item + '</div>';
+    optionalGrid.appendChild(div);
+  });
+}
 
 let currentPace = BASE_PACE;
 let currentStartMin = 0;
@@ -2796,6 +2902,9 @@ function applyConfig() {
     }
   }
 
+  // Seasonal gear
+  updateSeasonalGear(month);
+
   // Footer
   const footer = document.getElementById('footerLine');
   if (footer) footer.textContent = '台北大縱走 一日完走計畫 ── 上河 \u00d7' + pace.toFixed(2) + ' ── 2026';
@@ -3119,20 +3228,23 @@ document.querySelectorAll('.tl-item').forEach(item => {
 
 // ═══ GEAR CHECK ═══
 function toggleGear(el) {
+  // Only toggle items in the base gear grid
+  if (!document.getElementById('gearGrid').contains(el)) return;
   el.classList.toggle('checked');
-  const idx = Array.from(el.parentElement.children).indexOf(el);
+  const idx = Array.from(document.getElementById('gearGrid').children).indexOf(el);
   state.gear[idx] = el.classList.contains('checked');
   saveState(state);
   updateGear();
 }
 function updateGear() {
-  const total = document.querySelectorAll('.gear-item').length;
-  const checked = document.querySelectorAll('.gear-item.checked').length;
+  const baseGrid = document.getElementById('gearGrid');
+  const total = baseGrid.querySelectorAll('.gear-item').length;
+  const checked = baseGrid.querySelectorAll('.gear-item.checked').length;
   const pct = Math.round((checked / total) * 100);
   document.getElementById('gearFill').style.width = pct + '%';
   document.getElementById('gearText').textContent = checked + ' / ' + total;
 }
-document.querySelectorAll('.gear-item').forEach((item, idx) => {
+document.getElementById('gearGrid').querySelectorAll('.gear-item').forEach((item, idx) => {
   if (state.gear[idx]) item.classList.add('checked');
 });
 updateGear();
