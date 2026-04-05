@@ -132,7 +132,8 @@ body, .tl-card, .seg-card, .supply-card, nav, .bottom-nav, .tracker-card, .pace-
 .gate-card, .gear-item, .weather-card, .safety-card, .emergency-card, .logistics-card,
 .calc-card, .calc-slider-group, .milestone, .retreat-card, .gap-card, .toast,
 .progress-pill, .tl-progress-summary, .pace-stat, .smart-summary, .decision-tree,
-.seg-warning, .seg-danger, .seg-info, .seg-signal, footer, .offline-banner {
+.seg-warning, .seg-danger, .seg-info, .seg-signal, footer, .offline-banner,
+.tracker-next-gate, .tracker-big-bar, .gem-card, .gpx-download-card, .gems-intro, .gems-note, .checkpoint-badge {
   transition: background-color 0.3s, border-color 0.3s, color 0.3s, box-shadow 0.3s;
 }
 
@@ -1097,6 +1098,7 @@ footer a { color: var(--amber); text-decoration: none; }
   .pace-stats { grid-template-columns: 1fr; }
   .weather-grid { grid-template-columns: 1fr; }
   .gates-grid { grid-template-columns: 1fr; }
+  .gpx-grid { grid-template-columns: 1fr; }
 }
 
 /* ═══ LIVE TRACKER ═══ */
@@ -2241,7 +2243,7 @@ function updateSeasonalGear(month) {
   const optionalGrid = document.getElementById('gearOptionalGrid');
   const seasonalSection = document.getElementById('gearSeasonal');
   const seasonLabel = document.getElementById('gearSeasonLabel');
-  if (!seasonalGrid || !optionalGrid) return;
+  if (!seasonalGrid || !optionalGrid || !seasonLabel || !seasonalSection) return;
 
   seasonLabel.textContent = month + '月';
 
@@ -2484,7 +2486,7 @@ const elevData = [
   {x:155,h:984,label:'大屯西峰',seg:'s2',supply:false,major:false},
   {x:170,h:959,label:'大屯南峰',seg:'s2',supply:false,major:false},
   {x:200,h:1077,label:'',seg:'s2',supply:false,major:false},
-  {x:230,h:684,label:'二子坪',seg:'s2',supply:true,major:false},
+  {x:230,h:800,label:'二子坪',seg:'s2',supply:true,major:false},
   {x:250,h:750,label:'',seg:'s3',supply:false,major:false},
   {x:260,h:1040,label:'',seg:'s3',supply:false,major:false},
   {x:290,h:1120,label:'七星山',seg:'s3',supply:false,major:true},
@@ -3522,6 +3524,25 @@ function updateTracker() {
     const finM = Math.round(totalMin%60);
     segEl.innerHTML = '🏁 <strong>恭喜完走！</strong>全程 ' + finH + ' 小時' + (finM > 0 ? ' ' + finM + ' 分' : '');
     gateEl.style.display = 'none';
+    // Auto-check all segments on completion
+    SCHEDULE.forEach(function(seg) {
+      var item = document.querySelector('.tl-item[data-id="' + seg.id + '"]');
+      if (item && !item.classList.contains('checked')) {
+        item.classList.add('checked');
+        state.timeline[seg.id] = true;
+        if (!state.checkpoints) state.checkpoints = {};
+        if (!state.checkpoints[seg.id]) {
+          state.checkpoints[seg.id] = {
+            time: state.startTime + (seg.startMin + seg.durMin) * 60000,
+            expectedMin: seg.startMin + seg.durMin,
+            auto: true
+          };
+        }
+      }
+    });
+    saveState(state);
+    updateProgress();
+    updateCheckpointDisplay();
     updateGateColors();
     updateElevTrackerDot();
     return;
@@ -3624,6 +3645,7 @@ function updateTracker() {
 
   // Auto-check completed segments
   if (!state.trackerStopped) {
+    var newlyChecked = [];
     var currentIdx = SCHEDULE.findIndex(function(s) { return s.id === current.id; });
     for (var ci = 0; ci < currentIdx; ci++) {
       var seg = SCHEDULE[ci];
@@ -3639,8 +3661,18 @@ function updateTracker() {
             auto: true
           };
         }
-        showSegmentToast(seg);
+        newlyChecked.push(seg);
       }
+    }
+    if (newlyChecked.length === 1) {
+      showSegmentToast(newlyChecked[0]);
+    } else if (newlyChecked.length > 1) {
+      var names = newlyChecked.map(function(s) { return s.name.split(' ')[0]; }).join(', ');
+      var toast = document.getElementById('toast');
+      toast.textContent = '✓ ' + names + ' 完成';
+      toast.classList.add('visible');
+      clearTimeout(window._segToastTimer);
+      window._segToastTimer = setTimeout(function() { toast.classList.remove('visible'); }, 4000);
     }
     saveState(state);
     updateProgress();
