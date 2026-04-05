@@ -33,7 +33,7 @@
   --border-faint: rgba(0,0,0,0.05);
   --text-primary: #1e293b;
   --text-secondary: #475569;
-  --text-dim: #94a3b8;
+  --text-dim: #64748b;
   --text-white: #1e293b;
   --amber: #d97706;
   --amber-bg: rgba(217,119,6,0.1);
@@ -69,6 +69,9 @@
   --emergency-border: rgba(190,18,60,0.15);
   --timeline-dot-bg: var(--bg);
   --gear-check-after: #fff;
+  --timeline-night-start: #1e1b4b;
+  --timeline-night-end: #581c87;
+  --danger-text: #be123c;
 }
 
 /* ── DARK THEME ── */
@@ -119,6 +122,9 @@
   --emergency-border: rgba(225,29,72,0.15);
   --timeline-dot-bg: var(--bg);
   --gear-check-after: var(--bg);
+  --timeline-night-start: #312e81;
+  --timeline-night-end: #7c3aed;
+  --danger-text: #fb7185;
 }
 
 /* ── Smooth transitions ── */
@@ -499,8 +505,8 @@ nav a:hover, nav a.active { color: var(--amber); }
 .timeline::before {
   content: ''; position: absolute; left: 20px; top: 0; bottom: 0; width: 2px;
   background: linear-gradient(to bottom,
-    var(--bg) 0%, #1e1b4b 5%, #312e81 15%, var(--amber) 25%,
-    var(--sky) 45%, var(--sky) 55%, var(--sunrise) 75%, var(--sunset) 88%, #581c87 95%, var(--bg) 100%);
+    var(--bg) 0%, var(--timeline-night-start) 5%, var(--timeline-night-start) 15%, var(--amber) 25%,
+    var(--sky) 45%, var(--sky) 55%, var(--sunrise) 75%, var(--sunset) 88%, var(--timeline-night-end) 95%, var(--bg) 100%);
 }
 
 .tl-item {
@@ -620,7 +626,7 @@ nav a:hover, nav a.active { color: var(--amber); }
 /* Signal meta items */
 .tl-meta-signal[data-level="good"] { color: var(--ridge); }
 .tl-meta-signal[data-level="weak"] { color: var(--amber); }
-.tl-meta-signal[data-level="bad"] { color: #fb7185; }
+.tl-meta-signal[data-level="bad"] { color: var(--danger-text); }
 
 /* Checkpoint badges */
 .checkpoint-badge { font-family: var(--font-mono); font-size: 0.65rem; padding: 0.3rem 0.6rem; border-radius: 6px; margin-top: 0.5rem; display: inline-block; }
@@ -647,7 +653,7 @@ nav a:hover, nav a.active { color: var(--amber); }
 .gate-elapsed { font-family: var(--font-mono); font-size: 0.6rem; color: var(--text-dim); margin-top: 2px; }
 .gate-countdown { font-family: var(--font-mono); font-size: 0.7rem; color: var(--ridge); text-align: right; white-space: nowrap; }
 .gate-countdown.urgent { color: var(--amber); }
-.gate-countdown.past { color: #fb7185; }
+.gate-countdown.past { color: var(--danger-text); }
 .tracker-gate { margin-top: 0.5rem; font-family: var(--font-mono); font-size: 0.75rem; color: var(--ridge); }
 
 .tracker-btn {
@@ -670,7 +676,7 @@ nav a:hover, nav a.active { color: var(--amber); }
   padding: 8px 16px; font-size: 0.8rem; min-height: 44px; margin-left: 6px;
 }
 .tracker-btn-stop {
-  background: var(--sunset-bg); color: #fb7185;
+  background: var(--sunset-bg); color: var(--danger-text);
   border: 1px solid rgba(225,29,72,0.2); font-size: 0.75rem; padding: 8px 16px;
 }
 .tracker-btn-reset {
@@ -746,7 +752,7 @@ nav a:hover, nav a.active { color: var(--amber); }
   background: var(--sunset-bg); border-left: 3px solid var(--sunset);
   padding: 0.6rem 0.8rem; border-radius: 0 8px 8px 0; margin: 0.6rem 0;
 }
-.seg-danger p { font-size: 0.75rem; color: #fb7185; line-height: 1.6; }
+.seg-danger p { font-size: 0.75rem; color: var(--danger-text); line-height: 1.6; }
 
 .seg-info {
   background: var(--sky-bg); border-left: 3px solid var(--sky);
@@ -1873,6 +1879,8 @@ document.getElementById('themeToggle').addEventListener('click', () => {
   updateThemeColor(next);
   // Re-render elevation chart for new theme colors
   if (typeof renderElevationChart === 'function') renderElevationChart();
+  // Re-apply config to update day/night bar and other theme-dependent elements
+  if (typeof applyConfig === 'function') applyConfig();
 });
 
 // ═══ STATE ═══
@@ -2247,7 +2255,7 @@ function renderElevationChart() {
   svg += '<stop offset="100%" stop-color="var(--elev-fill-bottom)"/>';
   svg += '</linearGradient>';
   svg += '<linearGradient id="elevStroke" x1="0" y1="0" x2="1" y2="0">';
-  svg += '<stop offset="0%" stop-color="' + (theme === 'dark' ? '#818cf8' : '#818cf8') + '"/>';
+  svg += '<stop offset="0%" stop-color="' + (theme === 'dark' ? '#818cf8' : '#6366f1') + '"/>';
   svg += '<stop offset="15%" stop-color="' + (theme === 'dark' ? '#f59e0b' : '#d97706') + '"/>';
   svg += '<stop offset="35%" stop-color="' + (theme === 'dark' ? '#38bdf8' : '#0284c7') + '"/>';
   svg += '<stop offset="55%" stop-color="' + (theme === 'dark' ? '#38bdf8' : '#0284c7') + '"/>';
@@ -2368,10 +2376,11 @@ function getElevAtX(xPct) {
 let touchTimeout = null;
 chartEl.addEventListener('pointermove', (e) => {
   const rect = chartEl.getBoundingClientRect();
-  const xPct = (e.clientX - rect.left) / rect.width;
-  if (xPct < 0 || xPct > 1) return;
-  const info = getElevAtX(xPct);
+  const rawXPct = (e.clientX - rect.left) / rect.width;
+  if (rawXPct < 0 || rawXPct > 1) return;
   const padTop = 22, padBottom = 18, chartH = 200 - padTop - padBottom, padLeft = 28;
+  const xPct = Math.max(0, Math.min(1, (rawXPct * 1000 - padLeft) / (1000 - padLeft)));
+  const info = getElevAtX(xPct);
   const dotYPct = (padTop + chartH * (1 - info.h / maxH)) / 200 * 100;
   const dotXPct = (padLeft + xPct * (1000 - padLeft)) / 1000 * 100;
 
@@ -2392,11 +2401,12 @@ chartEl.addEventListener('pointerleave', () => {
 chartEl.addEventListener('touchstart', (e) => {
   const touch = e.touches[0];
   const rect = chartEl.getBoundingClientRect();
-  const xPct = (touch.clientX - rect.left) / rect.width;
-  if (xPct < 0 || xPct > 1) return;
+  const rawXPct = (touch.clientX - rect.left) / rect.width;
+  if (rawXPct < 0 || rawXPct > 1) return;
+  const padTop = 22, padBottom = 18, chartH = 200 - padTop - padBottom, padLeft = 28;
+  const xPct = Math.max(0, Math.min(1, (rawXPct * 1000 - padLeft) / (1000 - padLeft)));
   touchTimeout = setTimeout(() => {
     const info = getElevAtX(xPct);
-    const padTop = 22, padBottom = 18, chartH = 200 - padTop - padBottom, padLeft = 28;
     const dotYPct = (padTop + chartH * (1 - info.h / maxH)) / 200 * 100;
     const dotXPct = (padLeft + xPct * (1000 - padLeft)) / 1000 * 100;
     tooltip.style.left = dotXPct + '%';
@@ -2415,14 +2425,20 @@ chartEl.addEventListener('touchend', () => {
     dot.style.opacity = '0';
   }, 1500);
 }, { passive: true });
+chartEl.addEventListener('touchcancel', () => {
+  clearTimeout(touchTimeout);
+  tooltip.style.opacity = '0';
+  dot.style.opacity = '0';
+}, { passive: true });
 chartEl.addEventListener('touchmove', (e) => {
   clearTimeout(touchTimeout);
   const touch = e.touches[0];
   const rect = chartEl.getBoundingClientRect();
-  const xPct = (touch.clientX - rect.left) / rect.width;
-  if (xPct < 0 || xPct > 1) return;
-  const info = getElevAtX(xPct);
+  const rawXPct = (touch.clientX - rect.left) / rect.width;
+  if (rawXPct < 0 || rawXPct > 1) return;
   const padTop = 22, padBottom = 18, chartH = 200 - padTop - padBottom, padLeft = 28;
+  const xPct = Math.max(0, Math.min(1, (rawXPct * 1000 - padLeft) / (1000 - padLeft)));
+  const info = getElevAtX(xPct);
   const dotYPct = (padTop + chartH * (1 - info.h / maxH)) / 200 * 100;
   const dotXPct = (padLeft + xPct * (1000 - padLeft)) / 1000 * 100;
   tooltip.style.left = dotXPct + '%';
@@ -2665,9 +2681,6 @@ function applyConfig() {
   const footer = document.getElementById('footerLine');
   if (footer) footer.textContent = '台北大縱走 一日完走計畫 ── 上河 \u00d7' + pace.toFixed(2) + ' ── 2026';
 
-  // Re-render elevation chart
-  renderElevationChart();
-
   updateURL();
 }
 
@@ -2748,6 +2761,11 @@ function updateDaynightBar(startMin, totalMin, sun) {
   const track = document.getElementById('daynightTrack');
   if (!track) return;
 
+  const theme = document.documentElement.getAttribute('data-theme');
+  const nightColor = theme === 'dark' ? '#312e81' : '#1e1b4b';
+  const preNightColor = theme === 'dark' ? '#3730a3' : '#312e81';
+  const postDuskColor = theme === 'dark' ? '#3730a3' : '#581c87';
+
   // Build gradient by sampling at 1% intervals
   const stops = [];
   for (let i = 0; i <= 100; i++) {
@@ -2756,7 +2774,7 @@ function updateDaynightBar(startMin, totalMin, sun) {
     const phase = getPhase(clockMin, sun.rise, sun.set);
     let color;
     switch (phase) {
-      case 'night': color = '#1e1b4b'; break;
+      case 'night': color = nightColor; break;
       case 'dawn': color = '#f59e0b'; break;
       case 'day': color = (clockMin <= 660) ? '#38bdf8' : '#7dd3fc'; break;
       case 'afternoon': {
@@ -2774,7 +2792,7 @@ function updateDaynightBar(startMin, totalMin, sun) {
         break;
       }
       case 'dusk': color = '#e11d48'; break;
-      default: color = '#1e1b4b';
+      default: color = nightColor;
     }
     stops.push(color + ' ' + i + '%');
   }
@@ -3091,6 +3109,7 @@ function updateTracker() {
   if (state.trackerStopped) {
     statusEl.className = 'tracker-status before';
     statusEl.textContent = '已暫停';
+    updateGateColors();
     updateElevTrackerDot();
     return;
   }
@@ -3347,6 +3366,7 @@ if (!navigator.onLine) {
 
 // ═══ INIT ═══
 applyConfig();
+renderElevationChart();
 updateProgress();
 updateTracker();
 updateCalc();
