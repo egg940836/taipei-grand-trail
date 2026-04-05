@@ -997,6 +997,49 @@ footer a { color: var(--amber); text-decoration: none; }
 @keyframes fadeUp { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:translateY(0); } }
 @keyframes scrollPulse { 0%,100% { opacity:0.3; } 50% { opacity:1; } }
 
+/* ═══ WORD-BREAK FIXES ═══ */
+.smart-summary { word-break: break-word; }
+.tl-route { word-break: break-word; }
+
+/* ═══ OFFLINE BANNER THEME TOGGLE PUSH ═══ */
+.offline-active .theme-toggle { top: 40px; }
+
+/* ═══ GEMS SECTION ═══ */
+.gems-section { padding: 2.5rem 1rem; max-width: 900px; margin: 0 auto; }
+.gems-intro { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 1rem; margin-bottom: 1rem; font-size: 0.8rem; color: var(--text-secondary); line-height: 1.65; }
+.gems-intro strong { color: var(--text-primary); }
+.gems-app-links { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: 0.75rem; }
+.gems-app-links a { font-family: var(--font-mono); font-size: 0.7rem; color: var(--amber); text-decoration: underline; }
+.gems-subtitle { font-family: var(--font-display); font-weight: 700; font-size: 0.9rem; margin: 1rem 0 0.5rem; color: var(--text-primary); }
+.gems-grid { display: grid; grid-template-columns: 1fr; gap: 0.5rem; }
+.gem-card { display: flex; align-items: flex-start; gap: 0.75rem; background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; padding: 0.75rem; font-size: 0.8rem; }
+.gem-seg { font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.1em; padding: 0.2rem 0.5rem; border-radius: 4px; background: var(--amber-bg); color: var(--amber); font-weight: 600; white-space: nowrap; flex-shrink: 0; }
+.gem-card strong { color: var(--text-primary); font-size: 0.8rem; }
+.gem-loc { color: var(--text-dim); font-size: 0.75rem; }
+.gems-note { background: var(--amber-bg); border-left: 3px solid var(--amber); padding: 0.75rem 1rem; border-radius: 0 8px 8px 0; margin-top: 1rem; font-size: 0.75rem; color: var(--text-secondary); line-height: 1.6; }
+.gems-note strong { color: var(--amber); }
+
+/* ═══ GPX SECTION ═══ */
+.gpx-section { padding: 2.5rem 1rem; max-width: 900px; margin: 0 auto; }
+.gpx-warning { background: var(--amber-bg); border-left: 3px solid var(--amber); padding: 0.6rem 0.8rem; border-radius: 0 8px 8px 0; font-size: 0.75rem; color: var(--amber); margin-bottom: 1rem; }
+.gpx-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; }
+.gpx-download-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 1rem; text-decoration: none; text-align: center; transition: border-color 0.2s; }
+.gpx-download-card:hover { border-color: var(--ridge); }
+.gpx-download-card:active { transform: scale(0.97); }
+.gpx-download-icon { font-size: 1.5rem; margin-bottom: 0.4rem; }
+.gpx-download-name { font-family: var(--font-display); font-weight: 700; font-size: 0.85rem; color: var(--text-primary); margin-bottom: 0.2rem; }
+.gpx-download-desc { font-size: 0.7rem; color: var(--text-dim); }
+
+/* ═══ PER-SEGMENT GPX ═══ */
+.seg-gpx { margin-top: 0.75rem; padding-top: 0.75rem; border-top: 1px solid var(--border-faint); display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+.gpx-btn { font-family: var(--font-mono); font-size: 0.7rem; padding: 0.4rem 0.8rem; border-radius: 6px; background: var(--ridge-bg); color: var(--ridge); text-decoration: none; font-weight: 600; }
+.gpx-hint { font-size: 0.65rem; color: var(--text-dim); }
+
+/* ═══ LOGISTICS CARD BODY ═══ */
+.logistics-card-body { font-size: 0.8rem; color: var(--text-dim); line-height: 1.7; }
+.logistics-card-body p { margin-bottom: 0.3rem; }
+.logistics-card-body strong { color: var(--text-primary); }
+
 /* ═══ DESKTOP ═══ */
 @media (min-width: 641px) {
   .supply-grid { grid-template-columns: repeat(2, 1fr); }
@@ -1006,6 +1049,7 @@ footer a { color: var(--amber); text-decoration: none; }
   .emergency-grid { grid-template-columns: repeat(4, 1fr); }
   .weather-grid { grid-template-columns: repeat(4, 1fr); }
   .gates-grid { grid-template-columns: repeat(2, 1fr); }
+  .gems-grid { grid-template-columns: repeat(2, 1fr); }
   .timeline { padding-left: 72px; }
   .timeline::before { left: 30px; }
   .tl-item::before { left: -46px; }
@@ -1028,10 +1072,15 @@ footer a { color: var(--amber); text-decoration: none; }
   footer { padding-bottom: calc(80px + var(--safe-bottom)); }
   .theme-toggle { top: 10px; right: 12px; width: 44px; height: 44px; }
   .theme-toggle svg { width: 20px; height: 20px; }
+  .timeline { padding-left: 40px; }
+  .timeline::before { left: 14px; }
+  .tl-item::before { left: -30px; width: 8px; height: 8px; }
+  .tl-card { padding: 0.85rem 0.75rem; }
+  .tl-header { flex-wrap: wrap; }
 }
 
 /* ═══ SMALL MOBILE ═══ */
-@media (max-width: 380px) {
+@media (max-width: 420px) {
   .hero-stats { grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
   .gear-grid { grid-template-columns: 1fr; }
   .safety-grid { grid-template-columns: 1fr; }
@@ -1193,7 +1242,12 @@ input[type="range"]::-webkit-slider-thumb {
 .elev-waypoint-dot.always-show { opacity: 1; }
 .elevation-chart:hover .elev-waypoint-dot { opacity: 0.8; }
 
-@media (max-width: 380px) {
+@media (max-width: 640px) {
+  .elev-waypoint-label:not(.always-show) { display: none !important; }
+  .elev-waypoint-label.always-show { font-size: 6px; }
+}
+
+@media (max-width: 420px) {
   .calc-grid { grid-template-columns: 1fr; }
   .tracker-info { grid-template-columns: repeat(3, 1fr); }
 }
@@ -1242,8 +1296,10 @@ input[type="range"]::-webkit-slider-thumb {
     <a href="#retreat">撤退</a>
     <a href="#logistics">交通</a>
     <a href="#milestones">里程碑</a>
+    <a href="#gems">寶石</a>
     <a href="#gear">裝備</a>
     <a href="#calc">計算</a>
+    <a href="#gpx">GPX</a>
     <a href="#safety">安全</a>
   </div>
 </nav>
@@ -1494,6 +1550,7 @@ input[type="range"]::-webkit-slider-thumb {
     <div class="seg-warning"><p><strong>夜間：</strong>頭燈充飽電。陽明山有蛇出沒，登山杖打草驚蛇。道路段注意來車。</p></div>
     <div class="seg-subtitle">補給</div>
     <p class="seg-text"><strong>清天宮</strong>（~01:30）飲水機＋廁所｜<strong>二子坪</strong>（~03:20）販賣機24hr＋廁所</p>
+    <div class="seg-gpx"><a href="https://taipeigrandtrail.gov.taipei/News_Content.aspx?n=E0B7C742E7BA29C6&s=5A897AA80DB36A12&sms=9681E3755A0FC621" target="_blank" class="gpx-btn">📥 下載 GPX（官方）</a><span class="gpx-hint">出發前一天下載！山上網速極慢</span></div>
   </div></div></div>
 
   <div class="seg-card"><div class="seg-header" onclick="this.parentElement.classList.toggle('open')"><div class="seg-title-group"><span class="seg-badge dawn" data-seg-badge="s2">S2・03:20</span><span class="seg-name">面天坪→小油坑</span></div><span class="seg-toggle">&#9662;</span></div><div class="seg-body"><div class="seg-content">
@@ -1526,6 +1583,7 @@ input[type="range"]::-webkit-slider-thumb {
     <div class="seg-warning"><p><strong>穿越野跑鞋或雨鞋，帶工作手套。</strong>前幾天有雨可搭108公車從二子坪直達小油坑跳過此段。</p></div>
     <div class="seg-subtitle">撤退</div>
     <p class="seg-text">面天坪退回二子坪｜大屯山鞍部有108公車站｜竹子湖有公車下山</p>
+    <div class="seg-gpx"><a href="https://taipeigrandtrail.gov.taipei/News_Content.aspx?n=E0B7C742E7BA29C6&s=5A897AA80DB36A12&sms=9681E3755A0FC621" target="_blank" class="gpx-btn">📥 下載 GPX（官方）</a><span class="gpx-hint">出發前一天下載！山上網速極慢</span></div>
   </div></div></div>
 
   <div class="seg-card"><div class="seg-header" onclick="this.parentElement.classList.toggle('open')"><div class="seg-title-group"><span class="seg-badge day" data-seg-badge="s3">S3・06:00</span><span class="seg-name">小油坑→風櫃口</span></div><span class="seg-toggle">&#9662;</span></div><div class="seg-body"><div class="seg-content">
@@ -1539,6 +1597,7 @@ input[type="range"]::-webkit-slider-thumb {
     <div class="seg-warning"><p><strong>山頂可能低於10°C+強風。</strong>備薄風衣。午後常有雷陣雨。</p></div>
     <div class="seg-subtitle">補給</div>
     <p class="seg-text"><strong>冷水坑</strong>（~07:30）販賣機＋廁所｜<strong>擎天崗</strong> 廁所、小15公車可至劍潭（撤退用）</p>
+    <div class="seg-gpx"><a href="https://taipeigrandtrail.gov.taipei/News_Content.aspx?n=E0B7C742E7BA29C6&s=5A897AA80DB36A12&sms=9681E3755A0FC621" target="_blank" class="gpx-btn">📥 下載 GPX（官方）</a><span class="gpx-hint">出發前一天下載！山上網速極慢</span></div>
   </div></div></div>
 
   <div class="seg-card"><div class="seg-header" onclick="this.parentElement.classList.toggle('open')"><div class="seg-title-group"><span class="seg-badge day" data-seg-badge="s4">S4・09:20</span><span class="seg-name">風櫃口→大湖公園</span></div><span class="seg-toggle">&#9662;</span></div><div class="seg-body"><div class="seg-content">
@@ -1550,6 +1609,7 @@ input[type="range"]::-webkit-slider-thumb {
     <p class="seg-text"><strong>圓覺瀑布→大溝溪：</strong>全程最清涼路段之一。</p>
     <div class="seg-warning"><p><strong>官方終點是中華科大</strong>（含大湖公園→中華科大的道路段約5km）。一日完走在大湖公園站叫 Uber 即可，不需走到中華科大。</p></div>
     <div class="seg-info"><p><strong>過半！</strong>陽明山段結束。大湖公園站便利商店大補給。建議換襪子、充分補食。</p></div>
+    <div class="seg-gpx"><a href="https://taipeigrandtrail.gov.taipei/News_Content.aspx?n=E0B7C742E7BA29C6&s=5A897AA80DB36A12&sms=9681E3755A0FC621" target="_blank" class="gpx-btn">📥 下載 GPX（官方）</a><span class="gpx-hint">出發前一天下載！山上網速極慢</span></div>
   </div></div></div>
 
   <div class="seg-card"><div class="seg-header" onclick="this.parentElement.classList.toggle('open')"><div class="seg-title-group"><span class="seg-badge afternoon" data-seg-badge="s5">S5・12:40</span><span class="seg-name">劍潭→碧山巖</span></div><span class="seg-toggle">&#9662;</span></div><div class="seg-body"><div class="seg-content">
@@ -1562,6 +1622,7 @@ input[type="range"]::-webkit-slider-thumb {
     <div class="seg-subtitle">補給</div>
     <p class="seg-text"><strong>鄭成功廟</strong>有飲水機｜<strong>碧山巖</strong>（~15:40）飲水機＋廁所</p>
     <p class="seg-text"><strong>撤退：</strong>沿途多下切口至市區，離文明最近的一段。</p>
+    <div class="seg-gpx"><a href="https://taipeigrandtrail.gov.taipei/News_Content.aspx?n=E0B7C742E7BA29C6&s=5A897AA80DB36A12&sms=9681E3755A0FC621" target="_blank" class="gpx-btn">📥 下載 GPX（官方）</a><span class="gpx-hint">出發前一天下載！山上網速極慢</span></div>
   </div></div></div>
 
   <div class="seg-card"><div class="seg-header" onclick="this.parentElement.classList.toggle('open')"><div class="seg-title-group"><span class="seg-badge afternoon" data-seg-badge="s6">S6・16:20</span><span class="seg-name">中華科大→麟光</span></div><span class="seg-toggle">&#9662;</span></div><div class="seg-body"><div class="seg-content">
@@ -1573,6 +1634,7 @@ input[type="range"]::-webkit-slider-thumb {
     <p class="seg-text"><strong>糶米古道→富陽：</strong>原生步道林蔭佳，下降至麟光站。</p>
     <div class="seg-subtitle">補給</div>
     <p class="seg-text"><strong>安祿宮</strong>飲水機（冰溫熱）＋廁所｜<strong>麟光站</strong>（~18:44）便利商店，<strong>最後補給！</strong></p>
+    <div class="seg-gpx"><a href="https://taipeigrandtrail.gov.taipei/News_Content.aspx?n=E0B7C742E7BA29C6&s=5A897AA80DB36A12&sms=9681E3755A0FC621" target="_blank" class="gpx-btn">📥 下載 GPX（官方）</a><span class="gpx-hint">出發前一天下載！山上網速極慢</span></div>
   </div></div></div>
 
   <div class="seg-card"><div class="seg-header" onclick="this.parentElement.classList.toggle('open')"><div class="seg-title-group"><span class="seg-badge dusk" data-seg-badge="s7">S7・18:44</span><span class="seg-name">麟光→政大</span></div><span class="seg-toggle">&#9662;</span></div><div class="seg-body"><div class="seg-content">
@@ -1588,7 +1650,21 @@ input[type="range"]::-webkit-slider-thumb {
     <p class="seg-text"><strong>貓纜指南宮站/貓空站</strong>可搭纜車或公車（平日末班21:00/假日22:00，每月除第一個週一外其餘週一公休）｜<strong>樟山寺</strong>棕15公車</p>
     <div class="seg-subtitle">完走後</div>
     <p class="seg-text">政大校門口：公車 236區/237/282/530/611/676/棕6/綠1。或叫 Uber/計程車。</p>
+    <div class="seg-gpx"><a href="https://taipeigrandtrail.gov.taipei/News_Content.aspx?n=E0B7C742E7BA29C6&s=5A897AA80DB36A12&sms=9681E3755A0FC621" target="_blank" class="gpx-btn">📥 下載 GPX（官方）</a><span class="gpx-hint">出發前一天下載！山上網速極慢</span></div>
   </div></div></div>
+
+  <!-- S8 Note -->
+  <div class="seg-card" style="border-style:dashed;opacity:0.7;">
+    <div class="seg-header" style="cursor:default;">
+      <div class="seg-title-group">
+        <span class="seg-badge" style="background:var(--bg-card);color:var(--text-dim);">S8</span>
+        <span class="seg-name">動物園→關渡（自行車/步行）</span>
+      </div>
+    </div>
+    <div style="padding:0 1rem 1rem;font-size:0.8rem;color:var(--text-dim);line-height:1.6;">
+      S8 為河濱自行車道段（約 25km），從動物園沿河濱經社子島回到關渡。官方集章需完成 S8，但通常另擇一天騎車完成，不包含在一日完走計畫中。
+    </div>
+  </div>
 </section>
 
 <div class="divider"></div>
@@ -1677,6 +1753,15 @@ input[type="range"]::-webkit-slider-thumb {
       <li><strong>貓纜（若時間允許）：</strong>貓空站→動物園站，轉捷運文湖線</li>
     </ul>
   </div>
+
+  <div class="logistics-card">
+    <div class="logistics-card-title">📱 行前 APP 準備</div>
+    <div class="logistics-card-body">
+      <p><strong>必裝：</strong>健行筆記 APP（寶石收集 + 離線地圖）</p>
+      <p><strong>推薦：</strong>Hikingbook 或 綠野遊蹤（備用 GPS 導航）</p>
+      <p><strong>前一天務必：</strong>①登入帳號 ②下載 S1-S7 離線地圖 ③匯入 GPX 檔 ④開啟定位權限 ⑤充滿電</p>
+    </div>
+  </div>
 </section>
 
 <div class="divider"></div>
@@ -1692,6 +1777,37 @@ input[type="range"]::-webkit-slider-thumb {
     <div class="milestone" data-phase="day" data-ms-idx="3"><div class="milestone-time" data-ms-time="3">~12:20</div><div class="milestone-title">S4 完成</div><div class="milestone-desc">陽明山段結束</div></div>
     <div class="milestone" data-phase="dusk" data-ms-idx="4"><div class="milestone-time" data-ms-time="4">~18:30</div><div class="milestone-title">日落</div><div class="milestone-desc">S6 尾聲</div></div>
     <div class="milestone" data-phase="finish" data-ms-idx="5"><div class="milestone-time" data-ms-time="5">~21:10</div><div class="milestone-title">完走！</div><div class="milestone-desc">政大終點</div></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══ GEMS ═══ -->
+<section class="gems-section" id="gems">
+  <div class="section-label">GEM COLLECTION</div>
+  <div class="section-title">寶石收集</div>
+
+  <div class="gems-intro">
+    <p>2026 台北大縱走使用<strong>健行筆記 APP</strong> 收集數位寶石。走近寶石點時 APP 自動登錄，全 7 段共 56 顆寶石（含 S8）。集滿後可兌換完走證書和紀念品。</p>
+    <div class="gems-app-links">
+      <a href="https://hiking.biji.co/index.php?q=minisite&id=318" target="_blank">📱 2026 活動頁面</a>
+      <a href="https://taipeigrandtrail.gov.taipei/News_Content.aspx?n=E0B7C742E7BA29C6&sms=9681E3755A0FC621&s=15047C0DA0162369" target="_blank">📋 官方活動辦法</a>
+    </div>
+  </div>
+
+  <div class="gems-subtitle">各段拍照打卡點（2026）</div>
+  <div class="gems-grid">
+    <div class="gem-card"><span class="gem-seg">S1</span><div><strong>二子坪步道生態池</strong><br><span class="gem-loc">蘆桿嶺步道入口</span></div></div>
+    <div class="gem-card"><span class="gem-seg">S2</span><div><strong>大屯山觀景台</strong><br><span class="gem-loc">頂湖海芋步道（往幸福鐘約800m）</span></div></div>
+    <div class="gem-card"><span class="gem-seg">S3</span><div><strong>七星山頂活動標柱</strong><br><span class="gem-loc">擎天崗草原中央步道</span></div></div>
+    <div class="gem-card"><span class="gem-seg">S4</span><div><strong>同心池永結亭</strong><br><span class="gem-loc">圓覺瀑布指標</span></div></div>
+    <div class="gem-card"><span class="gem-seg">S5</span><div><strong>老地方觀機平台</strong><br><span class="gem-loc">文間山平台</span></div></div>
+    <div class="gem-card"><span class="gem-seg">S6</span><div><strong>九五峰活動標柱</strong><br><span class="gem-loc">馬蹄型觀景平台</span></div></div>
+    <div class="gem-card"><span class="gem-seg">S7</span><div><strong>千階步道（忠南亭附近）</strong><br><span class="gem-loc">樟樹步道（彩雲亭附近）</span></div></div>
+  </div>
+
+  <div class="gems-note">
+    <strong>重要：</strong>出發前一天下載健行筆記 APP 並登入帳號、下載離線地圖、開啟定位服務。山上網路慢，現場下載會來不及。
   </div>
 </section>
 
@@ -1757,6 +1873,27 @@ input[type="range"]::-webkit-slider-thumb {
       <div class="calc-value" id="calcGel">14<span class="unit">包</span></div>
       <div class="calc-sub">每 45 分鐘 1 包</div>
     </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══ GPX DOWNLOAD ═══ -->
+<section class="gpx-section" id="gpx">
+  <div class="section-label">GPX DOWNLOAD</div>
+  <div class="section-title">GPX 下載</div>
+  <div class="gpx-warning">⚠️ 出發前一天下載所有 GPX 檔！山上網路極慢，現場下載會失敗。</div>
+  <div class="gpx-grid">
+    <a href="https://taipeigrandtrail.gov.taipei/News_Content.aspx?n=E0B7C742E7BA29C6&s=5A897AA80DB36A12&sms=9681E3755A0FC621" target="_blank" class="gpx-download-card">
+      <div class="gpx-download-icon">📥</div>
+      <div class="gpx-download-name">官方 GPX 全段下載</div>
+      <div class="gpx-download-desc">S1-S8 分段 GPX 檔案</div>
+    </a>
+    <a href="https://hiking.biji.co/index.php?q=trail&act=gpx_detail&id=108887" target="_blank" class="gpx-download-card">
+      <div class="gpx-download-icon">🗺️</div>
+      <div class="gpx-download-name">健行筆記 GPX</div>
+      <div class="gpx-download-desc">全路線 GPX + 社群軌跡</div>
+    </a>
   </div>
 </section>
 
@@ -2179,7 +2316,7 @@ const elevData = [
   {x:870,h:285,label:'指南宮',seg:'s7',supply:false,major:false},
   {x:900,h:308,label:'貓空',seg:'s7',supply:false,major:false},
   {x:950,h:150,label:'',seg:'s7',supply:false,major:false},
-  {x:1000,h:50,label:'政大',seg:'s7',supply:false,major:false},
+  {x:1000,h:50,label:'政大',seg:'s7',supply:false,major:true},
 ];
 const maxH = 1120;
 
@@ -2822,6 +2959,23 @@ function updateDaynightBar(startMin, totalMin, sun) {
 
   // Finish marker
   addMarker(100, '完走');
+
+  // ═══ COLLISION DETECTION ═══
+  // Priority order: 起登 > 完走 > 天亮 > 日落 > 過半
+  const priorityMap = { '起登': 0, '完走': 1, '天亮': 2, '日落': 3, '過半': 4 };
+  const markers = Array.from(markersEl.querySelectorAll('.dn-marker'));
+  // Sort by priority (lower = more important)
+  markers.sort((a, b) => (priorityMap[a.dataset.label] || 99) - (priorityMap[b.dataset.label] || 99));
+  const shownPositions = [];
+  markers.forEach(mk => {
+    const pos = parseFloat(mk.style.left);
+    const tooClose = shownPositions.some(p => Math.abs(p - pos) < 8);
+    if (tooClose) {
+      mk.dataset.label = '';
+    } else {
+      shownPositions.push(pos);
+    }
+  });
 }
 
 // ═══ SMART SUMMARY ═══
@@ -3337,12 +3491,15 @@ function showToast(msg) {
 // ═══ OFFLINE SUPPORT ═══
 window.addEventListener('online', () => {
   document.getElementById('offlineBanner').classList.remove('visible');
+  document.body.classList.remove('offline-active');
 });
 window.addEventListener('offline', () => {
   document.getElementById('offlineBanner').classList.add('visible');
+  document.body.classList.add('offline-active');
 });
 if (!navigator.onLine) {
   document.getElementById('offlineBanner').classList.add('visible');
+  document.body.classList.add('offline-active');
 }
 
 // ═══ INIT ═══
