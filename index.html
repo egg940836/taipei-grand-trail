@@ -1307,6 +1307,12 @@ input[type="range"]::-webkit-slider-thumb {
 .toast { max-width: 300px; text-align: center; }
 
 .cp-auto { background: var(--bg-card); color: var(--text-dim); border: 1px dashed var(--border); }
+
+.seg-timing-note {
+  background: var(--sky-bg); border-left: 3px solid var(--sky);
+  padding: 0.6rem 0.8rem; border-radius: 0 8px 8px 0;
+  margin-bottom: 0.75rem; font-size: 0.75rem; color: var(--sky); line-height: 1.5;
+}
 </style>
 </head>
 <body>
@@ -1600,15 +1606,15 @@ input[type="range"]::-webkit-slider-thumb {
   </div>
 
   <div class="timeline" id="timelineList">
-    <!-- S1 --><div class="tl-item" data-phase="night" data-id="s1"><div class="tl-card"><div class="tl-header"><div class="tl-header-left"><div class="tl-check" onclick="toggleCheck(this)"><span class="tl-check-icon">&#10003;</span></div><span class="tl-seg">S1</span><span class="tl-time-badge" data-seg="s1">00:00</span></div><span class="tl-duration" data-seg="s1">3h20m</span></div><div class="tl-route">關渡<span class="arrow">→</span>二子坪</div><div class="tl-note">夜間摸黑起登，經忠義山、貴子坑，攀上<span class="highlight">大屯山 1092m</span></div><div class="tl-meta"><span class="tl-meta-item">📏 11.8km</span><span class="tl-meta-item">⬆ +1,200m</span><span class="tl-meta-item tl-meta-condition" data-seg="s1">🌙 全程夜走</span><span class="tl-meta-item tl-meta-signal" data-seg-sig="s1" data-level="weak">📶 收訊弱</span></div></div></div>
-    <!-- S2 --><div class="tl-item" data-phase="dawn" data-id="s2"><div class="tl-card"><div class="tl-header"><div class="tl-header-left"><div class="tl-check" onclick="toggleCheck(this)"><span class="tl-check-icon">&#10003;</span></div><span class="tl-seg">S2</span><span class="tl-time-badge" data-seg="s2">03:20</span></div><span class="tl-duration" data-seg="s2">2h40m</span></div><div class="tl-route">面天坪<span class="arrow">→</span>小油坑</div><div class="tl-note"><span class="highlight">最難路段！</span>大屯山西峰/南峰泥濘拉繩。天色漸亮</div><div class="tl-meta"><span class="tl-meta-item">📏 12km</span><span class="tl-meta-item">⬆ +800m</span><span class="tl-meta-item tl-meta-condition" data-seg="s2">⚠️ 濕滑拉繩</span><span class="tl-meta-item tl-meta-signal" data-seg-sig="s2" data-level="bad">📵 收訊差</span></div></div></div>
-    <!-- S3 --><div class="tl-item" data-phase="day" data-id="s3"><div class="tl-card"><div class="tl-header"><div class="tl-header-left"><div class="tl-check" onclick="toggleCheck(this)"><span class="tl-check-icon">&#10003;</span></div><span class="tl-seg">S3</span><span class="tl-time-badge" data-seg="s3">06:00</span></div><span class="tl-duration" data-seg="s3">3h20m</span></div><div class="tl-route">小油坑<span class="arrow">→</span>風櫃口</div><div class="tl-note">登<span class="highlight">七星山 1120m</span> 全程最高！擎天崗大草原、石梯嶺</div><div class="tl-meta"><span class="tl-meta-item">📏 13km</span><span class="tl-meta-item">⬆ +950m</span><span class="tl-meta-item tl-meta-condition" data-seg="s3">🌅 日出</span><span class="tl-meta-item tl-meta-signal" data-seg-sig="s3" data-level="good">📶 收訊好</span></div></div></div>
-    <!-- S4 --><div class="tl-item" data-phase="day" data-id="s4"><div class="tl-card"><div class="tl-header"><div class="tl-header-left"><div class="tl-check" onclick="toggleCheck(this)"><span class="tl-check-icon">&#10003;</span></div><span class="tl-seg">S4</span><span class="tl-time-badge" data-seg="s4">09:20</span></div><span class="tl-duration" data-seg="s4">3h00m</span></div><div class="tl-route">風櫃口<span class="arrow">→</span>大湖公園</div><div class="tl-note">一路下降至市區。<span class="highlight">陽明山段結束！過半</span>（官方終點為中華科大，含道路段）</div><div class="tl-meta"><span class="tl-meta-item">📏 ~13km 步道</span><span class="tl-meta-item">⬆ +350m ⬇ -870m</span><span class="tl-meta-item tl-meta-condition" data-seg="s4">✅ 過半</span><span class="tl-meta-item tl-meta-signal" data-seg-sig="s4" data-level="bad">📵 收訊差</span></div></div></div>
+    <!-- S1 --><div class="tl-item" data-phase="night" data-id="s1"><div class="tl-card"><div class="tl-header"><div class="tl-header-left"><div class="tl-check" onclick="toggleCheck(this)"><span class="tl-check-icon">&#10003;</span></div><span class="tl-seg">S1</span><span class="tl-time-badge" data-seg="s1">00:00</span></div><span class="tl-duration" data-seg="s1">3h20m</span></div><div class="tl-route">關渡<span class="arrow">→</span>二子坪</div><div class="tl-note" data-seg="s1">夜間摸黑起登，經忠義山、貴子坑，攀上<span class="highlight">大屯山 1092m</span></div><div class="tl-meta"><span class="tl-meta-item">📏 11.8km</span><span class="tl-meta-item">⬆ +1,200m</span><span class="tl-meta-item tl-meta-condition" data-seg="s1">🌙 全程夜走</span><span class="tl-meta-item tl-meta-signal" data-seg-sig="s1" data-level="weak">📶 收訊弱</span></div></div></div>
+    <!-- S2 --><div class="tl-item" data-phase="dawn" data-id="s2"><div class="tl-card"><div class="tl-header"><div class="tl-header-left"><div class="tl-check" onclick="toggleCheck(this)"><span class="tl-check-icon">&#10003;</span></div><span class="tl-seg">S2</span><span class="tl-time-badge" data-seg="s2">03:20</span></div><span class="tl-duration" data-seg="s2">2h40m</span></div><div class="tl-route">面天坪<span class="arrow">→</span>小油坑</div><div class="tl-note" data-seg="s2"><span class="highlight">最難路段！</span>大屯山西峰/南峰泥濘拉繩。天色漸亮</div><div class="tl-meta"><span class="tl-meta-item">📏 12km</span><span class="tl-meta-item">⬆ +800m</span><span class="tl-meta-item tl-meta-condition" data-seg="s2">⚠️ 濕滑拉繩</span><span class="tl-meta-item tl-meta-signal" data-seg-sig="s2" data-level="bad">📵 收訊差</span></div></div></div>
+    <!-- S3 --><div class="tl-item" data-phase="day" data-id="s3"><div class="tl-card"><div class="tl-header"><div class="tl-header-left"><div class="tl-check" onclick="toggleCheck(this)"><span class="tl-check-icon">&#10003;</span></div><span class="tl-seg">S3</span><span class="tl-time-badge" data-seg="s3">06:00</span></div><span class="tl-duration" data-seg="s3">3h20m</span></div><div class="tl-route">小油坑<span class="arrow">→</span>風櫃口</div><div class="tl-note" data-seg="s3">登<span class="highlight">七星山 1120m</span> 全程最高！擎天崗大草原、石梯嶺</div><div class="tl-meta"><span class="tl-meta-item">📏 13km</span><span class="tl-meta-item">⬆ +950m</span><span class="tl-meta-item tl-meta-condition" data-seg="s3">🌅 日出</span><span class="tl-meta-item tl-meta-signal" data-seg-sig="s3" data-level="good">📶 收訊好</span></div></div></div>
+    <!-- S4 --><div class="tl-item" data-phase="day" data-id="s4"><div class="tl-card"><div class="tl-header"><div class="tl-header-left"><div class="tl-check" onclick="toggleCheck(this)"><span class="tl-check-icon">&#10003;</span></div><span class="tl-seg">S4</span><span class="tl-time-badge" data-seg="s4">09:20</span></div><span class="tl-duration" data-seg="s4">3h00m</span></div><div class="tl-route">風櫃口<span class="arrow">→</span>大湖公園</div><div class="tl-note" data-seg="s4">一路下降至市區。<span class="highlight">陽明山段結束！過半</span>（官方終點為中華科大，含道路段）</div><div class="tl-meta"><span class="tl-meta-item">📏 ~13km 步道</span><span class="tl-meta-item">⬆ +350m ⬇ -870m</span><span class="tl-meta-item tl-meta-condition" data-seg="s4">✅ 過半</span><span class="tl-meta-item tl-meta-signal" data-seg-sig="s4" data-level="bad">📵 收訊差</span></div></div></div>
     <!-- Transit 1 --><div class="tl-item" data-phase="transit" data-id="t1"><div class="tl-card"><div class="tl-header"><div class="tl-header-left"><div class="tl-check" onclick="toggleCheck(this)"><span class="tl-check-icon">&#10003;</span></div><span class="tl-seg">接駁</span><span class="tl-time-badge" data-seg="t1">12:20</span></div><span class="tl-duration" data-seg="t1">~20m</span></div><div class="tl-route">大湖公園<span class="arrow">→</span>劍潭</div><div class="tl-note">Uber 直達。<span class="highlight">便利商店大補給！</span></div></div></div>
-    <!-- S5 --><div class="tl-item" data-phase="afternoon" data-id="s5"><div class="tl-card"><div class="tl-header"><div class="tl-header-left"><div class="tl-check" onclick="toggleCheck(this)"><span class="tl-check-icon">&#10003;</span></div><span class="tl-seg">S5</span><span class="tl-time-badge" data-seg="s5">12:40</span></div><span class="tl-duration" data-seg="s5">3h00m</span></div><div class="tl-route">劍潭<span class="arrow">→</span>碧山巖</div><div class="tl-note">老地方觀機平台、大崙頭山。<span class="highlight">午後最熱，岔路多注意導航</span></div><div class="tl-meta"><span class="tl-meta-item">📏 12km</span><span class="tl-meta-item">⬆ +550m</span><span class="tl-meta-item tl-meta-condition" data-seg="s5">🌡️ 防曬</span><span class="tl-meta-item tl-meta-signal" data-seg-sig="s5" data-level="good">📶 收訊好</span></div></div></div>
+    <!-- S5 --><div class="tl-item" data-phase="afternoon" data-id="s5"><div class="tl-card"><div class="tl-header"><div class="tl-header-left"><div class="tl-check" onclick="toggleCheck(this)"><span class="tl-check-icon">&#10003;</span></div><span class="tl-seg">S5</span><span class="tl-time-badge" data-seg="s5">12:40</span></div><span class="tl-duration" data-seg="s5">3h00m</span></div><div class="tl-route">劍潭<span class="arrow">→</span>碧山巖</div><div class="tl-note" data-seg="s5">老地方觀機平台、大崙頭山。<span class="highlight">岔路多注意導航</span></div><div class="tl-meta"><span class="tl-meta-item">📏 12km</span><span class="tl-meta-item">⬆ +550m</span><span class="tl-meta-item tl-meta-condition" data-seg="s5">🌡️ 防曬</span><span class="tl-meta-item tl-meta-signal" data-seg-sig="s5" data-level="good">📶 收訊好</span></div></div></div>
     <!-- Transit 2 --><div class="tl-item" data-phase="transit" data-id="t2"><div class="tl-card"><div class="tl-header"><div class="tl-header-left"><div class="tl-check" onclick="toggleCheck(this)"><span class="tl-check-icon">&#10003;</span></div><span class="tl-seg">接駁</span><span class="tl-time-badge" data-seg="t2">15:40</span></div><span class="tl-duration" data-seg="t2">~40m</span></div><div class="tl-route">碧山巖<span class="arrow">→</span>中華科大</div><div class="tl-note">Uber 直達（或小2公車→捷運→南港）。補給休息</div></div></div>
-    <!-- S6 --><div class="tl-item" data-phase="afternoon" data-id="s6"><div class="tl-card"><div class="tl-header"><div class="tl-header-left"><div class="tl-check" onclick="toggleCheck(this)"><span class="tl-check-icon">&#10003;</span></div><span class="tl-seg">S6</span><span class="tl-time-badge" data-seg="s6">16:20</span></div><span class="tl-duration" data-seg="s6">2h24m</span></div><div class="tl-route">中華科大<span class="arrow">→</span>麟光</div><div class="tl-note"><span class="highlight">九五峰眺望101</span>，糶米古道。最後補給在麟光站</div><div class="tl-meta"><span class="tl-meta-item">📏 11km</span><span class="tl-meta-item">⬆ +680m</span><span class="tl-meta-item tl-meta-condition" data-seg="s6">🌇 夕陽</span><span class="tl-meta-item tl-meta-signal" data-seg-sig="s6" data-level="good">📶 收訊好</span></div></div></div>
-    <!-- S7 --><div class="tl-item" data-phase="dusk" data-id="s7"><div class="tl-card"><div class="tl-header"><div class="tl-header-left"><div class="tl-check" onclick="toggleCheck(this)"><span class="tl-check-icon">&#10003;</span></div><span class="tl-seg">S7</span><span class="tl-time-badge" data-seg="s7">18:44</span></div><span class="tl-duration" data-seg="s7">2h26m</span></div><div class="tl-route">麟光<span class="arrow">→</span>指南宮<span class="arrow">→</span>政大</div><div class="tl-note">經世界山莊→和平東路→指南宮千階→貓空。<span class="highlight">最後衝刺！</span>天黑需頭燈</div><div class="tl-meta"><span class="tl-meta-item">📏 13km</span><span class="tl-meta-item">⬆ +500m</span><span class="tl-meta-item tl-meta-condition" data-seg="s7">🔦 頭燈</span><span class="tl-meta-item tl-meta-signal" data-seg-sig="s7" data-level="good">📶 收訊好</span></div></div></div>
+    <!-- S6 --><div class="tl-item" data-phase="afternoon" data-id="s6"><div class="tl-card"><div class="tl-header"><div class="tl-header-left"><div class="tl-check" onclick="toggleCheck(this)"><span class="tl-check-icon">&#10003;</span></div><span class="tl-seg">S6</span><span class="tl-time-badge" data-seg="s6">16:20</span></div><span class="tl-duration" data-seg="s6">2h24m</span></div><div class="tl-route">中華科大<span class="arrow">→</span>麟光</div><div class="tl-note" data-seg="s6"><span class="highlight">九五峰眺望101</span>，糶米古道。最後補給在麟光站</div><div class="tl-meta"><span class="tl-meta-item">📏 11km</span><span class="tl-meta-item">⬆ +680m</span><span class="tl-meta-item tl-meta-condition" data-seg="s6">🌇 夕陽</span><span class="tl-meta-item tl-meta-signal" data-seg-sig="s6" data-level="good">📶 收訊好</span></div></div></div>
+    <!-- S7 --><div class="tl-item" data-phase="dusk" data-id="s7"><div class="tl-card"><div class="tl-header"><div class="tl-header-left"><div class="tl-check" onclick="toggleCheck(this)"><span class="tl-check-icon">&#10003;</span></div><span class="tl-seg">S7</span><span class="tl-time-badge" data-seg="s7">18:44</span></div><span class="tl-duration" data-seg="s7">2h26m</span></div><div class="tl-route">麟光<span class="arrow">→</span>指南宮<span class="arrow">→</span>政大</div><div class="tl-note" data-seg="s7">經世界山莊→和平東路→指南宮千階→貓空。<span class="highlight">最後衝刺！</span></div><div class="tl-meta"><span class="tl-meta-item">📏 13km</span><span class="tl-meta-item">⬆ +500m</span><span class="tl-meta-item tl-meta-condition" data-seg="s7">🔦 頭燈</span><span class="tl-meta-item tl-meta-signal" data-seg-sig="s7" data-level="good">📶 收訊好</span></div></div></div>
     <!-- Finish --><div class="tl-item" data-phase="finish" data-id="fin"><div class="tl-card"><div class="tl-header"><div class="tl-header-left"><div class="tl-check" onclick="toggleCheck(this)"><span class="tl-check-icon">&#10003;</span></div><span class="tl-seg">完走</span><span class="tl-time-badge" data-seg="fin">~21:10</span></div></div><div class="tl-route" style="font-size:1.2rem;">🏁 完走！</div><div class="tl-note" id="finishNote">全程 <strong>~21 小時</strong>・92km・+5000m</div></div></div>
   </div>
 </section>
@@ -1630,6 +1636,7 @@ input[type="range"]::-webkit-slider-thumb {
   <div class="section-title">各段路況詳解</div>
 
   <div class="seg-card"><div class="seg-header" onclick="this.parentElement.classList.toggle('open')"><div class="seg-title-group"><span class="seg-badge night" data-seg-badge="s1">S1・00:00</span><span class="seg-name">關渡→二子坪</span></div><span class="seg-toggle">&#9662;</span></div><div class="seg-body"><div class="seg-content">
+    <div class="seg-timing-note" data-seg-timing="s1" style="display:none;"></div>
     <div class="seg-stats"><span class="seg-stat"><strong>11~13km</strong></span><span class="seg-stat"><strong>30~1092m</strong></span><span class="seg-stat"><strong>+1,200m</strong></span><span class="seg-stat"><strong data-seg-dur="s1">3h20m</strong></span></div>
     <div class="seg-signal sig-weak"><span class="sig-icon">📶</span><div><strong>收訊：間歇（谷地斷訊）</strong><p>清天宮附近有訊號</p></div></div>
     <div class="seg-subtitle">路況</div>
@@ -1643,6 +1650,7 @@ input[type="range"]::-webkit-slider-thumb {
   </div></div></div>
 
   <div class="seg-card"><div class="seg-header" onclick="this.parentElement.classList.toggle('open')"><div class="seg-title-group"><span class="seg-badge dawn" data-seg-badge="s2">S2・03:20</span><span class="seg-name">面天坪→小油坑</span></div><span class="seg-toggle">&#9662;</span></div><div class="seg-body"><div class="seg-content">
+    <div class="seg-timing-note" data-seg-timing="s2" style="display:none;"></div>
     <div class="seg-stats"><span class="seg-stat"><strong>12km</strong></span><span class="seg-stat"><strong>684~1077m</strong></span><span class="seg-stat"><strong>+800m</strong></span><span class="seg-stat"><strong data-seg-dur="s2">2h40m</strong></span></div>
     <div class="decision-tree">
       <div class="decision-title">⚠️ S2 出發前決策</div>
@@ -1676,9 +1684,10 @@ input[type="range"]::-webkit-slider-thumb {
   </div></div></div>
 
   <div class="seg-card"><div class="seg-header" onclick="this.parentElement.classList.toggle('open')"><div class="seg-title-group"><span class="seg-badge day" data-seg-badge="s3">S3・06:00</span><span class="seg-name">小油坑→風櫃口</span></div><span class="seg-toggle">&#9662;</span></div><div class="seg-body"><div class="seg-content">
+    <div class="seg-timing-note" data-seg-timing="s3" style="display:none;"></div>
     <div class="seg-stats"><span class="seg-stat"><strong>13km</strong></span><span class="seg-stat"><strong>553~1120m</strong></span><span class="seg-stat"><strong>+950m</strong></span><span class="seg-stat"><strong data-seg-dur="s3">3h20m</strong></span></div>
     <div class="seg-signal sig-good"><span class="sig-icon">📶</span><div><strong>收訊：好（稜線高處）</strong><p>冷水坑、擎天崗收訊穩定</p></div></div>
-    <div class="seg-info"><p><strong>全程最高點！</strong>七星山 1120m。~06:30 登頂有機會看日出。</p></div>
+    <div class="seg-info"><p><strong>全程最高點！</strong>七星山 1120m。<span id="s3SummitNote">~06:30 登頂有機會看日出。</span></p></div>
     <div class="seg-warning"><p><strong>火災後路況：</strong>七星山區曾發生山林大火（約50公頃），經巡檢已重新開放，但部分路段植被受損、路況可能與過去不同。出發前請查詢<a href="https://www.ymsnp.gov.tw/YMSNP_HighwayCondition.aspx?n=17910&sms=13477" target="_blank" style="color:var(--amber);text-decoration:underline;">陽管處步道開放資訊</a>。</p></div>
     <div class="seg-subtitle">路況</div>
     <p class="seg-text"><strong>小油坑→七星山：</strong>安山岩階梯，路況佳。遮蔭少，注意防曬補水。山頂風大體感驟降。</p>
@@ -1702,6 +1711,7 @@ input[type="range"]::-webkit-slider-thumb {
   </div></div></div>
 
   <div class="seg-card"><div class="seg-header" onclick="this.parentElement.classList.toggle('open')"><div class="seg-title-group"><span class="seg-badge afternoon" data-seg-badge="s5">S5・12:40</span><span class="seg-name">劍潭→碧山巖</span></div><span class="seg-toggle">&#9662;</span></div><div class="seg-body"><div class="seg-content">
+    <div class="seg-timing-note" data-seg-timing="s5" style="display:none;"></div>
     <div class="seg-stats"><span class="seg-stat"><strong>12km</strong></span><span class="seg-stat"><strong>10~327m</strong></span><span class="seg-stat"><strong>+550m</strong></span><span class="seg-stat"><strong data-seg-dur="s5">3h00m</strong></span></div>
     <div class="seg-signal sig-good"><span class="sig-icon">📶</span><div><strong>收訊：好（靠近市區）</strong><p>全段收訊穩定</p></div></div>
     <div class="seg-subtitle">路況</div>
@@ -1727,6 +1737,7 @@ input[type="range"]::-webkit-slider-thumb {
   </div></div></div>
 
   <div class="seg-card"><div class="seg-header" onclick="this.parentElement.classList.toggle('open')"><div class="seg-title-group"><span class="seg-badge dusk" data-seg-badge="s7">S7・18:44</span><span class="seg-name">麟光→政大</span></div><span class="seg-toggle">&#9662;</span></div><div class="seg-body"><div class="seg-content">
+    <div class="seg-timing-note" data-seg-timing="s7" style="display:none;"></div>
     <div class="seg-stats"><span class="seg-stat"><strong>13km</strong></span><span class="seg-stat"><strong>26~308m</strong></span><span class="seg-stat"><strong>+500m</strong></span><span class="seg-stat"><strong data-seg-dur="s7">2h26m</strong></span></div>
     <div class="seg-signal sig-good"><span class="sig-icon">📶</span><div><strong>收訊：好</strong><p>指南宮、貓空地區收訊穩定</p></div></div>
     <div class="seg-subtitle">路況</div>
@@ -1866,12 +1877,12 @@ input[type="range"]::-webkit-slider-thumb {
   <div class="section-label">MILESTONES</div>
   <div class="section-title">關鍵里程碑</div>
   <div class="milestones-grid" id="milestonesGrid">
-    <div class="milestone" data-phase="night" data-ms-idx="0"><div class="milestone-time" data-ms-time="0">~00:00</div><div class="milestone-title">起登</div><div class="milestone-desc">關渡出發</div></div>
-    <div class="milestone" data-phase="dawn" data-ms-idx="1"><div class="milestone-time" data-ms-time="1">~05:30</div><div class="milestone-title">天亮</div><div class="milestone-desc">S2尾/S3初</div></div>
-    <div class="milestone" data-phase="day" data-ms-idx="2"><div class="milestone-time" data-ms-time="2">~06:30</div><div class="milestone-title">七星山頂</div><div class="milestone-desc">全程最高 1120m</div></div>
-    <div class="milestone" data-phase="day" data-ms-idx="3"><div class="milestone-time" data-ms-time="3">~12:20</div><div class="milestone-title">S4 完成</div><div class="milestone-desc">陽明山段結束</div></div>
-    <div class="milestone" data-phase="dusk" data-ms-idx="4"><div class="milestone-time" data-ms-time="4">~18:30</div><div class="milestone-title">日落</div><div class="milestone-desc">S6 尾聲</div></div>
-    <div class="milestone" data-phase="finish" data-ms-idx="5"><div class="milestone-time" data-ms-time="5">~21:10</div><div class="milestone-title">完走！</div><div class="milestone-desc">政大終點</div></div>
+    <div class="milestone" data-phase="night" data-ms-idx="0"><div class="milestone-time" data-ms-time="0">~00:00</div><div class="milestone-title">起登</div><div class="milestone-desc" data-ms-desc="0">關渡出發</div></div>
+    <div class="milestone" data-phase="dawn" data-ms-idx="1"><div class="milestone-time" data-ms-time="1">~05:30</div><div class="milestone-title">天亮</div><div class="milestone-desc" data-ms-desc="1">S2尾/S3初</div></div>
+    <div class="milestone" data-phase="day" data-ms-idx="2"><div class="milestone-time" data-ms-time="2">~06:30</div><div class="milestone-title">七星山頂</div><div class="milestone-desc" data-ms-desc="2">全程最高 1120m</div></div>
+    <div class="milestone" data-phase="day" data-ms-idx="3"><div class="milestone-time" data-ms-time="3">~12:20</div><div class="milestone-title">S4 完成</div><div class="milestone-desc" data-ms-desc="3">陽明山段結束</div></div>
+    <div class="milestone" data-phase="dusk" data-ms-idx="4"><div class="milestone-time" data-ms-time="4">~18:30</div><div class="milestone-title">日落</div><div class="milestone-desc" data-ms-desc="4">S6 尾聲</div></div>
+    <div class="milestone" data-phase="finish" data-ms-idx="5"><div class="milestone-time" data-ms-time="5">~21:10</div><div class="milestone-title">完走！</div><div class="milestone-desc" data-ms-desc="5">政大終點</div></div>
   </div>
 </section>
 
@@ -2201,6 +2212,103 @@ const GATES = [
   { id: 'g6', name: '大湖公園', segId: 't1', baseMin: 740, action: '回到文明，重新評估是否繼續南段' },
   { id: 'g7', name: '麟光站', segId: 's7', baseMin: 1124, action: '最後補給點，天黑後需頭燈完成S7' },
 ];
+
+// ═══ DYNAMIC TIMELINE NOTE TEMPLATES ═══
+const SEG_NOTE_TEMPLATES = {
+  s1: {
+    base: '經忠義山、貴子坑，攀上<span class="highlight">大屯山 1092m</span>',
+    night: '夜間摸黑起登，',
+    dawn: '天色微亮中起登，',
+    day: '白天起登，',
+    afternoon: '午後起登，',
+    dusk: '傍晚起登，',
+  },
+  s2: {
+    base: '<span class="highlight">最難路段！</span>大屯山西峰/南峰泥濘拉繩',
+    night: '。全程夜走，務必頭燈',
+    dawn: '。天色漸亮',
+    day: '。白天通過，視野較好',
+    afternoon: '。午後通過',
+    dusk: '。傍晚通過，注意天色',
+  },
+  s3: {
+    base: '登<span class="highlight">七星山 1120m</span> 全程最高！擎天崗大草原、石梯嶺',
+    hasSunrise: '。可能看見日出',
+    hasSunset: '。注意日落時間',
+    night: '。夜間行走需頭燈',
+    day: '',
+    dawn: '',
+    afternoon: '',
+    dusk: '',
+  },
+  s4: {
+    always: '一路下降至市區。<span class="highlight">陽明山段結束！過半</span>（官方終點為中華科大，含道路段）',
+  },
+  s5: {
+    base: '老地方觀機平台、大崙頭山。<span class="highlight">岔路多注意導航</span>',
+    night: '。夜間行走，更容易迷路',
+    dawn: '。天色微亮',
+    day: '',
+    afternoon: '。午後最熱，注意防曬',
+    dusk: '。傍晚光線漸暗',
+  },
+  s6: {
+    base: '<span class="highlight">九五峰眺望101</span>，糶米古道。最後補給在麟光站',
+    hasSunset: '。可能看見夕陽',
+    night: '。夜間行走需頭燈',
+    day: '',
+    dawn: '',
+    afternoon: '',
+    dusk: '。注意天色',
+  },
+  s7: {
+    base: '經世界山莊→和平東路→指南宮千階→貓空。<span class="highlight">最後衝刺！</span>',
+    night: '夜間行走需頭燈',
+    dawn: '天色漸亮',
+    day: '白天完走',
+    afternoon: '午後完走',
+    dusk: '天黑前趕路',
+  },
+};
+
+// ═══ SEGMENT TIMING NOTES (accordion context) ═══
+const SEG_TIMING_NOTES = {
+  s1: {
+    night: '',
+    dawn: '\u23f0 以目前設定，S1 部分在天亮後行走。不需全程頭燈。',
+    day: '\u2600\ufe0f 以目前設定，S1 在白天行走。忠義山段不需頭燈但較熱。',
+    afternoon: '\ud83c\udf21\ufe0f 以目前設定，S1 在午後行走。注意防曬補水。',
+    dusk: '\ud83c\udf07 以目前設定，S1 在傍晚行走。注意天色變化。',
+  },
+  s2: {
+    dawn: '',
+    night: '\ud83d\udd26 以目前設定，S2 全程夜走。大屯西峰/南峰夜間更危險，強烈建議跳過搭108。',
+    day: '\u2600\ufe0f 以目前設定，S2 在白天行走。視野較好但泥濘仍危險。',
+    afternoon: '',
+    dusk: '',
+  },
+  s3: {
+    day: '',
+    night: '\ud83d\udd26 以目前設定，S3 在夜間行走。七星山夜走注意強風低溫。',
+    dawn: '\ud83c\udf05 以目前設定，S3 有機會在七星山看日出！',
+    afternoon: '',
+    dusk: '',
+  },
+  s5: {
+    afternoon: '',
+    night: '\ud83d\udd26 以目前設定，S5 在夜間行走。岔路多，務必跟緊 GPX！夜間更容易迷路。',
+    day: '\u2600\ufe0f 以目前設定，S5 在白天行走。較不易迷路但注意防曬。',
+    dawn: '',
+    dusk: '',
+  },
+  s7: {
+    dusk: '',
+    night: '',
+    day: '\u2600\ufe0f 以目前設定，S7 在白天完走。不需頭燈。',
+    afternoon: '\ud83c\udf21\ufe0f 以目前設定，S7 在午後行走。貓空茶館區可能很熱。',
+    dawn: '\ud83c\udf05 以目前設定，S7 天亮時段行走。',
+  },
+};
 
 // ═══ FATIGUE MODEL ═══
 const FATIGUE_MODEL = [
@@ -2931,6 +3039,148 @@ function applyConfig() {
           condEl.textContent = '☀️ 日間';
         }
       }
+    }
+  }
+
+  // ═══ DYNAMIC TIMELINE NOTES ═══
+  for (const seg of segs) {
+    if (seg.id === 'fin' || seg.id === 't1' || seg.id === 't2') continue;
+    const noteEl = document.querySelector('.tl-note[data-seg="' + seg.id + '"]');
+    if (!noteEl) continue;
+    const tmpl = SEG_NOTE_TEMPLATES[seg.id];
+    if (!tmpl) continue;
+
+    if (tmpl.always) {
+      noteEl.innerHTML = tmpl.always;
+      continue;
+    }
+
+    const midClockTime = normMin(startMin + seg.startMin + seg.durMin / 2);
+    const phase = getPhase(midClockTime, sun.rise, sun.set);
+    let note = '';
+
+    // For s1: prefix + base
+    if (seg.id === 's1') {
+      note = (tmpl[phase] || '') + tmpl.base;
+    }
+    // For s5: base + suffix
+    else if (seg.id === 's5') {
+      note = tmpl.base + (tmpl[phase] || '');
+    }
+    // For s2, s7: base + suffix
+    else if (seg.id === 's2' || seg.id === 's7') {
+      note = tmpl.base + (tmpl[phase] || '');
+    }
+    // For s3, s6: base + sunrise/sunset check + phase suffix
+    else if (seg.id === 's3' || seg.id === 's6') {
+      note = tmpl.base;
+      const absStart = startMin + seg.startMin;
+      const absEnd = startMin + seg.startMin + seg.durMin;
+      var hasSR = false, hasSS = false;
+      for (var day = -1; day <= 2; day++) {
+        if (sun.rise + day * 1440 > absStart && sun.rise + day * 1440 < absEnd) hasSR = true;
+        if (sun.set + day * 1440 > absStart && sun.set + day * 1440 < absEnd) hasSS = true;
+      }
+      if (hasSR && tmpl.hasSunrise) note += tmpl.hasSunrise;
+      if (hasSS && tmpl.hasSunset) note += tmpl.hasSunset;
+      if (!hasSR && !hasSS && tmpl[phase]) note += tmpl[phase];
+    }
+
+    if (note) noteEl.innerHTML = note;
+  }
+
+  // ═══ DYNAMIC MILESTONE DESCRIPTIONS ═══
+  var startPhase = getPhase(normMin(startMin), sun.rise, sun.set);
+
+  // Milestone idx 0 (起登): show night hours if starting at night
+  var ms0desc = document.querySelector('[data-ms-desc="0"]');
+  if (ms0desc) {
+    if (startPhase === 'night' || startPhase === 'dawn') {
+      var hoursToSunrise = 0;
+      for (var d0 = -1; d0 <= 2; d0++) {
+        var sr0 = sun.rise + d0 * 1440;
+        if (sr0 > startMin) { hoursToSunrise = (sr0 - startMin) / 60; break; }
+      }
+      ms0desc.textContent = hoursToSunrise > 0 ? '摸黑 ' + hoursToSunrise.toFixed(0) + '+ 小時' : '白天出發';
+    } else {
+      ms0desc.textContent = '白天出發';
+    }
+  }
+
+  // Milestone idx 1 (天亮): only show if sunrise occurs during journey
+  var ms1 = document.querySelector('[data-ms-idx="1"]');
+  if (ms1) {
+    var sunriseInJourney = false;
+    for (var d1 = -1; d1 <= 2; d1++) {
+      var sr1 = sun.rise + d1 * 1440;
+      var elapsed1 = sr1 - startMin;
+      if (elapsed1 > 0 && elapsed1 < totalMin) { sunriseInJourney = true; break; }
+    }
+    ms1.style.display = sunriseInJourney ? '' : 'none';
+    var ms1desc = document.querySelector('[data-ms-desc="1"]');
+    if (ms1desc) ms1desc.textContent = startPhase === 'night' ? '結束夜走' : '日出';
+  }
+
+  // Milestone idx 4 (日落): check if sunset is during journey
+  var ms4 = document.querySelector('[data-ms-idx="4"]');
+  if (ms4) {
+    var sunsetInJourney = false;
+    var sunsetSegName = '';
+    for (var d4 = -1; d4 <= 2; d4++) {
+      var ss4 = sun.set + d4 * 1440;
+      var elapsed4 = ss4 - startMin;
+      if (elapsed4 > 0 && elapsed4 < totalMin) {
+        sunsetInJourney = true;
+        for (var si = 0; si < segs.length; si++) {
+          var s = segs[si];
+          if (elapsed4 >= s.startMin && elapsed4 < s.startMin + s.durMin) {
+            sunsetSegName = s.name.split(' ')[0];
+            break;
+          }
+        }
+        break;
+      }
+    }
+    ms4.style.display = sunsetInJourney ? '' : 'none';
+    var ms4desc = document.querySelector('[data-ms-desc="4"]');
+    if (ms4desc) ms4desc.textContent = sunsetSegName ? sunsetSegName + ' 期間' : 'S6 尾聲';
+  }
+
+  // ═══ DYNAMIC S3 SUMMIT NOTE ═══
+  var s3note = document.getElementById('s3SummitNote');
+  if (s3note) {
+    var s3seg = segs.find(function(s) { return s.id === 's3'; });
+    if (s3seg) {
+      var summitClockMin = normMin(startMin + s3seg.startMin + 30);
+      var summitTime = minToHHMM(startMin + s3seg.startMin + 30);
+      var summitPhase = getPhase(summitClockMin, sun.rise, sun.set);
+      if (summitPhase === 'dawn' || (summitClockMin >= sun.rise - 30 && summitClockMin <= sun.rise + 60)) {
+        s3note.textContent = '~' + summitTime + ' 登頂有機會看日出。';
+      } else if (summitPhase === 'night') {
+        s3note.textContent = '~' + summitTime + ' 登頂，夜間注意強風低溫。';
+      } else {
+        s3note.textContent = '~' + summitTime + ' 登頂。';
+      }
+    }
+  }
+
+  // ═══ DYNAMIC SEGMENT TIMING NOTES (accordion) ═══
+  for (var ti = 0; ti < segs.length; ti++) {
+    var tseg = segs[ti];
+    var timingEl = document.querySelector('[data-seg-timing="' + tseg.id + '"]');
+    if (!timingEl) continue;
+    var notes = SEG_TIMING_NOTES[tseg.id];
+    if (!notes) { timingEl.style.display = 'none'; continue; }
+
+    var tMidClockTime = normMin(startMin + tseg.startMin + tseg.durMin / 2);
+    var tPhase = getPhase(tMidClockTime, sun.rise, sun.set);
+    var tNote = notes[tPhase];
+
+    if (tNote === undefined || tNote === '') {
+      timingEl.style.display = 'none';
+    } else {
+      timingEl.style.display = '';
+      timingEl.textContent = tNote;
     }
   }
 
