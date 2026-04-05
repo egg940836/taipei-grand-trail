@@ -5,6 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>台北大縱走 一日完走計畫</title>
 <meta name="theme-color" content="#0a0e1a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="台北大縱走">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700;900&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <style>
@@ -344,6 +347,16 @@ nav a:hover, nav a.active { color: var(--amber); }
 .smart-summary .ss-day { color: var(--sky); }
 .smart-summary .ss-headlamp { color: var(--amber); }
 
+/* Fatigue toggle */
+.fatigue-toggle {
+  display: flex; align-items: center; gap: 0.5rem; cursor: pointer;
+  font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-dim);
+}
+.fatigue-toggle input[type="checkbox"] {
+  width: 18px; height: 18px; accent-color: var(--amber); cursor: pointer;
+}
+.fatigue-toggle-text { line-height: 1.4; }
+
 /* ═══ MAIN TIMELINE (checkable) ═══ */
 .timeline-section { padding: 2.5rem 1rem; max-width: 900px; margin: 0 auto; position: relative; }
 
@@ -489,6 +502,39 @@ nav a:hover, nav a.active { color: var(--amber); }
   color: var(--text-dim); display: flex; align-items: center; gap: 0.2rem;
 }
 
+/* Signal meta items */
+.tl-meta-signal[data-level="good"] { color: var(--ridge); }
+.tl-meta-signal[data-level="weak"] { color: var(--amber); }
+.tl-meta-signal[data-level="bad"] { color: #fb7185; }
+
+/* Checkpoint badges */
+.checkpoint-badge { font-family: var(--font-mono); font-size: 0.65rem; padding: 0.3rem 0.6rem; border-radius: 6px; margin-top: 0.5rem; display: inline-block; }
+.cp-ontime { background: rgba(110,231,183,0.1); color: var(--ridge); }
+.cp-late { background: rgba(245,158,11,0.1); color: var(--amber); }
+.cp-early { background: rgba(56,189,248,0.1); color: var(--sky); }
+
+/* ═══ GATE TIMES ═══ */
+.gates-section { padding: 2.5rem 1rem; max-width: 900px; margin: 0 auto; }
+.gates-grid { display: grid; grid-template-columns: 1fr; gap: 0.5rem; }
+.gate-card {
+  background: var(--ghost); border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 10px; padding: 0.85rem 1rem;
+  display: grid; grid-template-columns: auto 1fr auto; gap: 0.75rem; align-items: center;
+  transition: border-color 0.3s;
+}
+.gate-card.gate-green { border-color: rgba(110,231,183,0.2); }
+.gate-card.gate-amber { border-color: rgba(245,158,11,0.3); background: rgba(245,158,11,0.04); }
+.gate-card.gate-red { border-color: rgba(225,29,72,0.3); background: rgba(225,29,72,0.04); }
+.gate-name { font-family: var(--font-display); font-weight: 700; font-size: 0.9rem; }
+.gate-action { font-size: 0.75rem; color: var(--text-dim); line-height: 1.5; margin-top: 0.15rem; }
+.gate-time-col { text-align: center; min-width: 56px; }
+.gate-clock { font-family: var(--font-mono); font-size: 1rem; font-weight: 600; color: var(--amber); }
+.gate-elapsed { font-family: var(--font-mono); font-size: 0.6rem; color: var(--text-dim); margin-top: 2px; }
+.gate-countdown { font-family: var(--font-mono); font-size: 0.7rem; color: var(--ridge); text-align: right; white-space: nowrap; }
+.gate-countdown.urgent { color: var(--amber); }
+.gate-countdown.past { color: #fb7185; }
+.tracker-gate { margin-top: 0.5rem; font-family: var(--font-mono); font-size: 0.75rem; color: var(--ridge); }
+
 /* ═══ SEGMENT DETAILS (accordion) ═══ */
 .segments-section { padding: 2.5rem 1rem; max-width: 900px; margin: 0 auto; }
 
@@ -559,6 +605,33 @@ nav a:hover, nav a.active { color: var(--amber); }
 }
 .seg-info p { font-size: 0.75rem; color: var(--sky); line-height: 1.6; }
 
+/* Signal info in segments */
+.seg-signal { display: flex; align-items: flex-start; gap: 0.5rem; padding: 0.5rem 0.75rem; border-radius: 8px; margin: 0.5rem 0; font-size: 0.75rem; }
+.sig-icon { font-size: 1rem; flex-shrink: 0; }
+.seg-signal strong { color: var(--text); display: block; margin-bottom: 0.1rem; }
+.seg-signal p { color: var(--text-dim); margin: 0; line-height: 1.5; }
+.sig-good { background: rgba(110,231,183,0.06); }
+.sig-weak { background: rgba(245,158,11,0.06); }
+.sig-bad { background: rgba(225,29,72,0.06); }
+
+/* Decision tree (S2) */
+.decision-tree {
+  background: rgba(245,158,11,0.06); border: 1px solid rgba(245,158,11,0.15);
+  border-radius: 12px; padding: 1rem; margin-bottom: 1rem;
+}
+.decision-title { font-family: var(--font-display); font-weight: 700; font-size: 0.9rem; margin-bottom: 0.75rem; }
+.decision-item { padding: 0.5rem 0.75rem; border-radius: 8px; margin-bottom: 0.5rem; font-size: 0.8rem; line-height: 1.5; }
+.decision-item.go { background: rgba(110,231,183,0.08); border-left: 3px solid var(--ridge); }
+.decision-item.caution { background: rgba(245,158,11,0.08); border-left: 3px solid var(--amber); }
+.decision-item.nogo { background: rgba(225,29,72,0.08); border-left: 3px solid var(--sunset); }
+.decision-label { font-family: var(--font-mono); font-weight: 700; font-size: 0.75rem; margin-bottom: 0.2rem; }
+.decision-item.go .decision-label { color: var(--ridge); }
+.decision-item.caution .decision-label { color: var(--amber); }
+.decision-item.nogo .decision-label { color: var(--sunset); }
+.decision-text { color: var(--text-dim); }
+.decision-links { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: 0.5rem; }
+.decision-links a { font-family: var(--font-mono); font-size: 0.7rem; color: var(--amber); text-decoration: underline; }
+
 /* ═══ SUPPLY ═══ */
 .supply-section { padding: 2.5rem 1rem; max-width: 900px; margin: 0 auto; }
 .supply-grid { display: grid; grid-template-columns: 1fr; gap: 0.6rem; }
@@ -618,6 +691,26 @@ nav a:hover, nav a.active { color: var(--amber); }
 .retreat-detail { font-size: 0.8rem; color: var(--text-dim); line-height: 1.6; }
 .retreat-detail strong { color: var(--text); }
 
+/* ═══ LOGISTICS ═══ */
+.logistics-section { padding: 2.5rem 1rem; max-width: 900px; margin: 0 auto; }
+.logistics-card {
+  background: var(--ghost); border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 10px; padding: 1rem; margin-bottom: 0.75rem;
+}
+.logistics-card-title {
+  font-family: var(--font-display); font-weight: 700; font-size: 0.9rem;
+  margin-bottom: 0.5rem; color: var(--text);
+}
+.logistics-list { list-style: none; padding: 0; }
+.logistics-list li {
+  font-size: 0.8rem; color: var(--text-dim); line-height: 1.7;
+  padding: 0.2rem 0; padding-left: 1rem; position: relative;
+}
+.logistics-list li::before {
+  content: '\2022'; position: absolute; left: 0; color: var(--amber);
+}
+.logistics-list li strong { color: var(--text); }
+
 /* ═══ MILESTONES ═══ */
 .milestones-section { padding: 2.5rem 1rem; max-width: 900px; margin: 0 auto; }
 .milestones-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.6rem; }
@@ -666,6 +759,20 @@ nav a:hover, nav a.active { color: var(--amber); }
 }
 .gear-item.checked .gear-text { opacity: 0.45; text-decoration: line-through; }
 .gear-text { font-size: 0.8rem; transition: all 0.2s; line-height: 1.3; }
+
+/* ═══ WEATHER LINKS ═══ */
+.weather-links { padding: 2.5rem 1rem; max-width: 900px; margin: 0 auto; }
+.weather-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.6rem; }
+.weather-card {
+  display: block; text-decoration: none; text-align: center;
+  background: var(--ghost); border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 10px; padding: 1rem; transition: border-color 0.3s, transform 0.2s;
+}
+.weather-card:active { transform: scale(0.97); }
+.weather-card:hover { border-color: rgba(245,158,11,0.3); }
+.weather-icon { font-size: 1.5rem; margin-bottom: 0.35rem; }
+.weather-name { font-family: var(--font-display); font-weight: 700; font-size: 0.85rem; color: var(--text); margin-bottom: 0.15rem; }
+.weather-desc { font-size: 0.7rem; color: var(--text-dim); }
 
 /* ═══ SAFETY ═══ */
 .safety-section { padding: 2.5rem 1rem; max-width: 900px; margin: 0 auto; }
@@ -722,6 +829,15 @@ footer a { color: var(--amber); text-decoration: none; }
 }
 .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
+/* ═══ OFFLINE BANNER ═══ */
+.offline-banner {
+  display: none; position: fixed; top: 0; left: 0; right: 0; z-index: 1100;
+  background: rgba(245,158,11,0.9); color: var(--night); text-align: center;
+  font-family: var(--font-mono); font-size: 0.75rem; font-weight: 600;
+  padding: 6px 12px;
+}
+.offline-banner.visible { display: block; }
+
 /* ═══ ANIMATIONS ═══ */
 @keyframes fadeUp { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:translateY(0); } }
 @keyframes scrollPulse { 0%,100% { opacity:0.3; } 50% { opacity:1; } }
@@ -733,6 +849,8 @@ footer a { color: var(--amber); text-decoration: none; }
   .gear-grid { grid-template-columns: repeat(3, 1fr); }
   .safety-grid { grid-template-columns: repeat(3, 1fr); }
   .emergency-grid { grid-template-columns: repeat(4, 1fr); }
+  .weather-grid { grid-template-columns: repeat(4, 1fr); }
+  .gates-grid { grid-template-columns: repeat(2, 1fr); }
   .timeline { padding-left: 72px; }
   .timeline::before { left: 30px; }
   .tl-item::before { left: -46px; }
@@ -762,6 +880,8 @@ footer a { color: var(--amber); text-decoration: none; }
   .milestones-grid { grid-template-columns: 1fr; }
   .emergency-grid { grid-template-columns: 1fr; }
   .pace-stats { grid-template-columns: 1fr; }
+  .weather-grid { grid-template-columns: 1fr; }
+  .gates-grid { grid-template-columns: 1fr; }
 }
 
 /* ═══ LIVE TRACKER ═══ */
@@ -875,6 +995,9 @@ input[type="range"]::-webkit-slider-thumb {
 </head>
 <body>
 
+<!-- Offline Banner -->
+<div class="offline-banner" id="offlineBanner">📡 離線模式 — 所有資料已快取可用</div>
+
 <div class="topo-bg">
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" preserveAspectRatio="none">
 <defs><pattern id="topo" x="0" y="0" width="200" height="200" patternUnits="userSpaceOnUse">
@@ -901,9 +1024,11 @@ input[type="range"]::-webkit-slider-thumb {
   <div class="nav-inner">
     <a href="#hero">首頁</a>
     <a href="#timeline">時程</a>
+    <a href="#gates">關門</a>
     <a href="#segments">路況</a>
     <a href="#supply">補給</a>
     <a href="#retreat">撤退</a>
+    <a href="#logistics">交通</a>
     <a href="#milestones">里程碑</a>
     <a href="#gear">裝備</a>
     <a href="#calc">計算</a>
@@ -1032,6 +1157,14 @@ input[type="range"]::-webkit-slider-thumb {
       <input type="range" id="paceSlider" min="50" max="120" step="1" value="60" oninput="onConfigChange()">
     </div>
 
+    <!-- Fatigue toggle -->
+    <div class="config-row" style="padding-top:0.5rem;border-top:1px solid rgba(255,255,255,0.06);">
+      <label class="fatigue-toggle">
+        <input type="checkbox" id="fatigueToggle" onchange="onConfigChange()" checked>
+        <span class="fatigue-toggle-text">考慮體能衰退（12hr後+15%、18hr後+30%）</span>
+      </label>
+    </div>
+
     <!-- Stats row -->
     <div class="pace-stats">
       <div class="pace-stat">
@@ -1046,6 +1179,14 @@ input[type="range"]::-webkit-slider-thumb {
         <div class="pace-stat-label">預估完走時間</div>
         <div class="pace-stat-value" id="paceStatFinish">21:10</div>
       </div>
+    </div>
+
+    <!-- Fatigue comparison (shown when fatigue enabled) -->
+    <div class="smart-summary" id="fatigueCompare" style="display:none;margin-top:0.5rem;">
+      <span style="color:var(--text-dim);">理論時間：</span><span id="fatigueBaseTime" style="color:var(--sky);">21h10m</span>
+      <span style="margin:0 0.3rem;color:var(--text-dim);">→</span>
+      <span style="color:var(--text-dim);">實際預估：</span><span id="fatigueTotalTime" style="color:var(--amber);">23h05m</span>
+      <span style="color:var(--text-dim);margin-left:0.3rem;">(+<span id="fatigueDiffTime">1h55m</span>)</span>
     </div>
 
     <!-- Smart summary -->
@@ -1080,6 +1221,7 @@ input[type="range"]::-webkit-slider-thumb {
     <div class="tracker-segment" id="trackerSeg">
       設定出發日期後，會自動追蹤你目前應該在哪一段。點擊下方「設定出發時間」開始。
     </div>
+    <div class="tracker-gate" id="trackerGate" style="display:none;"></div>
     <div style="margin-top:0.75rem;text-align:center;">
       <label style="font-size:0.7rem;color:var(--text-dim);">出發日期時間：</label><br>
       <input type="datetime-local" id="startTimeInput" style="
@@ -1110,17 +1252,26 @@ input[type="range"]::-webkit-slider-thumb {
   </div>
 
   <div class="timeline" id="timelineList">
-    <!-- S1 --><div class="tl-item" data-phase="night" data-id="s1"><div class="tl-card"><div class="tl-header"><div class="tl-header-left"><div class="tl-check" onclick="toggleCheck(this)"><span class="tl-check-icon">&#10003;</span></div><span class="tl-seg">S1</span><span class="tl-time-badge" data-seg="s1">00:00</span></div><span class="tl-duration" data-seg="s1">3h20m</span></div><div class="tl-route">關渡<span class="arrow">→</span>二子坪</div><div class="tl-note">夜間摸黑起登，經忠義山、貴子坑，攀上<span class="highlight">大屯山 1092m</span></div><div class="tl-meta"><span class="tl-meta-item">📏 11.8km</span><span class="tl-meta-item">⬆ +1,200m</span><span class="tl-meta-item tl-meta-condition" data-seg="s1">🌙 全程夜走</span></div></div></div>
-    <!-- S2 --><div class="tl-item" data-phase="dawn" data-id="s2"><div class="tl-card"><div class="tl-header"><div class="tl-header-left"><div class="tl-check" onclick="toggleCheck(this)"><span class="tl-check-icon">&#10003;</span></div><span class="tl-seg">S2</span><span class="tl-time-badge" data-seg="s2">03:20</span></div><span class="tl-duration" data-seg="s2">2h40m</span></div><div class="tl-route">面天坪<span class="arrow">→</span>小油坑</div><div class="tl-note"><span class="highlight">最難路段！</span>大屯山西峰/南峰泥濘拉繩。天色漸亮</div><div class="tl-meta"><span class="tl-meta-item">📏 12km</span><span class="tl-meta-item">⬆ +800m</span><span class="tl-meta-item tl-meta-condition" data-seg="s2">⚠️ 濕滑拉繩</span></div></div></div>
-    <!-- S3 --><div class="tl-item" data-phase="day" data-id="s3"><div class="tl-card"><div class="tl-header"><div class="tl-header-left"><div class="tl-check" onclick="toggleCheck(this)"><span class="tl-check-icon">&#10003;</span></div><span class="tl-seg">S3</span><span class="tl-time-badge" data-seg="s3">06:00</span></div><span class="tl-duration" data-seg="s3">3h20m</span></div><div class="tl-route">小油坑<span class="arrow">→</span>風櫃口</div><div class="tl-note">登<span class="highlight">七星山 1120m</span> 全程最高！擎天崗大草原、石梯嶺</div><div class="tl-meta"><span class="tl-meta-item">📏 13km</span><span class="tl-meta-item">⬆ +950m</span><span class="tl-meta-item tl-meta-condition" data-seg="s3">🌅 日出</span></div></div></div>
-    <!-- S4 --><div class="tl-item" data-phase="day" data-id="s4"><div class="tl-card"><div class="tl-header"><div class="tl-header-left"><div class="tl-check" onclick="toggleCheck(this)"><span class="tl-check-icon">&#10003;</span></div><span class="tl-seg">S4</span><span class="tl-time-badge" data-seg="s4">09:20</span></div><span class="tl-duration" data-seg="s4">3h00m</span></div><div class="tl-route">風櫃口<span class="arrow">→</span>大湖公園</div><div class="tl-note">一路下降至市區。<span class="highlight">陽明山段結束！過半</span>（官方終點為中華科大，含道路段）</div><div class="tl-meta"><span class="tl-meta-item">📏 ~13km 步道</span><span class="tl-meta-item">⬆ +350m ⬇ -870m</span><span class="tl-meta-item tl-meta-condition" data-seg="s4">✅ 過半</span></div></div></div>
+    <!-- S1 --><div class="tl-item" data-phase="night" data-id="s1"><div class="tl-card"><div class="tl-header"><div class="tl-header-left"><div class="tl-check" onclick="toggleCheck(this)"><span class="tl-check-icon">&#10003;</span></div><span class="tl-seg">S1</span><span class="tl-time-badge" data-seg="s1">00:00</span></div><span class="tl-duration" data-seg="s1">3h20m</span></div><div class="tl-route">關渡<span class="arrow">→</span>二子坪</div><div class="tl-note">夜間摸黑起登，經忠義山、貴子坑，攀上<span class="highlight">大屯山 1092m</span></div><div class="tl-meta"><span class="tl-meta-item">📏 11.8km</span><span class="tl-meta-item">⬆ +1,200m</span><span class="tl-meta-item tl-meta-condition" data-seg="s1">🌙 全程夜走</span><span class="tl-meta-item tl-meta-signal" data-seg-sig="s1" data-level="weak">📶 收訊弱</span></div></div></div>
+    <!-- S2 --><div class="tl-item" data-phase="dawn" data-id="s2"><div class="tl-card"><div class="tl-header"><div class="tl-header-left"><div class="tl-check" onclick="toggleCheck(this)"><span class="tl-check-icon">&#10003;</span></div><span class="tl-seg">S2</span><span class="tl-time-badge" data-seg="s2">03:20</span></div><span class="tl-duration" data-seg="s2">2h40m</span></div><div class="tl-route">面天坪<span class="arrow">→</span>小油坑</div><div class="tl-note"><span class="highlight">最難路段！</span>大屯山西峰/南峰泥濘拉繩。天色漸亮</div><div class="tl-meta"><span class="tl-meta-item">📏 12km</span><span class="tl-meta-item">⬆ +800m</span><span class="tl-meta-item tl-meta-condition" data-seg="s2">⚠️ 濕滑拉繩</span><span class="tl-meta-item tl-meta-signal" data-seg-sig="s2" data-level="bad">📵 收訊差</span></div></div></div>
+    <!-- S3 --><div class="tl-item" data-phase="day" data-id="s3"><div class="tl-card"><div class="tl-header"><div class="tl-header-left"><div class="tl-check" onclick="toggleCheck(this)"><span class="tl-check-icon">&#10003;</span></div><span class="tl-seg">S3</span><span class="tl-time-badge" data-seg="s3">06:00</span></div><span class="tl-duration" data-seg="s3">3h20m</span></div><div class="tl-route">小油坑<span class="arrow">→</span>風櫃口</div><div class="tl-note">登<span class="highlight">七星山 1120m</span> 全程最高！擎天崗大草原、石梯嶺</div><div class="tl-meta"><span class="tl-meta-item">📏 13km</span><span class="tl-meta-item">⬆ +950m</span><span class="tl-meta-item tl-meta-condition" data-seg="s3">🌅 日出</span><span class="tl-meta-item tl-meta-signal" data-seg-sig="s3" data-level="good">📶 收訊好</span></div></div></div>
+    <!-- S4 --><div class="tl-item" data-phase="day" data-id="s4"><div class="tl-card"><div class="tl-header"><div class="tl-header-left"><div class="tl-check" onclick="toggleCheck(this)"><span class="tl-check-icon">&#10003;</span></div><span class="tl-seg">S4</span><span class="tl-time-badge" data-seg="s4">09:20</span></div><span class="tl-duration" data-seg="s4">3h00m</span></div><div class="tl-route">風櫃口<span class="arrow">→</span>大湖公園</div><div class="tl-note">一路下降至市區。<span class="highlight">陽明山段結束！過半</span>（官方終點為中華科大，含道路段）</div><div class="tl-meta"><span class="tl-meta-item">📏 ~13km 步道</span><span class="tl-meta-item">⬆ +350m ⬇ -870m</span><span class="tl-meta-item tl-meta-condition" data-seg="s4">✅ 過半</span><span class="tl-meta-item tl-meta-signal" data-seg-sig="s4" data-level="weak">📶 收訊弱</span></div></div></div>
     <!-- Transit 1 --><div class="tl-item" data-phase="transit" data-id="t1"><div class="tl-card"><div class="tl-header"><div class="tl-header-left"><div class="tl-check" onclick="toggleCheck(this)"><span class="tl-check-icon">&#10003;</span></div><span class="tl-seg">接駁</span><span class="tl-time-badge" data-seg="t1">12:20</span></div><span class="tl-duration" data-seg="t1">~20m</span></div><div class="tl-route">大湖公園<span class="arrow">→</span>劍潭</div><div class="tl-note">Uber 直達。<span class="highlight">便利商店大補給！</span></div></div></div>
-    <!-- S5 --><div class="tl-item" data-phase="afternoon" data-id="s5"><div class="tl-card"><div class="tl-header"><div class="tl-header-left"><div class="tl-check" onclick="toggleCheck(this)"><span class="tl-check-icon">&#10003;</span></div><span class="tl-seg">S5</span><span class="tl-time-badge" data-seg="s5">12:40</span></div><span class="tl-duration" data-seg="s5">3h00m</span></div><div class="tl-route">劍潭<span class="arrow">→</span>碧山巖</div><div class="tl-note">老地方觀機平台、大崙頭山。<span class="highlight">午後最熱，岔路多注意導航</span></div><div class="tl-meta"><span class="tl-meta-item">📏 12km</span><span class="tl-meta-item">⬆ +550m</span><span class="tl-meta-item tl-meta-condition" data-seg="s5">🌡️ 防曬</span></div></div></div>
+    <!-- S5 --><div class="tl-item" data-phase="afternoon" data-id="s5"><div class="tl-card"><div class="tl-header"><div class="tl-header-left"><div class="tl-check" onclick="toggleCheck(this)"><span class="tl-check-icon">&#10003;</span></div><span class="tl-seg">S5</span><span class="tl-time-badge" data-seg="s5">12:40</span></div><span class="tl-duration" data-seg="s5">3h00m</span></div><div class="tl-route">劍潭<span class="arrow">→</span>碧山巖</div><div class="tl-note">老地方觀機平台、大崙頭山。<span class="highlight">午後最熱，岔路多注意導航</span></div><div class="tl-meta"><span class="tl-meta-item">📏 12km</span><span class="tl-meta-item">⬆ +550m</span><span class="tl-meta-item tl-meta-condition" data-seg="s5">🌡️ 防曬</span><span class="tl-meta-item tl-meta-signal" data-seg-sig="s5" data-level="good">📶 收訊好</span></div></div></div>
     <!-- Transit 2 --><div class="tl-item" data-phase="transit" data-id="t2"><div class="tl-card"><div class="tl-header"><div class="tl-header-left"><div class="tl-check" onclick="toggleCheck(this)"><span class="tl-check-icon">&#10003;</span></div><span class="tl-seg">接駁</span><span class="tl-time-badge" data-seg="t2">15:40</span></div><span class="tl-duration" data-seg="t2">~40m</span></div><div class="tl-route">碧山巖<span class="arrow">→</span>中華科大</div><div class="tl-note">Uber 直達（或小2公車→捷運→南港）。補給休息</div></div></div>
-    <!-- S6 --><div class="tl-item" data-phase="afternoon" data-id="s6"><div class="tl-card"><div class="tl-header"><div class="tl-header-left"><div class="tl-check" onclick="toggleCheck(this)"><span class="tl-check-icon">&#10003;</span></div><span class="tl-seg">S6</span><span class="tl-time-badge" data-seg="s6">16:20</span></div><span class="tl-duration" data-seg="s6">2h24m</span></div><div class="tl-route">中華科大<span class="arrow">→</span>麟光</div><div class="tl-note"><span class="highlight">九五峰眺望101</span>，糶米古道。最後補給在麟光站</div><div class="tl-meta"><span class="tl-meta-item">📏 11km</span><span class="tl-meta-item">⬆ +680m</span><span class="tl-meta-item tl-meta-condition" data-seg="s6">🌇 夕陽</span></div></div></div>
-    <!-- S7 --><div class="tl-item" data-phase="dusk" data-id="s7"><div class="tl-card"><div class="tl-header"><div class="tl-header-left"><div class="tl-check" onclick="toggleCheck(this)"><span class="tl-check-icon">&#10003;</span></div><span class="tl-seg">S7</span><span class="tl-time-badge" data-seg="s7">18:44</span></div><span class="tl-duration" data-seg="s7">2h26m</span></div><div class="tl-route">麟光<span class="arrow">→</span>指南宮<span class="arrow">→</span>政大</div><div class="tl-note">經世界山莊→和平東路→指南宮千階→貓空。<span class="highlight">最後衝刺！</span>天黑需頭燈</div><div class="tl-meta"><span class="tl-meta-item">📏 13km</span><span class="tl-meta-item">⬆ +500m</span><span class="tl-meta-item tl-meta-condition" data-seg="s7">🔦 頭燈</span></div></div></div>
+    <!-- S6 --><div class="tl-item" data-phase="afternoon" data-id="s6"><div class="tl-card"><div class="tl-header"><div class="tl-header-left"><div class="tl-check" onclick="toggleCheck(this)"><span class="tl-check-icon">&#10003;</span></div><span class="tl-seg">S6</span><span class="tl-time-badge" data-seg="s6">16:20</span></div><span class="tl-duration" data-seg="s6">2h24m</span></div><div class="tl-route">中華科大<span class="arrow">→</span>麟光</div><div class="tl-note"><span class="highlight">九五峰眺望101</span>，糶米古道。最後補給在麟光站</div><div class="tl-meta"><span class="tl-meta-item">📏 11km</span><span class="tl-meta-item">⬆ +680m</span><span class="tl-meta-item tl-meta-condition" data-seg="s6">🌇 夕陽</span><span class="tl-meta-item tl-meta-signal" data-seg-sig="s6" data-level="good">📶 收訊好</span></div></div></div>
+    <!-- S7 --><div class="tl-item" data-phase="dusk" data-id="s7"><div class="tl-card"><div class="tl-header"><div class="tl-header-left"><div class="tl-check" onclick="toggleCheck(this)"><span class="tl-check-icon">&#10003;</span></div><span class="tl-seg">S7</span><span class="tl-time-badge" data-seg="s7">18:44</span></div><span class="tl-duration" data-seg="s7">2h26m</span></div><div class="tl-route">麟光<span class="arrow">→</span>指南宮<span class="arrow">→</span>政大</div><div class="tl-note">經世界山莊→和平東路→指南宮千階→貓空。<span class="highlight">最後衝刺！</span>天黑需頭燈</div><div class="tl-meta"><span class="tl-meta-item">📏 13km</span><span class="tl-meta-item">⬆ +500m</span><span class="tl-meta-item tl-meta-condition" data-seg="s7">🔦 頭燈</span><span class="tl-meta-item tl-meta-signal" data-seg-sig="s7" data-level="good">📶 收訊好</span></div></div></div>
     <!-- Finish --><div class="tl-item" data-phase="finish" data-id="fin"><div class="tl-card"><div class="tl-header"><div class="tl-header-left"><div class="tl-check" onclick="toggleCheck(this)"><span class="tl-check-icon">&#10003;</span></div><span class="tl-seg">完走</span><span class="tl-time-badge" data-seg="fin">~21:10</span></div></div><div class="tl-route" style="font-size:1.2rem;">🏁 完走！</div><div class="tl-note" id="finishNote">全程 <strong>~21 小時</strong>・92km・+5000m</div></div></div>
   </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══ GATE TIMES ═══ -->
+<section class="gates-section" id="gates">
+  <div class="section-label">GATE TIMES</div>
+  <div class="section-title">關門時間</div>
+  <div class="gates-grid" id="gatesGrid"></div>
 </section>
 
 <div class="divider"></div>
@@ -1132,6 +1283,7 @@ input[type="range"]::-webkit-slider-thumb {
 
   <div class="seg-card"><div class="seg-header" onclick="this.parentElement.classList.toggle('open')"><div class="seg-title-group"><span class="seg-badge night" data-seg-badge="s1">S1・00:00</span><span class="seg-name">關渡→二子坪</span></div><span class="seg-toggle">&#9662;</span></div><div class="seg-body"><div class="seg-content">
     <div class="seg-stats"><span class="seg-stat"><strong>11~13km</strong></span><span class="seg-stat"><strong>30~1092m</strong></span><span class="seg-stat"><strong>+1,200m</strong></span><span class="seg-stat"><strong data-seg-dur="s1">3h20m</strong></span></div>
+    <div class="seg-signal sig-weak"><span class="sig-icon">📶</span><div><strong>收訊：間歇（谷地斷訊）</strong><p>清天宮附近有訊號</p></div></div>
     <div class="seg-subtitle">路況</div>
     <p class="seg-text"><strong>忠義山步道：</strong>原始路況，部分需拉繩。凌晨全黑行走注意腳下。</p>
     <p class="seg-text"><strong>貴子坑→清天宮：</strong>一般道路段，凌晨車少但仍注意安全。路燈少。</p>
@@ -1143,6 +1295,26 @@ input[type="range"]::-webkit-slider-thumb {
 
   <div class="seg-card"><div class="seg-header" onclick="this.parentElement.classList.toggle('open')"><div class="seg-title-group"><span class="seg-badge dawn" data-seg-badge="s2">S2・03:20</span><span class="seg-name">面天坪→小油坑</span></div><span class="seg-toggle">&#9662;</span></div><div class="seg-body"><div class="seg-content">
     <div class="seg-stats"><span class="seg-stat"><strong>12km</strong></span><span class="seg-stat"><strong>684~1077m</strong></span><span class="seg-stat"><strong>+800m</strong></span><span class="seg-stat"><strong data-seg-dur="s2">2h40m</strong></span></div>
+    <div class="decision-tree">
+      <div class="decision-title">⚠️ S2 出發前決策</div>
+      <div class="decision-item go">
+        <div class="decision-label">✅ GO</div>
+        <div class="decision-text">連續 3 天未降雨 + 降雨機率 <30% + 能見度良好</div>
+      </div>
+      <div class="decision-item caution">
+        <div class="decision-label">⚠️ 注意</div>
+        <div class="decision-text">1-2 天前有小雨 + 降雨機率 30-60% → 穿雨鞋＋工作手套，放慢速度</div>
+      </div>
+      <div class="decision-item nogo">
+        <div class="decision-label">❌ 跳過</div>
+        <div class="decision-text">前 2-3 天有大雨 或 降雨機率 >70% 或 濃霧 → 搭 108 公車從二子坪直達小油坑</div>
+      </div>
+      <div class="decision-links">
+        <a href="https://www.cwa.gov.tw/V8/C/W/Mountain/Mountain.html?PID=N002" target="_blank">中央氣象署山區預報</a>
+        <a href="https://www.ymsnp.gov.tw/YMSNP_HighwayCondition.aspx?n=17910&csn=5239" target="_blank">陽管處步道資訊</a>
+      </div>
+    </div>
+    <div class="seg-signal sig-bad"><span class="sig-icon">📵</span><div><strong>收訊：差（谷地死角）</strong><p>最危險段卻最沒訊號，務必離線GPX</p></div></div>
     <div class="seg-warning"><p><strong>注意：</strong>官方起點為面天坪涼亭。從二子坪出發需經二子坪步道走約10分鐘銜接。</p></div>
     <div class="seg-danger"><p><strong>全程最難！</strong>大屯山西峰/南峰泥濘陡攀，需持續拉繩。跨距大、路窄。雨後極危險。</p></div>
     <div class="seg-subtitle">危險路段</div>
@@ -1155,6 +1327,7 @@ input[type="range"]::-webkit-slider-thumb {
 
   <div class="seg-card"><div class="seg-header" onclick="this.parentElement.classList.toggle('open')"><div class="seg-title-group"><span class="seg-badge day" data-seg-badge="s3">S3・06:00</span><span class="seg-name">小油坑→風櫃口</span></div><span class="seg-toggle">&#9662;</span></div><div class="seg-body"><div class="seg-content">
     <div class="seg-stats"><span class="seg-stat"><strong>13km</strong></span><span class="seg-stat"><strong>553~1120m</strong></span><span class="seg-stat"><strong>+950m</strong></span><span class="seg-stat"><strong data-seg-dur="s3">3h20m</strong></span></div>
+    <div class="seg-signal sig-good"><span class="sig-icon">📶</span><div><strong>收訊：好（稜線高處）</strong><p>冷水坑、擎天崗收訊穩定</p></div></div>
     <div class="seg-info"><p><strong>全程最高點！</strong>七星山 1120m。~06:30 登頂有機會看日出。</p></div>
     <div class="seg-warning"><p><strong>火災後路況：</strong>七星山區曾發生山林大火（約50公頃），經巡檢已重新開放，但部分路段植被受損、路況可能與過去不同。出發前請查詢<a href="https://www.ymsnp.gov.tw/YMSNP_HighwayCondition.aspx?n=17910&csn=5239" target="_blank" style="color:var(--amber);text-decoration:underline;">陽管處步道開放資訊</a>。</p></div>
     <div class="seg-subtitle">路況</div>
@@ -1167,6 +1340,7 @@ input[type="range"]::-webkit-slider-thumb {
 
   <div class="seg-card"><div class="seg-header" onclick="this.parentElement.classList.toggle('open')"><div class="seg-title-group"><span class="seg-badge day" data-seg-badge="s4">S4・09:20</span><span class="seg-name">風櫃口→大湖公園</span></div><span class="seg-toggle">&#9662;</span></div><div class="seg-body"><div class="seg-content">
     <div class="seg-stats"><span class="seg-stat"><strong>~13km 步道</strong></span><span class="seg-stat"><strong>30~553m</strong></span><span class="seg-stat"><strong>+350m ⬇870m</strong></span><span class="seg-stat"><strong data-seg-dur="s4">3h00m</strong></span></div>
+    <div class="seg-signal sig-weak"><span class="sig-icon">📶</span><div><strong>收訊：差（雙溪溝古道段）</strong><p>白石湖後恢復</p></div></div>
     <div class="seg-subtitle">路況</div>
     <p class="seg-text"><strong>雙溪溝古道：</strong>溪畔路段，泥濘濕滑。雲霧中易失方向。</p>
     <p class="seg-text"><strong>白石湖→圓覺寺：</strong>柏油＋石板，好走。白石湖有咖啡廳。</p>
@@ -1177,6 +1351,7 @@ input[type="range"]::-webkit-slider-thumb {
 
   <div class="seg-card"><div class="seg-header" onclick="this.parentElement.classList.toggle('open')"><div class="seg-title-group"><span class="seg-badge afternoon" data-seg-badge="s5">S5・12:40</span><span class="seg-name">劍潭→碧山巖</span></div><span class="seg-toggle">&#9662;</span></div><div class="seg-body"><div class="seg-content">
     <div class="seg-stats"><span class="seg-stat"><strong>12km</strong></span><span class="seg-stat"><strong>10~327m</strong></span><span class="seg-stat"><strong>+550m</strong></span><span class="seg-stat"><strong data-seg-dur="s5">3h00m</strong></span></div>
+    <div class="seg-signal sig-good"><span class="sig-icon">📶</span><div><strong>收訊：好（靠近市區）</strong><p>全段收訊穩定</p></div></div>
     <div class="seg-subtitle">路況</div>
     <p class="seg-text">難度「易」，坡度有限。但<strong>步道網極複雜，岔路多，最容易迷路的一段！</strong>務必跟緊GPX。</p>
     <p class="seg-text">午後最熱，部分路段無遮蔽。途中經過墳墓區域。</p>
@@ -1188,6 +1363,7 @@ input[type="range"]::-webkit-slider-thumb {
 
   <div class="seg-card"><div class="seg-header" onclick="this.parentElement.classList.toggle('open')"><div class="seg-title-group"><span class="seg-badge afternoon" data-seg-badge="s6">S6・16:20</span><span class="seg-name">中華科大→麟光</span></div><span class="seg-toggle">&#9662;</span></div><div class="seg-body"><div class="seg-content">
     <div class="seg-stats"><span class="seg-stat"><strong>11km</strong></span><span class="seg-stat"><strong>30~375m</strong></span><span class="seg-stat"><strong>+680m</strong></span><span class="seg-stat"><strong data-seg-dur="s6">2h24m</strong></span></div>
+    <div class="seg-signal sig-good"><span class="sig-icon">📶</span><div><strong>收訊：好（靠近市區）</strong><p>全段收訊穩定</p></div></div>
     <div class="seg-subtitle">路況</div>
     <p class="seg-text"><strong>中華科大→九五峰：</strong>全程樓梯上坡，林蔭少注意防曬。九五峰巨石眺望101。</p>
     <p class="seg-text"><strong>拇指山：</strong>短但陡，需拉繩。</p>
@@ -1198,6 +1374,7 @@ input[type="range"]::-webkit-slider-thumb {
 
   <div class="seg-card"><div class="seg-header" onclick="this.parentElement.classList.toggle('open')"><div class="seg-title-group"><span class="seg-badge dusk" data-seg-badge="s7">S7・18:44</span><span class="seg-name">麟光→政大</span></div><span class="seg-toggle">&#9662;</span></div><div class="seg-body"><div class="seg-content">
     <div class="seg-stats"><span class="seg-stat"><strong>13km</strong></span><span class="seg-stat"><strong>26~308m</strong></span><span class="seg-stat"><strong>+500m</strong></span><span class="seg-stat"><strong data-seg-dur="s7">2h26m</strong></span></div>
+    <div class="seg-signal sig-good"><span class="sig-icon">📶</span><div><strong>收訊：好</strong><p>指南宮、貓空地區收訊穩定</p></div></div>
     <div class="seg-subtitle">路況</div>
     <div class="seg-warning"><p><strong>路線銜接：</strong>官方 S7 起點為世界山莊（S6 途經點）。從麟光的完整路線：麟光→富陽→世界山莊→和平東路→萬壽橋→指南宮千階。與 S6 有部分重疊屬正常。</p></div>
     <p class="seg-text"><strong>指南宮千階：</strong>石階陡升，天黑後頭燈行走。</p>
@@ -1252,6 +1429,51 @@ input[type="range"]::-webkit-slider-thumb {
   <div class="retreat-card"><span class="retreat-seg">S5</span><div class="retreat-detail">沿途多下切口：<strong>劍潭山/文間山/鄭成功廟/圓明寺/忠勇山</strong>。全段離市區最近，撤退最方便</div></div>
   <div class="retreat-card"><span class="retreat-seg">S6</span><div class="retreat-detail"><strong>九五峰</strong>退往象山下信義區｜<strong>糶米古道</strong>下至吳興街｜<strong>福州山</strong>直下麟光站</div></div>
   <div class="retreat-card"><span class="retreat-seg">S7</span><div class="retreat-detail"><strong>指南宮/貓空</strong>搭貓纜或公車（平日末班21:00/假日22:00，除每月第一個週一外週一公休）｜<strong>樟山寺</strong>棕15公車</div></div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══ LOGISTICS ═══ -->
+<section class="logistics-section" id="logistics">
+  <div class="section-label">LOGISTICS</div>
+  <div class="section-title">交通物流</div>
+
+  <div class="logistics-card">
+    <div class="logistics-card-title">起點交通（如何到達關渡）</div>
+    <ul class="logistics-list">
+      <li><strong>捷運：</strong>淡水信義線（紅線）關渡站。末班車約 00:15 到站。</li>
+      <li><strong>Uber/計程車：</strong>台北市區→關渡 約 250-350 元，15-20 分鐘。深夜叫車穩定。</li>
+      <li><strong>自駕：</strong>可停劍潭站停車場（平日 150 元/日），再搭計程車至關渡。</li>
+    </ul>
+  </div>
+
+  <div class="logistics-card">
+    <div class="logistics-card-title">接駁段 Uber 預估</div>
+    <ul class="logistics-list">
+      <li><strong>T1 大湖公園→劍潭：</strong>約 200-280 元，15-20 分鐘</li>
+      <li><strong>T2 碧山巖→中華科大：</strong>約 250-350 元，20-30 分鐘</li>
+    </ul>
+  </div>
+
+  <div class="logistics-card">
+    <div class="logistics-card-title">關鍵公車時刻</div>
+    <ul class="logistics-list">
+      <li><strong>108 陽明山遊園公車：</strong>二子坪↔小油坑↔竹子湖。末班約 17:30。假日擠爆，建議 15:00 前到站。</li>
+      <li><strong>小15：</strong>擎天崗/冷水坑→劍潭站。班次較多，撤退首選。</li>
+      <li><strong>小2：</strong>碧山巖→內湖。</li>
+      <li><strong>棕15：</strong>樟山寺→政大方向。</li>
+      <li><strong>貓纜：</strong>平日末班 21:00／假日 22:00。除每月第一個週一外，週一公休。</li>
+    </ul>
+  </div>
+
+  <div class="logistics-card">
+    <div class="logistics-card-title">完走後回家</div>
+    <ul class="logistics-list">
+      <li><strong>政大校門口公車：</strong>236區/237/282/530/611/676/棕6/綠1</li>
+      <li><strong>Uber/計程車：</strong>政大、貓空地區深夜仍可叫車</li>
+      <li><strong>貓纜（若時間允許）：</strong>貓空站→動物園站，轉捷運文湖線</li>
+    </ul>
+  </div>
 </section>
 
 <div class="divider"></div>
@@ -1337,6 +1559,36 @@ input[type="range"]::-webkit-slider-thumb {
 
 <div class="divider"></div>
 
+<!-- ═══ WEATHER LINKS ═══ -->
+<section class="weather-links" id="weather">
+  <div class="section-label">WEATHER CHECK</div>
+  <div class="section-title">出發前天氣確認</div>
+  <div class="weather-grid">
+    <a href="https://www.cwa.gov.tw/V8/C/W/Mountain/Mountain.html?PID=N002" target="_blank" class="weather-card">
+      <div class="weather-icon">🌤️</div>
+      <div class="weather-name">中央氣象署</div>
+      <div class="weather-desc">山區天氣預報</div>
+    </a>
+    <a href="https://www.ymsnp.gov.tw/YMSNP_HighwayCondition.aspx?n=17910&csn=5239" target="_blank" class="weather-card">
+      <div class="weather-icon">🏔️</div>
+      <div class="weather-name">陽管處</div>
+      <div class="weather-desc">步道開放資訊</div>
+    </a>
+    <a href="https://www.cwa.gov.tw/V8/C/W/OBS_Radar.html" target="_blank" class="weather-card">
+      <div class="weather-icon">📡</div>
+      <div class="weather-name">雷達回波</div>
+      <div class="weather-desc">即時降雨圖</div>
+    </a>
+    <a href="https://www.windy.com/25.175/121.527?25.120,121.527,12" target="_blank" class="weather-card">
+      <div class="weather-icon">💨</div>
+      <div class="weather-name">Windy</div>
+      <div class="weather-desc">風速/雲圖/降雨</div>
+    </a>
+  </div>
+</section>
+
+<div class="divider"></div>
+
 <!-- ═══ SAFETY ═══ -->
 <section class="safety-section" id="safety">
   <div class="section-label">SAFETY</div>
@@ -1392,6 +1644,7 @@ function saveState(s) { localStorage.setItem(STATE_KEY, JSON.stringify(s)); }
 const state = loadState();
 if (!state.timeline) state.timeline = {};
 if (!state.gear) state.gear = {};
+if (!state.checkpoints) state.checkpoints = {};
 
 // ═══ SUN TABLE ═══
 const SUN_TABLE = {
@@ -1436,25 +1689,86 @@ const SEG_KM = { s1:11.8, s2:12, s3:13, s4:13, t1:0, s5:12, t2:0, s6:11, s7:13, 
 const SEG_ASCENT = { s1:1200, s2:800, s3:950, s4:350, t1:0, s5:550, t2:0, s6:680, s7:500, fin:0 };
 const SEG_HEADER_LABELS = { s1:'S1', s2:'S2', s3:'S3', s4:'S4', s5:'S5', s6:'S6', s7:'S7' };
 
+// ═══ GATE TIMES DATA ═══
+const GATES = [
+  { id: 'g1', name: '二子坪', segId: 's1', baseMin: 200, action: '評估體能，考慮是否繼續' },
+  { id: 'g2', name: '小油坑', segId: 's3', baseMin: 360, action: '未到→搭108公車下山（末班~17:30）' },
+  { id: 'g3', name: '冷水坑', segId: 's3', baseMin: 450, action: '108公車或小15公車撤退' },
+  { id: 'g4', name: '擎天崗', segId: 's3', baseMin: 520, action: '小15公車至劍潭站撤退' },
+  { id: 'g5', name: '風櫃口', segId: 's4', baseMin: 560, action: '市民小巴1（班次極少！）過了這裡撤退困難' },
+  { id: 'g6', name: '大湖公園', segId: 't1', baseMin: 740, action: '回到文明，重新評估是否繼續南段' },
+  { id: 'g7', name: '麟光站', segId: 's7', baseMin: 1124, action: '最後補給點，天黑後需頭燈完成S7' },
+];
+
+// ═══ SIGNAL DATA ═══
+const SIGNAL_INFO = {
+  s1: { level: 'weak', text: '間歇（谷地斷訊）', tip: '清天宮附近有訊號' },
+  s2: { level: 'bad', text: '差（谷地死角）', tip: '最危險段卻最沒訊號，務必離線GPX' },
+  s3: { level: 'good', text: '好（稜線高處）', tip: '冷水坑、擎天崗收訊穩定' },
+  s4: { level: 'weak', text: '差（雙溪溝古道段）', tip: '白石湖後恢復' },
+  s5: { level: 'good', text: '好（靠近市區）', tip: '全段收訊穩定' },
+  s6: { level: 'good', text: '好（靠近市區）', tip: '全段收訊穩定' },
+  s7: { level: 'good', text: '好', tip: '指南宮、貓空地區收訊穩定' },
+};
+
+// ═══ FATIGUE MODEL ═══
+const FATIGUE_MODEL = [
+  { afterHr: 0,  multiplier: 1.0 },
+  { afterHr: 12, multiplier: 1.15 },
+  { afterHr: 18, multiplier: 1.30 },
+];
+
 let currentPace = BASE_PACE;
-let currentStartMin = 0; // minutes from midnight (can be negative for prev day)
+let currentStartMin = 0;
 let currentMonth = new Date().getMonth() + 1;
+let fatigueEnabled = true;
 
 function scaledDur(seg, pace) {
   if (seg.transit) return seg.baseDur;
   return Math.round(seg.baseDur * (pace / BASE_PACE));
 }
 
+function scaledDurWithFatigue(seg, pace, segStartMin) {
+  if (seg.transit) return seg.baseDur;
+  const rawDur = Math.round(seg.baseDur * (pace / BASE_PACE));
+  if (!fatigueEnabled) return rawDur;
+
+  const startHr = segStartMin / 60;
+  const endHr = (segStartMin + rawDur) / 60;
+  const midHr = (startHr + endHr) / 2;
+
+  let fatigueMult = 1.0;
+  for (let i = FATIGUE_MODEL.length - 1; i >= 0; i--) {
+    if (midHr >= FATIGUE_MODEL[i].afterHr) {
+      fatigueMult = FATIGUE_MODEL[i].multiplier;
+      break;
+    }
+  }
+
+  return Math.round(rawDur * fatigueMult);
+}
+
 function buildSchedule(pace) {
   const segs = [];
   let cumMin = 0;
   for (const bs of BASE_SEGMENTS) {
-    const dur = scaledDur(bs, pace);
+    const dur = scaledDurWithFatigue(bs, pace, cumMin);
     segs.push({ id: bs.id, name: SEG_NAMES[bs.id], startMin: cumMin, durMin: dur, km: SEG_KM[bs.id], ascent: SEG_ASCENT[bs.id] });
     cumMin += dur;
   }
   segs.push({ id: 'fin', name: '🏁 完走！', startMin: cumMin, durMin: 0, km: 0, ascent: 0 });
   return { segs, totalMin: cumMin };
+}
+
+function buildScheduleNoFatigue(pace) {
+  const segs = [];
+  let cumMin = 0;
+  for (const bs of BASE_SEGMENTS) {
+    const dur = scaledDur(bs, pace);
+    segs.push({ id: bs.id, startMin: cumMin, durMin: dur });
+    cumMin += dur;
+  }
+  return { totalMin: cumMin };
 }
 
 function scaleBaseTime(baseMin, pace) {
@@ -1561,6 +1875,8 @@ function getInitialTrackerStart() {
 currentPace = getInitialPace();
 currentStartMin = getInitialStartMin();
 currentMonth = getInitialMonth();
+fatigueEnabled = (state.fatigue !== undefined) ? state.fatigue : true;
+document.getElementById('fatigueToggle').checked = fatigueEnabled;
 
 const initTrackerStart = getInitialTrackerStart();
 if (initTrackerStart) {
@@ -1600,6 +1916,7 @@ function applyConfig() {
   state.pace = pace;
   state.startHour = startMin;
   state.month = month;
+  state.fatigue = fatigueEnabled;
   saveState(state);
 
   const { segs, totalMin } = buildSchedule(pace);
@@ -1627,6 +1944,19 @@ function applyConfig() {
   document.getElementById('paceStatTotal').textContent = minToDurStr(totalMin);
   const finishClockMin = startMin + totalMin;
   document.getElementById('paceStatFinish').textContent = minToHHMM(finishClockMin);
+
+  // Fatigue comparison
+  const fatigueCompareEl = document.getElementById('fatigueCompare');
+  if (fatigueEnabled) {
+    const noFatigue = buildScheduleNoFatigue(pace);
+    const diff = totalMin - noFatigue.totalMin;
+    document.getElementById('fatigueBaseTime').textContent = minToDurStr(noFatigue.totalMin);
+    document.getElementById('fatigueTotalTime').textContent = minToDurStr(totalMin);
+    document.getElementById('fatigueDiffTime').textContent = minToDurStr(diff);
+    fatigueCompareEl.style.display = diff > 0 ? '' : 'none';
+  } else {
+    fatigueCompareEl.style.display = 'none';
+  }
 
   // Timeline items: time badges, durations, phases, condition icons
   for (const seg of segs) {
@@ -1680,8 +2010,6 @@ function applyConfig() {
         const absEnd = startMin + seg.startMin + seg.durMin;
         let hasSunrise = false;
         let hasSunset = false;
-        // Check if sunrise time (mod 1440) falls within the segment's absolute time range
-        // We need to check each day the segment might span
         for (let day = -1; day <= 2; day++) {
           const sr = sun.rise + day * 1440;
           const ss = sun.set + day * 1440;
@@ -1759,6 +2087,9 @@ function applyConfig() {
     els.forEach(el => { el.textContent = '~' + clockTime; });
   });
 
+  // ═══ GATE TIMES ═══
+  updateGates(pace, startMin);
+
   // ═══ DYNAMIC DAY/NIGHT BAR ═══
   updateDaynightBar(startMin, totalMin, sun);
 
@@ -1781,6 +2112,78 @@ function applyConfig() {
   if (footer) footer.textContent = '台北大縱走 一日完走計畫 ── 上河 \u00d7' + pace.toFixed(2) + ' ── 2026';
 
   updateURL();
+}
+
+// ═══ GATE TIMES UPDATE ═══
+function updateGates(pace, startMin) {
+  const grid = document.getElementById('gatesGrid');
+  if (!grid) return;
+  grid.innerHTML = '';
+
+  GATES.forEach(gate => {
+    const scaled = scaleBaseTime(gate.baseMin, pace);
+    const gateClockMin = startMin + scaled + 30; // 30min grace
+    const elapsedMin = scaled + 30;
+    const elH = Math.floor(elapsedMin / 60);
+    const elM = Math.round(elapsedMin % 60);
+
+    const card = document.createElement('div');
+    card.className = 'gate-card';
+    card.dataset.gateId = gate.id;
+
+    card.innerHTML =
+      '<div class="gate-time-col">' +
+        '<div class="gate-clock">' + minToHHMM(gateClockMin) + '</div>' +
+        '<div class="gate-elapsed">+' + elH + 'h' + String(elM).padStart(2,'0') + 'm</div>' +
+      '</div>' +
+      '<div>' +
+        '<div class="gate-name">' + gate.name + '</div>' +
+        '<div class="gate-action">' + gate.action + '</div>' +
+      '</div>' +
+      '<div class="gate-countdown" data-gate-id="' + gate.id + '"></div>';
+
+    grid.appendChild(card);
+  });
+}
+
+function updateGateColors() {
+  if (!state.startTime) {
+    document.querySelectorAll('.gate-card').forEach(c => {
+      c.classList.remove('gate-green', 'gate-amber', 'gate-red');
+      c.classList.add('gate-green');
+    });
+    document.querySelectorAll('.gate-countdown').forEach(el => { el.textContent = ''; });
+    return;
+  }
+
+  const now = Date.now();
+  const diffMin = (now - state.startTime) / 60000;
+
+  GATES.forEach(gate => {
+    const scaled = scaleBaseTime(gate.baseMin, currentPace);
+    const gateElapsedMin = scaled + 30;
+    const remainMin = gateElapsedMin - diffMin;
+
+    const card = document.querySelector('.gate-card[data-gate-id="' + gate.id + '"]');
+    const cdEl = document.querySelector('.gate-countdown[data-gate-id="' + gate.id + '"]');
+    if (!card) return;
+
+    card.classList.remove('gate-green', 'gate-amber', 'gate-red');
+    if (remainMin <= 0) {
+      card.classList.add('gate-red');
+      if (cdEl) { cdEl.textContent = '已過'; cdEl.className = 'gate-countdown past'; }
+    } else if (remainMin < 120) {
+      card.classList.add('gate-amber');
+      const rH = Math.floor(remainMin / 60);
+      const rM = Math.floor(remainMin % 60);
+      if (cdEl) { cdEl.textContent = '剩 ' + rH + 'h' + String(rM).padStart(2,'0') + 'm'; cdEl.className = 'gate-countdown urgent'; }
+    } else {
+      card.classList.add('gate-green');
+      const rH = Math.floor(remainMin / 60);
+      const rM = Math.floor(remainMin % 60);
+      if (cdEl) { cdEl.textContent = '剩 ' + rH + 'h' + String(rM).padStart(2,'0') + 'm'; cdEl.className = 'gate-countdown'; }
+    }
+  });
 }
 
 // ═══ DAY/NIGHT BAR GRADIENT ═══
@@ -1911,6 +2314,7 @@ function updateSmartSummary(segs, startMin, totalMin, sun) {
 function onConfigChange() {
   currentPace = parseInt(document.getElementById('paceSlider').value) / 100;
   currentStartMin = parseInt(document.getElementById('startSlider').value);
+  fatigueEnabled = document.getElementById('fatigueToggle').checked;
   // Month is handled by button click
   applyConfig();
   updateCalc();
@@ -1932,14 +2336,64 @@ function updateURL() {
   window.history.replaceState({}, '', url);
 }
 
-// ═══ TIMELINE CHECK ═══
+// ═══ TIMELINE CHECK (with checkpoint recording) ═══
 function toggleCheck(el) {
   const item = el.closest('.tl-item');
+  const id = item.dataset.id;
   item.classList.toggle('checked');
-  state.timeline[item.dataset.id] = item.classList.contains('checked');
+
+  if (item.classList.contains('checked') && state.startTime) {
+    if (!state.checkpoints) state.checkpoints = {};
+    state.checkpoints[id] = Date.now();
+  } else if (!item.classList.contains('checked')) {
+    if (state.checkpoints) delete state.checkpoints[id];
+  }
+
+  state.timeline[id] = item.classList.contains('checked');
   saveState(state);
   updateProgress();
+  updateCheckpointDisplay();
 }
+
+function updateCheckpointDisplay() {
+  if (!state.startTime || !state.checkpoints) return;
+
+  document.querySelectorAll('.tl-item.checked').forEach(item => {
+    const id = item.dataset.id;
+    const checkpoint = state.checkpoints[id];
+    if (!checkpoint) return;
+
+    const elapsed = (checkpoint - state.startTime) / 60000;
+    const seg = SCHEDULE.find(s => s.id === id);
+    if (!seg) return;
+
+    const expected = seg.startMin + seg.durMin;
+    const diff = elapsed - expected;
+
+    let badgeEl = item.querySelector('.checkpoint-badge');
+    if (!badgeEl) {
+      badgeEl = document.createElement('div');
+      badgeEl.className = 'checkpoint-badge';
+      item.querySelector('.tl-card').appendChild(badgeEl);
+    }
+
+    const actualTime = minToHHMM(currentStartMin + elapsed);
+    if (Math.abs(diff) < 5) {
+      badgeEl.innerHTML = '✅ ' + actualTime + ' (準時)';
+      badgeEl.className = 'checkpoint-badge cp-ontime';
+    } else if (diff > 0) {
+      badgeEl.innerHTML = '⏱️ ' + actualTime + ' (慢 ' + Math.round(diff) + '分)';
+      badgeEl.className = 'checkpoint-badge cp-late';
+    } else {
+      badgeEl.innerHTML = '⚡ ' + actualTime + ' (快 ' + Math.round(-diff) + '分)';
+      badgeEl.className = 'checkpoint-badge cp-early';
+    }
+  });
+
+  // Remove badges from unchecked items
+  document.querySelectorAll('.tl-item:not(.checked) .checkpoint-badge').forEach(b => b.remove());
+}
+
 function updateProgress() {
   const total = document.querySelectorAll('.tl-item').length;
   const checked = document.querySelectorAll('.tl-item.checked').length;
@@ -2011,6 +2465,7 @@ function updateTracker() {
   const remainEl = document.getElementById('trackerRemain');
   const etaEl = document.getElementById('trackerETA');
   const segEl = document.getElementById('trackerSeg');
+  const gateEl = document.getElementById('trackerGate');
 
   const pad = n => String(n).padStart(2,'0');
   clock.textContent = pad(now.getHours())+':'+pad(now.getMinutes())+':'+pad(now.getSeconds());
@@ -2020,6 +2475,8 @@ function updateTracker() {
     statusEl.className = 'tracker-status before';
     statusEl.textContent = '尚未設定';
     segEl.innerHTML = '設定出發日期時間後，即時追蹤你在哪一段、已走多久、預估剩餘時間。';
+    gateEl.style.display = 'none';
+    updateGateColors();
     return;
   }
 
@@ -2038,6 +2495,8 @@ function updateTracker() {
     const eta = new Date(start.getTime() + totalMin * 60000);
     etaEl.textContent = pad(eta.getHours()) + ':' + pad(eta.getMinutes());
     segEl.innerHTML = '距離出發還有 <strong>' + untilH + '小時' + untilM + '分</strong>';
+    gateEl.style.display = 'none';
+    updateGateColors();
     return;
   }
 
@@ -2050,6 +2509,8 @@ function updateTracker() {
     const finH = Math.floor(totalMin/60);
     const finM = Math.round(totalMin%60);
     segEl.innerHTML = '🏁 <strong>恭喜完走！</strong>全程 ' + finH + ' 小時' + (finM > 0 ? ' ' + finM + ' 分' : '');
+    gateEl.style.display = 'none';
+    updateGateColors();
     return;
   }
 
@@ -2079,6 +2540,30 @@ function updateTracker() {
 
   segEl.innerHTML = '目前應在 <span class="seg-highlight">' + current.name + '</span>（段內 ' + segProgress + '%）<br>' +
     '總進度 <strong>' + totalPct + '%</strong> ・ 約 ' + kmDone.toFixed(1) + 'km';
+
+  // Next gate countdown
+  let nextGate = null;
+  for (const gate of GATES) {
+    const scaled = scaleBaseTime(gate.baseMin, currentPace);
+    const gateElapsedMin = scaled + 30;
+    if (gateElapsedMin > diffMin) {
+      nextGate = { name: gate.name, elapsedMin: gateElapsedMin, remainMin: gateElapsedMin - diffMin };
+      break;
+    }
+  }
+
+  if (nextGate) {
+    const gRH = Math.floor(nextGate.remainMin / 60);
+    const gRM = Math.floor(nextGate.remainMin % 60);
+    const gateClockStr = minToHHMM(currentStartMin + nextGate.elapsedMin);
+    gateEl.style.display = '';
+    gateEl.innerHTML = '下一關門：<strong>' + nextGate.name + '</strong> ' + gateClockStr + '（剩 ' + gRH + 'h' + pad(gRM) + 'm）';
+  } else {
+    gateEl.style.display = 'none';
+  }
+
+  updateGateColors();
+  updateCheckpointDisplay();
 
   const pillSeg = document.getElementById('pillSeg');
   if (pillSeg) pillSeg.textContent = current.name.split(' ')[0];
@@ -2291,11 +2776,30 @@ function showToast(msg) {
   setTimeout(() => toast.classList.remove('show'), 2000);
 }
 
+// ═══ OFFLINE SUPPORT ═══
+window.addEventListener('online', () => {
+  document.getElementById('offlineBanner').classList.remove('visible');
+});
+window.addEventListener('offline', () => {
+  document.getElementById('offlineBanner').classList.add('visible');
+});
+if (!navigator.onLine) {
+  document.getElementById('offlineBanner').classList.add('visible');
+}
+
+// PWA: Register service worker for offline support
+if ('serviceWorker' in navigator) {
+  const swCode = "const CACHE_NAME='tgt-v3';const URLS=['/'];self.addEventListener('install',e=>{e.waitUntil(caches.open(CACHE_NAME).then(c=>c.addAll(URLS)));self.skipWaiting();});self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE_NAME).map(k=>caches.delete(k)))));self.clients.claim();});self.addEventListener('fetch',e=>{e.respondWith(caches.match(e.request).then(r=>r||fetch(e.request).then(resp=>{const clone=resp.clone();caches.open(CACHE_NAME).then(c=>c.put(e.request,clone));return resp;})).catch(()=>caches.match('/')));});";
+  const blob = new Blob([swCode], { type: 'application/javascript' });
+  navigator.serviceWorker.register(URL.createObjectURL(blob)).catch(() => {});
+}
+
 // ═══ INIT ═══
 applyConfig();
 updateProgress();
 updateTracker();
 updateCalc();
+updateCheckpointDisplay();
 </script>
 </body>
 </html>
