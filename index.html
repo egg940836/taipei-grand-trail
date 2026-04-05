@@ -535,6 +535,40 @@ nav a:hover, nav a.active { color: var(--amber); }
 .gate-countdown.past { color: #fb7185; }
 .tracker-gate { margin-top: 0.5rem; font-family: var(--font-mono); font-size: 0.75rem; color: var(--ridge); }
 
+.tracker-btn {
+  padding: 10px 20px; border-radius: 10px; border: none;
+  font-family: var(--font-body); font-size: 0.85rem; font-weight: 600;
+  cursor: pointer; min-height: 48px; transition: all 0.2s;
+  -webkit-tap-highlight-color: transparent;
+}
+.tracker-btn:active { transform: scale(0.96); }
+.tracker-btn-go {
+  background: linear-gradient(135deg, var(--ridge), #34d399);
+  color: var(--night); min-width: 140px;
+}
+.tracker-btn-custom {
+  background: rgba(255,255,255,0.08); color: var(--text);
+  border: 1px solid rgba(255,255,255,0.15);
+}
+.tracker-btn-confirm {
+  background: var(--amber); color: var(--night);
+  padding: 8px 16px; font-size: 0.8rem; min-height: 44px; margin-left: 6px;
+}
+.tracker-btn-stop {
+  background: rgba(225,29,72,0.15); color: #fb7185;
+  border: 1px solid rgba(225,29,72,0.2); font-size: 0.75rem; padding: 8px 16px;
+}
+.tracker-btn-reset {
+  background: rgba(255,255,255,0.06); color: var(--text-dim);
+  border: 1px solid rgba(255,255,255,0.1); font-size: 0.75rem; padding: 8px 16px;
+}
+.tracker-datetime-input {
+  padding: 8px 10px; border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.15); background: rgba(255,255,255,0.06);
+  color: var(--text); font-family: var(--font-mono); font-size: 0.8rem;
+  min-height: 44px;
+}
+
 /* ═══ SEGMENT DETAILS (accordion) ═══ */
 .segments-section { padding: 2.5rem 1rem; max-width: 900px; margin: 0 auto; }
 
@@ -1197,44 +1231,50 @@ input[type="range"]::-webkit-slider-thumb {
 <!-- ═══ LIVE TRACKER ═══ -->
 <section class="tracker" id="tracker">
   <div class="tracker-card">
-    <div class="tracker-header">
-      <div>
-        <div class="tracker-clock" id="trackerClock">--:--:--</div>
-        <div class="tracker-date" id="trackerDate"></div>
-      </div>
-      <div class="tracker-status before" id="trackerStatus">尚未開始</div>
-    </div>
-    <div class="tracker-info">
-      <div class="tracker-info-item">
-        <div class="tracker-info-label">已經過</div>
-        <div class="tracker-info-value" id="trackerElapsed">--<span class="unit">hr</span></div>
-      </div>
-      <div class="tracker-info-item">
-        <div class="tracker-info-label">預估剩餘</div>
-        <div class="tracker-info-value" id="trackerRemain">~21<span class="unit">hr</span></div>
-      </div>
-      <div class="tracker-info-item">
-        <div class="tracker-info-label">預估完成</div>
-        <div class="tracker-info-value" id="trackerETA">21:10</div>
+    <!-- Pre-start: action buttons -->
+    <div id="trackerPreStart">
+      <div style="text-align:center;padding:0.5rem 0;">
+        <div style="font-family:var(--font-display);font-weight:700;font-size:1rem;margin-bottom:0.25rem;">即時追蹤</div>
+        <div style="font-size:0.75rem;color:var(--text-dim);margin-bottom:1rem;">到登山口了？啟動追蹤，全程掌握進度</div>
+        <div style="display:flex;gap:0.75rem;justify-content:center;flex-wrap:wrap;">
+          <button onclick="startNow()" class="tracker-btn tracker-btn-go">🟢 現在出發</button>
+          <button onclick="showCustomStart()" class="tracker-btn tracker-btn-custom">📅 自訂時間</button>
+        </div>
+        <div id="customStartWrap" style="display:none;margin-top:0.75rem;">
+          <input type="datetime-local" id="startTimeInput" class="tracker-datetime-input">
+          <button onclick="setCustomStart()" class="tracker-btn tracker-btn-confirm">確認</button>
+        </div>
       </div>
     </div>
-    <div class="tracker-segment" id="trackerSeg">
-      設定出發日期後，會自動追蹤你目前應該在哪一段。點擊下方「設定出發時間」開始。
-    </div>
-    <div class="tracker-gate" id="trackerGate" style="display:none;"></div>
-    <div style="margin-top:0.75rem;text-align:center;">
-      <label style="font-size:0.7rem;color:var(--text-dim);">出發日期時間：</label><br>
-      <input type="datetime-local" id="startTimeInput" style="
-        margin-top:4px; padding:6px 10px; border-radius:8px;
-        border:1px solid rgba(255,255,255,0.15); background:rgba(255,255,255,0.06);
-        color:var(--text); font-family:var(--font-mono); font-size:0.8rem;
-        min-height:44px;
-      ">
-      <button onclick="setStartTime()" style="
-        margin-left:6px; padding:6px 14px; border-radius:8px; border:none;
-        background:var(--amber); color:var(--night); font-weight:600;
-        font-size:0.75rem; cursor:pointer; min-height:44px; min-width:44px;
-      ">設定</button>
+    <!-- Active / Done: live display -->
+    <div id="trackerActive" style="display:none;">
+      <div class="tracker-header">
+        <div>
+          <div class="tracker-clock" id="trackerClock">--:--:--</div>
+          <div class="tracker-date" id="trackerDate"></div>
+        </div>
+        <div class="tracker-status active" id="trackerStatus">進行中</div>
+      </div>
+      <div class="tracker-info">
+        <div class="tracker-info-item">
+          <div class="tracker-info-label">已經過</div>
+          <div class="tracker-info-value" id="trackerElapsed">--<span class="unit">hr</span></div>
+        </div>
+        <div class="tracker-info-item">
+          <div class="tracker-info-label">預估剩餘</div>
+          <div class="tracker-info-value" id="trackerRemain">--<span class="unit">hr</span></div>
+        </div>
+        <div class="tracker-info-item">
+          <div class="tracker-info-label">預估完成</div>
+          <div class="tracker-info-value" id="trackerETA">--:--</div>
+        </div>
+      </div>
+      <div class="tracker-segment" id="trackerSeg"></div>
+      <div class="tracker-gate" id="trackerGate" style="display:none;"></div>
+      <div style="margin-top:0.75rem;display:flex;gap:0.5rem;justify-content:center;">
+        <button onclick="stopTracker()" class="tracker-btn tracker-btn-stop">⏹ 停止追蹤</button>
+        <button onclick="resetTracker()" class="tracker-btn tracker-btn-reset">🔄 重置</button>
+      </div>
     </div>
   </div>
 </section>
@@ -2325,11 +2365,6 @@ function buildShareURL() {
   url.searchParams.set('start', String(currentStartMin));
   url.searchParams.set('month', String(currentMonth));
   url.searchParams.set('fatigue', fatigueEnabled ? '1' : '0');
-  if (state.startTime) {
-    const d = new Date(state.startTime);
-    const pad = n => String(n).padStart(2,'0');
-    url.searchParams.set('trackerStart', d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate())+'T'+pad(d.getHours())+':'+pad(d.getMinutes()));
-  }
   return url;
 }
 function updateURL() {
@@ -2433,32 +2468,86 @@ document.querySelectorAll('.gear-item').forEach((item, idx) => {
 updateGear();
 
 // ═══ LIVE TRACKER ═══
-function setStartTime() {
-  const input = document.getElementById('startTimeInput');
-  if (!input.value) return;
-  state.startTime = new Date(input.value).getTime();
-  saveState(state);
-
-  // Auto-set planning start hour to match tracker start
-  const d = new Date(state.startTime);
-  const trackerHourMin = d.getHours() * 60 + d.getMinutes();
-  // Convert to our slider range: if trackerHourMin < 720 (12:00), treat as is; if >= 1200 (20:00), treat as negative
-  let sliderVal = trackerHourMin;
-  if (trackerHourMin >= 1200) sliderVal = trackerHourMin - 1440; // e.g., 22:00 = 1320 -> -120
+// ═══ TRACKER CONTROLS ═══
+function syncSliderToTime(timestamp) {
+  const d = new Date(timestamp);
+  const hourMin = d.getHours() * 60 + d.getMinutes();
+  let sliderVal = hourMin;
+  if (hourMin >= 1200) sliderVal = hourMin - 1440;
   sliderVal = Math.max(-240, Math.min(360, Math.round(sliderVal / 15) * 15));
   currentStartMin = sliderVal;
   document.getElementById('startSlider').value = sliderVal;
+}
 
+function activateTracker(timestamp) {
+  state.startTime = timestamp;
+  saveState(state);
+  syncSliderToTime(timestamp);
   applyConfig();
+  showTrackerActive();
   updateTracker();
 }
 
-// Restore start time
+function startNow() {
+  activateTracker(Date.now());
+}
+
+function showCustomStart() {
+  const wrap = document.getElementById('customStartWrap');
+  wrap.style.display = wrap.style.display === 'none' ? 'block' : 'none';
+  // Pre-fill with current planning time
+  if (!document.getElementById('startTimeInput').value) {
+    const now = new Date();
+    const pad = n => String(n).padStart(2,'0');
+    document.getElementById('startTimeInput').value =
+      now.getFullYear()+'-'+pad(now.getMonth()+1)+'-'+pad(now.getDate())+'T'+pad(now.getHours())+':'+pad(now.getMinutes());
+  }
+}
+
+function setCustomStart() {
+  const input = document.getElementById('startTimeInput');
+  if (!input.value) return;
+  activateTracker(new Date(input.value).getTime());
+}
+
+function stopTracker() {
+  state.trackerStopped = true;
+  saveState(state);
+  showTrackerActive(); // stays in active view but stops updating
+}
+
+function resetTracker() {
+  delete state.startTime;
+  delete state.trackerStopped;
+  delete state.checkpoints;
+  state.timeline = {};
+  saveState(state);
+  // Uncheck all timeline items
+  document.querySelectorAll('.tl-item.checked').forEach(item => {
+    item.classList.remove('checked');
+    const badge = item.querySelector('.checkpoint-badge');
+    if (badge) badge.remove();
+  });
+  updateProgress();
+  showTrackerPreStart();
+}
+
+function showTrackerActive() {
+  document.getElementById('trackerPreStart').style.display = 'none';
+  document.getElementById('trackerActive').style.display = 'block';
+}
+
+function showTrackerPreStart() {
+  document.getElementById('trackerPreStart').style.display = 'block';
+  document.getElementById('trackerActive').style.display = 'none';
+  document.getElementById('customStartWrap').style.display = 'none';
+}
+
+// Restore tracker state on page load
 if (state.startTime) {
-  const d = new Date(state.startTime);
-  const pad = n => String(n).padStart(2,'0');
-  document.getElementById('startTimeInput').value =
-    d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate())+'T'+pad(d.getHours())+':'+pad(d.getMinutes());
+  showTrackerActive();
+} else {
+  showTrackerPreStart();
 }
 
 function updateTracker() {
@@ -2477,11 +2566,15 @@ function updateTracker() {
   dateEl.textContent = now.getFullYear()+'/'+pad(now.getMonth()+1)+'/'+pad(now.getDate())+' '+ ['日','一','二','三','四','五','六'][now.getDay()];
 
   if (!state.startTime) {
-    statusEl.className = 'tracker-status before';
-    statusEl.textContent = '尚未設定';
-    segEl.innerHTML = '設定出發日期時間後，即時追蹤你在哪一段、已走多久、預估剩餘時間。';
     gateEl.style.display = 'none';
     updateGateColors();
+    return;
+  }
+
+  // Stopped state: show last known data but don't update
+  if (state.trackerStopped) {
+    statusEl.className = 'tracker-status before';
+    statusEl.textContent = '已暫停';
     return;
   }
 
