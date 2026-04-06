@@ -692,6 +692,21 @@ nav a:hover, nav a.active { color: var(--amber); }
 .gate-countdown.urgent { color: var(--amber); }
 .gate-countdown.past { color: var(--danger-text); }
 .tracker-gate { margin-top: 0.5rem; font-family: var(--font-mono); font-size: 0.75rem; color: var(--ridge); }
+.tracker-emergency { text-align: center; margin-top: 0.5rem; font-family: var(--font-mono); font-size: 0.8rem; }
+.tracker-emergency a { color: var(--danger-text); text-decoration: none; font-weight: 600; }
+.tracker-next-supply {
+  font-family: var(--font-mono); font-size: 0.85rem; color: var(--ridge);
+  margin-top: 0.3rem; padding: 0.4rem 0.75rem;
+  border-radius: var(--radius-sm); background: var(--ridge-bg);
+}
+.tracker-supply-label { color: var(--text-dim); margin-right: 0.5rem; }
+.config-warning {
+  background: var(--sunset-bg); border-left: 3px solid var(--sunset);
+  padding: 0.6rem 0.8rem; border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  margin-top: 0.5rem; font-size: 0.85rem; color: var(--danger-text); line-height: 1.5;
+}
+.hud-emergency { margin-top: 1rem; }
+.hud-emergency a { color: var(--danger-text); font-size: 1rem; text-decoration: underline; }
 
 .tracker-btn {
   padding: 10px 20px; border-radius: var(--radius-sm); border: none;
@@ -1555,6 +1570,8 @@ html.trail-mode .pace-stat-value { font-size: 1.15rem; }
 }
 .hud-supply {
   font-size: 1rem; color: var(--ridge); margin-bottom: 0.75rem;
+  padding: 0.75rem; border-radius: var(--radius-sm);
+  background: var(--ridge-bg); border: 1px solid rgba(110,231,183,0.2);
 }
 .hud-elapsed {
   font-family: var(--font-mono); font-size: 1.1rem;
@@ -1793,6 +1810,8 @@ html.trail-mode .pace-stat-value { font-size: 1.15rem; }
       <span style="color:var(--text-dim);margin-left:0.3rem;">(+<span id="fatigueDiffTime">1h55m</span>)</span>
     </div>
 
+    <div class="config-warning" id="overDayWarning" style="display:none;"></div>
+
     <!-- Smart summary -->
     <div class="smart-summary" id="smartSummary"></div>
   </div>
@@ -1876,6 +1895,17 @@ html.trail-mode .pace-stat-value { font-size: 1.15rem; }
       <!-- Battery Warning (Feature 6) -->
       <div class="tracker-battery" id="trackerBattery" style="display:none;"></div>
 
+      <!-- Next supply countdown -->
+      <div class="tracker-next-supply" id="trackerNextSupply" style="display:none;">
+        <span class="tracker-supply-label">下個補給</span>
+        <span class="tracker-supply-info" id="trackerNextSupplyInfo"></span>
+      </div>
+
+      <!-- Emergency quick access -->
+      <div class="tracker-emergency">
+        <a href="tel:119">119 山難救援</a> ｜ <a href="tel:112">112 緊急</a>
+      </div>
+
       <!-- Controls -->
       <div style="margin-top:0.75rem;display:flex;gap:0.5rem;justify-content:center;flex-wrap:wrap;">
         <button onclick="toggleHUD()" class="tracker-btn tracker-btn-hud" id="hudBtn">📺 精簡模式</button>
@@ -1926,6 +1956,7 @@ html.trail-mode .pace-stat-value { font-size: 1.15rem; }
 <section class="gates-section" id="gates">
   <div class="section-label">GATE TIMES</div>
   <div class="section-title">關門時間</div>
+  <div style="font-size:0.8rem;color:var(--text-dim);margin-bottom:1rem;">每個關門時間已含 30 分鐘緩衝。超過此時間建議評估撤退。</div>
   <div class="gates-grid" id="gatesGrid"></div>
 </section>
 
@@ -3229,7 +3260,7 @@ chartEl.addEventListener('touchstart', (e) => {
   if (rawXPct < 0 || rawXPct > 1) return;
   const padTop = 22, padBottom = 18, chartH = 200 - padTop - padBottom, padLeft = 28;
   const xPct = Math.max(0, Math.min(1, (rawXPct * 1000 - padLeft) / (1000 - padLeft)));
-  touchTimeout = setTimeout(() => {
+  {
     const info = getElevAtX(xPct);
     const dotYPct = (padTop + chartH * (1 - info.h / maxH)) / 200 * 100;
     const dotXPct = (padLeft + xPct * (1000 - padLeft)) / 1000 * 100;
@@ -3240,7 +3271,7 @@ chartEl.addEventListener('touchstart', (e) => {
     dot.style.left = dotXPct + '%';
     dot.style.top = dotYPct + '%';
     dot.style.opacity = '1';
-  }, 300);
+  }
 }, { passive: true });
 chartEl.addEventListener('touchend', () => {
   clearTimeout(touchTimeout);
@@ -3385,6 +3416,17 @@ function applyConfig() {
     fatigueCompareEl.style.display = diff > 0 ? '' : 'none';
   } else {
     fatigueCompareEl.style.display = 'none';
+  }
+
+  // Show warning if total exceeds 24 hours
+  var overDayEl = document.getElementById('overDayWarning');
+  if (overDayEl) {
+    if (totalMin > 1440) {
+      overDayEl.style.display = '';
+      overDayEl.textContent = '⚠ 以目前設定，預估總時 ' + minToDurStr(totalMin) + '，超過 24 小時。建議調快配速或減少路段。';
+    } else {
+      overDayEl.style.display = 'none';
+    }
   }
 
   // Timeline items: time badges, durations, phases, condition icons
@@ -4287,6 +4329,29 @@ function updateTracker() {
     gateEl.style.display = 'none';
   }
 
+  // Next supply
+  var nextSupplyEl = document.getElementById('trackerNextSupply');
+  var nextSupplyInfoEl = document.getElementById('trackerNextSupplyInfo');
+  if (nextSupplyEl && nextSupplyInfoEl) {
+    var nextSup = null;
+    for (var si = 0; si < SUPPLY_BASE.length; si++) {
+      var supScaled = scaleBaseTime(SUPPLY_BASE[si], currentPace);
+      if (supScaled > diffMin) {
+        nextSup = { idx: si, elapsed: supScaled };
+        break;
+      }
+    }
+    if (nextSup) {
+      var supRemain = Math.round(nextSup.elapsed - diffMin);
+      var supCard = document.querySelector('[data-supply-time="' + nextSup.idx + '"]');
+      var supName = supCard ? supCard.closest('.supply-card').querySelector('.supply-name').textContent.trim().split('\n')[0] : '';
+      nextSupplyInfoEl.textContent = supName + '（約 ' + supRemain + ' 分）';
+      nextSupplyEl.style.display = '';
+    } else {
+      nextSupplyEl.style.display = 'none';
+    }
+  }
+
   // Position estimate
   var posText = document.getElementById('trackerPosText');
   var sigIcon = document.getElementById('trackerSigIcon');
@@ -4300,7 +4365,7 @@ function updateTracker() {
     var dist = Math.abs(elevData[pi].x - xPos);
     if (dist < minDist) { minDist = dist; nearestPoint = elevData[pi]; }
   }
-  posText.textContent = '預估位置：' + nearestPoint.seg;
+  posText.textContent = '預估位置：' + (nearestPoint.label || (SEG_NAMES[nearestPoint.seg] || '').split(' ').slice(1).join(' ') || nearestPoint.seg);
 
   // Signal for current segment
   var currentSegId = current.id;
@@ -4339,9 +4404,9 @@ function updateTracker() {
       var names = newlyChecked.map(function(s) { return s.name.split(' ')[0]; }).join(', ');
       var toast = document.getElementById('toast');
       toast.textContent = '✓ ' + names + ' 完成';
-      toast.classList.add('visible');
+      toast.classList.add('show');
       clearTimeout(window._segToastTimer);
-      window._segToastTimer = setTimeout(function() { toast.classList.remove('visible'); }, 4000);
+      window._segToastTimer = setTimeout(function() { toast.classList.remove('show'); }, 4000);
     }
     saveState(state);
     updateProgress();
@@ -4788,6 +4853,7 @@ updateCheckpointDisplay();
     <div class="hud-gate" id="hudGate">下一關門：二子坪 03:50（剩 3h03m）</div>
     <div class="hud-supply" id="hudSupply">下個補給：清天宮（約 45min）</div>
     <div class="hud-elapsed" id="hudElapsed">已走 0:47 ｜ 剩餘 20:23</div>
+    <div class="hud-emergency"><a href="tel:119">119 山難求救</a></div>
   </div>
   <button onclick="toggleHUD()" class="hud-close">返回完整版</button>
 </div>
