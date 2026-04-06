@@ -583,7 +583,7 @@ nav a:hover, nav a.active { color: var(--amber); }
 .tl-check:hover { border-color: var(--ridge); }
 .tl-check:active { transform: scale(0.9); }
 .tl-check-icon {
-  opacity: 0; font-size: 0.9rem; color: var(--ridge);
+  width: 16px; height: 16px; opacity: 0; color: var(--ridge);
   transition: opacity 0.2s; pointer-events: none;
 }
 .tl-item.checked .tl-check {
@@ -940,6 +940,7 @@ nav a:hover, nav a.active { color: var(--amber); }
 .weather-card:active { transform: scale(0.97); }
 .weather-card:hover { border-color: var(--amber-border); }
 .weather-icon { font-size: 1.5rem; margin-bottom: 0.35rem; }
+.weather-icon .icon-lg { width: 24px; height: 24px; }
 .weather-name { font-family: var(--font-display); font-weight: 700; font-size: 0.85rem; color: var(--text-primary); margin-bottom: 0.15rem; }
 .weather-desc { font-size: 0.7rem; color: var(--text-dim); }
 
@@ -952,6 +953,7 @@ nav a:hover, nav a.active { color: var(--amber); }
 }
 .safety-card:active { transform: scale(0.97); }
 .safety-icon { font-size: 1.3rem; margin-bottom: 0.35rem; }
+.safety-icon .icon-lg { width: 22px; height: 22px; }
 .safety-title { font-family: var(--font-display); font-weight: 700; font-size: 0.85rem; margin-bottom: 0.35rem; }
 .safety-desc { font-size: 0.75rem; color: var(--text-dim); line-height: 1.65; }
 
@@ -1171,6 +1173,7 @@ footer a { color: var(--amber); text-decoration: none; }
   border-radius: 12px; padding: 1.25rem; text-align: center;
 }
 .calc-icon { font-size: 1.5rem; margin-bottom: 0.5rem; }
+.calc-icon .icon-lg { width: 24px; height: 24px; }
 .calc-label { font-size: 0.7rem; color: var(--text-dim); margin-bottom: 0.25rem; }
 .calc-value {
   font-family: var(--font-mono); font-size: 1.5rem; font-weight: 600; color: var(--text-white);
@@ -1325,6 +1328,17 @@ input[type="range"]::-webkit-slider-thumb {
   padding: 0.6rem 0.8rem; border-radius: 0 8px 8px 0;
   margin-bottom: 0.75rem; font-size: 0.75rem; color: var(--sky); line-height: 1.5;
 }
+
+/* ═══ INLINE SVG ICONS ═══ */
+.icon { display: inline-flex; width: 14px; height: 14px; vertical-align: -2px; flex-shrink: 0; align-items: center; justify-content: center; }
+.icon svg { width: 100%; height: 100%; }
+.icon-sm { width: 12px; height: 12px; }
+.icon-lg { width: 18px; height: 18px; }
+
+/* ═══ GEMS IMAGES ═══ */
+.gems-image { width: 100%; max-width: 400px; border-radius: 12px; margin: 0.75rem auto; display: block; border: 1px solid var(--border); }
+.gems-rewards { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; margin: 0.75rem 0; }
+.gems-rewards img { width: 100%; border-radius: 10px; border: 1px solid var(--border); }
 </style>
 </head>
 <body>
@@ -1530,8 +1544,8 @@ input[type="range"]::-webkit-slider-thumb {
         <div style="font-family:var(--font-display);font-weight:700;font-size:1rem;margin-bottom:0.25rem;">即時追蹤</div>
         <div style="font-size:0.75rem;color:var(--text-dim);margin-bottom:1rem;">到登山口了？啟動追蹤，全程掌握進度</div>
         <div style="display:flex;gap:0.75rem;justify-content:center;flex-wrap:wrap;">
-          <button onclick="startNow()" class="tracker-btn tracker-btn-go">🟢 現在出發</button>
-          <button onclick="showCustomStart()" class="tracker-btn tracker-btn-custom">📅 自訂時間</button>
+          <button onclick="startNow()" class="tracker-btn tracker-btn-go"><span class="icon"><svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="5 3 19 12 5 21 5 3"/></svg></span> 現在出發</button>
+          <button onclick="showCustomStart()" class="tracker-btn tracker-btn-custom"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span> 自訂時間</button>
         </div>
         <div id="customStartWrap" style="display:none;margin-top:0.75rem;">
           <input type="datetime-local" id="startTimeInput" class="tracker-datetime-input">
@@ -1574,18 +1588,18 @@ input[type="range"]::-webkit-slider-thumb {
 
       <!-- Row 4: Next gate countdown (most important info) -->
       <div class="tracker-next-gate" id="trackerNextGate" style="display:none;">
-        <div class="tracker-next-gate-label">⏱ 下一關門</div>
+        <div class="tracker-next-gate-label"><span class="icon icon-sm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2 2"/><path d="M5 3L2 6"/><path d="M22 6l-3-3"/><line x1="10" y1="2" x2="14" y2="2"/></svg></span> 下一關門</div>
         <div class="tracker-next-gate-info" id="trackerNextGateInfo"></div>
       </div>
 
       <!-- Row 5: Current position + signal -->
       <div class="tracker-position" id="trackerPosition">
         <div class="tracker-pos-row">
-          <span class="tracker-pos-icon">📍</span>
+          <span class="tracker-pos-icon"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span></span>
           <span class="tracker-pos-text" id="trackerPosText">--</span>
         </div>
         <div class="tracker-pos-row">
-          <span class="tracker-pos-icon" id="trackerSigIcon">📶</span>
+          <span class="tracker-pos-icon" id="trackerSigIcon"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 20h.01"/><path d="M7 20v-4"/><path d="M12 20v-8"/><path d="M17 20V8"/></svg></span></span>
           <span class="tracker-pos-text" id="trackerSigText">--</span>
         </div>
       </div>
@@ -1598,8 +1612,8 @@ input[type="range"]::-webkit-slider-thumb {
 
       <!-- Controls -->
       <div style="margin-top:0.75rem;display:flex;gap:0.5rem;justify-content:center;">
-        <button onclick="stopTracker()" class="tracker-btn tracker-btn-stop">⏹ 停止追蹤</button>
-        <button onclick="resetTracker()" class="tracker-btn tracker-btn-reset">🔄 重置</button>
+        <button onclick="stopTracker()" class="tracker-btn tracker-btn-stop"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/></svg></span> 停止追蹤</button>
+        <button onclick="resetTracker()" class="tracker-btn tracker-btn-reset"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10"/><path d="M20.49 15a9 9 0 0 1-14.85 3.36L1 14"/></svg></span> 重置</button>
       </div>
     </div>
   </div>
@@ -1618,16 +1632,16 @@ input[type="range"]::-webkit-slider-thumb {
   </div>
 
   <div class="timeline" id="timelineList">
-    <!-- S1 --><div class="tl-item" data-phase="night" data-id="s1"><div class="tl-card"><div class="tl-header"><div class="tl-header-left"><div class="tl-check" onclick="toggleCheck(this)"><span class="tl-check-icon">💎</span></div><span class="tl-seg">S1</span><span class="tl-time-badge" data-seg="s1">00:00</span></div><span class="tl-duration" data-seg="s1">3h20m</span></div><div class="tl-route">關渡<span class="arrow">→</span>二子坪</div><div class="tl-note" data-seg="s1">夜間摸黑起登，經忠義山、貴子坑，攀上<span class="highlight">大屯山 1092m</span></div><div class="tl-meta"><span class="tl-meta-item">📏 11.8km</span><span class="tl-meta-item">⬆ +1,200m</span><span class="tl-meta-item tl-meta-condition" data-seg="s1">🌙 全程夜走</span><span class="tl-meta-item tl-meta-signal" data-seg-sig="s1" data-level="weak">📶 收訊弱</span></div></div></div>
-    <!-- S2 --><div class="tl-item" data-phase="dawn" data-id="s2"><div class="tl-card"><div class="tl-header"><div class="tl-header-left"><div class="tl-check" onclick="toggleCheck(this)"><span class="tl-check-icon">💎</span></div><span class="tl-seg">S2</span><span class="tl-time-badge" data-seg="s2">03:20</span></div><span class="tl-duration" data-seg="s2">2h40m</span></div><div class="tl-route">面天坪<span class="arrow">→</span>小油坑</div><div class="tl-note" data-seg="s2"><span class="highlight">最難路段！</span>大屯山西峰/南峰泥濘拉繩。天色漸亮</div><div class="tl-meta"><span class="tl-meta-item">📏 12km</span><span class="tl-meta-item">⬆ +800m</span><span class="tl-meta-item tl-meta-condition" data-seg="s2">⚠️ 濕滑拉繩</span><span class="tl-meta-item tl-meta-signal" data-seg-sig="s2" data-level="bad">📵 收訊差</span></div></div></div>
-    <!-- S3 --><div class="tl-item" data-phase="day" data-id="s3"><div class="tl-card"><div class="tl-header"><div class="tl-header-left"><div class="tl-check" onclick="toggleCheck(this)"><span class="tl-check-icon">💎</span></div><span class="tl-seg">S3</span><span class="tl-time-badge" data-seg="s3">06:00</span></div><span class="tl-duration" data-seg="s3">3h20m</span></div><div class="tl-route">小油坑<span class="arrow">→</span>風櫃口</div><div class="tl-note" data-seg="s3">登<span class="highlight">七星山 1120m</span> 全程最高！擎天崗大草原、石梯嶺</div><div class="tl-meta"><span class="tl-meta-item">📏 13km</span><span class="tl-meta-item">⬆ +950m</span><span class="tl-meta-item tl-meta-condition" data-seg="s3">🌅 日出</span><span class="tl-meta-item tl-meta-signal" data-seg-sig="s3" data-level="good">📶 收訊好</span></div></div></div>
-    <!-- S4 --><div class="tl-item" data-phase="day" data-id="s4"><div class="tl-card"><div class="tl-header"><div class="tl-header-left"><div class="tl-check" onclick="toggleCheck(this)"><span class="tl-check-icon">💎</span></div><span class="tl-seg">S4</span><span class="tl-time-badge" data-seg="s4">09:20</span></div><span class="tl-duration" data-seg="s4">3h00m</span></div><div class="tl-route">風櫃口<span class="arrow">→</span>大湖公園</div><div class="tl-note" data-seg="s4">一路下降至市區。<span class="highlight">陽明山段結束！過半</span>（官方終點為中華科大，含道路段）</div><div class="tl-meta"><span class="tl-meta-item">📏 ~13km 步道</span><span class="tl-meta-item">⬆ +350m ⬇ -870m</span><span class="tl-meta-item tl-meta-condition" data-seg="s4">✅ 過半</span><span class="tl-meta-item tl-meta-signal" data-seg-sig="s4" data-level="bad">📵 收訊差</span></div></div></div>
-    <!-- Transit 1 --><div class="tl-item" data-phase="transit" data-id="t1"><div class="tl-card"><div class="tl-header"><div class="tl-header-left"><div class="tl-check" onclick="toggleCheck(this)"><span class="tl-check-icon">💎</span></div><span class="tl-seg">接駁</span><span class="tl-time-badge" data-seg="t1">12:20</span></div><span class="tl-duration" data-seg="t1">~20m</span></div><div class="tl-route">大湖公園<span class="arrow">→</span>劍潭</div><div class="tl-note">Uber 直達。<span class="highlight">便利商店大補給！</span></div></div></div>
-    <!-- S5 --><div class="tl-item" data-phase="afternoon" data-id="s5"><div class="tl-card"><div class="tl-header"><div class="tl-header-left"><div class="tl-check" onclick="toggleCheck(this)"><span class="tl-check-icon">💎</span></div><span class="tl-seg">S5</span><span class="tl-time-badge" data-seg="s5">12:40</span></div><span class="tl-duration" data-seg="s5">3h00m</span></div><div class="tl-route">劍潭<span class="arrow">→</span>碧山巖</div><div class="tl-note" data-seg="s5">老地方觀機平台、大崙頭山。<span class="highlight">岔路多注意導航</span></div><div class="tl-meta"><span class="tl-meta-item">📏 12km</span><span class="tl-meta-item">⬆ +550m</span><span class="tl-meta-item tl-meta-condition" data-seg="s5">🌡️ 防曬</span><span class="tl-meta-item tl-meta-signal" data-seg-sig="s5" data-level="good">📶 收訊好</span></div></div></div>
-    <!-- Transit 2 --><div class="tl-item" data-phase="transit" data-id="t2"><div class="tl-card"><div class="tl-header"><div class="tl-header-left"><div class="tl-check" onclick="toggleCheck(this)"><span class="tl-check-icon">💎</span></div><span class="tl-seg">接駁</span><span class="tl-time-badge" data-seg="t2">15:40</span></div><span class="tl-duration" data-seg="t2">~40m</span></div><div class="tl-route">碧山巖<span class="arrow">→</span>中華科大</div><div class="tl-note">Uber 直達（或小2公車→捷運→南港）。補給休息</div></div></div>
-    <!-- S6 --><div class="tl-item" data-phase="afternoon" data-id="s6"><div class="tl-card"><div class="tl-header"><div class="tl-header-left"><div class="tl-check" onclick="toggleCheck(this)"><span class="tl-check-icon">💎</span></div><span class="tl-seg">S6</span><span class="tl-time-badge" data-seg="s6">16:20</span></div><span class="tl-duration" data-seg="s6">2h24m</span></div><div class="tl-route">中華科大<span class="arrow">→</span>麟光</div><div class="tl-note" data-seg="s6"><span class="highlight">九五峰眺望101</span>，糶米古道。最後補給在麟光站</div><div class="tl-meta"><span class="tl-meta-item">📏 11km</span><span class="tl-meta-item">⬆ +680m</span><span class="tl-meta-item tl-meta-condition" data-seg="s6">🌇 夕陽</span><span class="tl-meta-item tl-meta-signal" data-seg-sig="s6" data-level="good">📶 收訊好</span></div></div></div>
-    <!-- S7 --><div class="tl-item" data-phase="dusk" data-id="s7"><div class="tl-card"><div class="tl-header"><div class="tl-header-left"><div class="tl-check" onclick="toggleCheck(this)"><span class="tl-check-icon">💎</span></div><span class="tl-seg">S7</span><span class="tl-time-badge" data-seg="s7">18:44</span></div><span class="tl-duration" data-seg="s7">2h26m</span></div><div class="tl-route">麟光<span class="arrow">→</span>指南宮<span class="arrow">→</span>政大</div><div class="tl-note" data-seg="s7">經世界山莊→和平東路→指南宮千階→貓空。<span class="highlight">最後衝刺！</span></div><div class="tl-meta"><span class="tl-meta-item">📏 13km</span><span class="tl-meta-item">⬆ +500m</span><span class="tl-meta-item tl-meta-condition" data-seg="s7">🔦 頭燈</span><span class="tl-meta-item tl-meta-signal" data-seg-sig="s7" data-level="good">📶 收訊好</span></div></div></div>
-    <!-- Finish --><div class="tl-item" data-phase="finish" data-id="fin"><div class="tl-card"><div class="tl-header"><div class="tl-header-left"><div class="tl-check" onclick="toggleCheck(this)"><span class="tl-check-icon">💎</span></div><span class="tl-seg">完走</span><span class="tl-time-badge" data-seg="fin">~21:10</span></div></div><div class="tl-route" style="font-size:1.2rem;">🏁 完走！</div><div class="tl-note" id="finishNote">全程 <strong>~21 小時</strong>・92km・+5000m</div></div></div>
+    <!-- S1 --><div class="tl-item" data-phase="night" data-id="s1"><div class="tl-card"><div class="tl-header"><div class="tl-header-left"><div class="tl-check" onclick="toggleCheck(this)"><svg class="tl-check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 3h12l4 8-10 12L2 11l4-8z"/><path d="M2 11h20"/><path d="M12 23L8 11l4-8 4 8-4 12z" opacity="0.3" fill="currentColor"/></svg></div><span class="tl-seg">S1</span><span class="tl-time-badge" data-seg="s1">00:00</span></div><span class="tl-duration" data-seg="s1">3h20m</span></div><div class="tl-route">關渡<span class="arrow">→</span>二子坪</div><div class="tl-note" data-seg="s1">夜間摸黑起登，經忠義山、貴子坑，攀上<span class="highlight">大屯山 1092m</span></div><div class="tl-meta"><span class="tl-meta-item"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 7L9 3 5 7"/><path d="M9 3v12"/><path d="M11 17l4 4 4-4"/><path d="M15 21V9"/></svg></span>11.8km</span><span class="tl-meta-item"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 19V5"/><polyline points="5 12 12 5 19 12"/></svg></span>+1,200m</span><span class="tl-meta-item tl-meta-condition" data-seg="s1"><span class="icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/></svg></span> 全程夜走</span><span class="tl-meta-item tl-meta-signal" data-seg-sig="s1" data-level="weak"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 20h.01"/><path d="M7 20v-4"/><path d="M12 20v-2" opacity="0.3"/><path d="M17 20v-1" opacity="0.15"/></svg></span> 收訊弱</span></div></div></div>
+    <!-- S2 --><div class="tl-item" data-phase="dawn" data-id="s2"><div class="tl-card"><div class="tl-header"><div class="tl-header-left"><div class="tl-check" onclick="toggleCheck(this)"><svg class="tl-check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 3h12l4 8-10 12L2 11l4-8z"/><path d="M2 11h20"/><path d="M12 23L8 11l4-8 4 8-4 12z" opacity="0.3" fill="currentColor"/></svg></div><span class="tl-seg">S2</span><span class="tl-time-badge" data-seg="s2">03:20</span></div><span class="tl-duration" data-seg="s2">2h40m</span></div><div class="tl-route">面天坪<span class="arrow">→</span>小油坑</div><div class="tl-note" data-seg="s2"><span class="highlight">最難路段！</span>大屯山西峰/南峰泥濘拉繩。天色漸亮</div><div class="tl-meta"><span class="tl-meta-item"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 7L9 3 5 7"/><path d="M9 3v12"/><path d="M11 17l4 4 4-4"/><path d="M15 21V9"/></svg></span>12km</span><span class="tl-meta-item"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 19V5"/><polyline points="5 12 12 5 19 12"/></svg></span>+800m</span><span class="tl-meta-item tl-meta-condition" data-seg="s2"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span> 濕滑拉繩</span><span class="tl-meta-item tl-meta-signal" data-seg-sig="s2" data-level="bad"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 20h.01"/><path d="M7 20v-4"/><line x1="3" y1="3" x2="21" y2="21"/></svg></span> 收訊差</span></div></div></div>
+    <!-- S3 --><div class="tl-item" data-phase="day" data-id="s3"><div class="tl-card"><div class="tl-header"><div class="tl-header-left"><div class="tl-check" onclick="toggleCheck(this)"><svg class="tl-check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 3h12l4 8-10 12L2 11l4-8z"/><path d="M2 11h20"/><path d="M12 23L8 11l4-8 4 8-4 12z" opacity="0.3" fill="currentColor"/></svg></div><span class="tl-seg">S3</span><span class="tl-time-badge" data-seg="s3">06:00</span></div><span class="tl-duration" data-seg="s3">3h20m</span></div><div class="tl-route">小油坑<span class="arrow">→</span>風櫃口</div><div class="tl-note" data-seg="s3">登<span class="highlight">七星山 1120m</span> 全程最高！擎天崗大草原、石梯嶺</div><div class="tl-meta"><span class="tl-meta-item"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 7L9 3 5 7"/><path d="M9 3v12"/><path d="M11 17l4 4 4-4"/><path d="M15 21V9"/></svg></span>13km</span><span class="tl-meta-item"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 19V5"/><polyline points="5 12 12 5 19 12"/></svg></span>+950m</span><span class="tl-meta-item tl-meta-condition" data-seg="s3"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 18a5 5 0 0 0-10 0"/><line x1="12" y1="2" x2="12" y2="9"/><polyline points="8 6 12 2 16 6"/><line x1="1" y1="22" x2="23" y2="22"/></svg></span> 日出</span><span class="tl-meta-item tl-meta-signal" data-seg-sig="s3" data-level="good"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 20h.01"/><path d="M7 20v-4"/><path d="M12 20v-8"/><path d="M17 20V8"/></svg></span> 收訊好</span></div></div></div>
+    <!-- S4 --><div class="tl-item" data-phase="day" data-id="s4"><div class="tl-card"><div class="tl-header"><div class="tl-header-left"><div class="tl-check" onclick="toggleCheck(this)"><svg class="tl-check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 3h12l4 8-10 12L2 11l4-8z"/><path d="M2 11h20"/><path d="M12 23L8 11l4-8 4 8-4 12z" opacity="0.3" fill="currentColor"/></svg></div><span class="tl-seg">S4</span><span class="tl-time-badge" data-seg="s4">09:20</span></div><span class="tl-duration" data-seg="s4">3h00m</span></div><div class="tl-route">風櫃口<span class="arrow">→</span>大湖公園</div><div class="tl-note" data-seg="s4">一路下降至市區。<span class="highlight">陽明山段結束！過半</span>（官方終點為中華科大，含道路段）</div><div class="tl-meta"><span class="tl-meta-item"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 7L9 3 5 7"/><path d="M9 3v12"/><path d="M11 17l4 4 4-4"/><path d="M15 21V9"/></svg></span>~13km 步道</span><span class="tl-meta-item"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 19V5"/><polyline points="5 12 12 5 19 12"/></svg></span>+350m <span class="icon icon-sm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14"/><polyline points="19 12 12 19 5 12"/></svg></span> -870m</span><span class="tl-meta-item tl-meta-condition" data-seg="s4"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></span> 過半</span><span class="tl-meta-item tl-meta-signal" data-seg-sig="s4" data-level="bad"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 20h.01"/><path d="M7 20v-4"/><line x1="3" y1="3" x2="21" y2="21"/></svg></span> 收訊差</span></div></div></div>
+    <!-- Transit 1 --><div class="tl-item" data-phase="transit" data-id="t1"><div class="tl-card"><div class="tl-header"><div class="tl-header-left"><div class="tl-check" onclick="toggleCheck(this)"><svg class="tl-check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 3h12l4 8-10 12L2 11l4-8z"/><path d="M2 11h20"/><path d="M12 23L8 11l4-8 4 8-4 12z" opacity="0.3" fill="currentColor"/></svg></div><span class="tl-seg">接駁</span><span class="tl-time-badge" data-seg="t1">12:20</span></div><span class="tl-duration" data-seg="t1">~20m</span></div><div class="tl-route">大湖公園<span class="arrow">→</span>劍潭</div><div class="tl-note">Uber 直達。<span class="highlight">便利商店大補給！</span></div></div></div>
+    <!-- S5 --><div class="tl-item" data-phase="afternoon" data-id="s5"><div class="tl-card"><div class="tl-header"><div class="tl-header-left"><div class="tl-check" onclick="toggleCheck(this)"><svg class="tl-check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 3h12l4 8-10 12L2 11l4-8z"/><path d="M2 11h20"/><path d="M12 23L8 11l4-8 4 8-4 12z" opacity="0.3" fill="currentColor"/></svg></div><span class="tl-seg">S5</span><span class="tl-time-badge" data-seg="s5">12:40</span></div><span class="tl-duration" data-seg="s5">3h00m</span></div><div class="tl-route">劍潭<span class="arrow">→</span>碧山巖</div><div class="tl-note" data-seg="s5">老地方觀機平台、大崙頭山。<span class="highlight">岔路多注意導航</span></div><div class="tl-meta"><span class="tl-meta-item"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 7L9 3 5 7"/><path d="M9 3v12"/><path d="M11 17l4 4 4-4"/><path d="M15 21V9"/></svg></span>12km</span><span class="tl-meta-item"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 19V5"/><polyline points="5 12 12 5 19 12"/></svg></span>+550m</span><span class="tl-meta-item tl-meta-condition" data-seg="s5"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></span> 防曬</span><span class="tl-meta-item tl-meta-signal" data-seg-sig="s5" data-level="good"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 20h.01"/><path d="M7 20v-4"/><path d="M12 20v-8"/><path d="M17 20V8"/></svg></span> 收訊好</span></div></div></div>
+    <!-- Transit 2 --><div class="tl-item" data-phase="transit" data-id="t2"><div class="tl-card"><div class="tl-header"><div class="tl-header-left"><div class="tl-check" onclick="toggleCheck(this)"><svg class="tl-check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 3h12l4 8-10 12L2 11l4-8z"/><path d="M2 11h20"/><path d="M12 23L8 11l4-8 4 8-4 12z" opacity="0.3" fill="currentColor"/></svg></div><span class="tl-seg">接駁</span><span class="tl-time-badge" data-seg="t2">15:40</span></div><span class="tl-duration" data-seg="t2">~40m</span></div><div class="tl-route">碧山巖<span class="arrow">→</span>中華科大</div><div class="tl-note">Uber 直達（或小2公車→捷運→南港）。補給休息</div></div></div>
+    <!-- S6 --><div class="tl-item" data-phase="afternoon" data-id="s6"><div class="tl-card"><div class="tl-header"><div class="tl-header-left"><div class="tl-check" onclick="toggleCheck(this)"><svg class="tl-check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 3h12l4 8-10 12L2 11l4-8z"/><path d="M2 11h20"/><path d="M12 23L8 11l4-8 4 8-4 12z" opacity="0.3" fill="currentColor"/></svg></div><span class="tl-seg">S6</span><span class="tl-time-badge" data-seg="s6">16:20</span></div><span class="tl-duration" data-seg="s6">2h24m</span></div><div class="tl-route">中華科大<span class="arrow">→</span>麟光</div><div class="tl-note" data-seg="s6"><span class="highlight">九五峰眺望101</span>，糶米古道。最後補給在麟光站</div><div class="tl-meta"><span class="tl-meta-item"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 7L9 3 5 7"/><path d="M9 3v12"/><path d="M11 17l4 4 4-4"/><path d="M15 21V9"/></svg></span>11km</span><span class="tl-meta-item"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 19V5"/><polyline points="5 12 12 5 19 12"/></svg></span>+680m</span><span class="tl-meta-item tl-meta-condition" data-seg="s6"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 18a5 5 0 0 0-10 0"/><line x1="12" y1="9" x2="12" y2="2"/><polyline points="16 6 12 10 8 6"/><line x1="1" y1="22" x2="23" y2="22"/></svg></span> 夕陽</span><span class="tl-meta-item tl-meta-signal" data-seg-sig="s6" data-level="good"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 20h.01"/><path d="M7 20v-4"/><path d="M12 20v-8"/><path d="M17 20V8"/></svg></span> 收訊好</span></div></div></div>
+    <!-- S7 --><div class="tl-item" data-phase="dusk" data-id="s7"><div class="tl-card"><div class="tl-header"><div class="tl-header-left"><div class="tl-check" onclick="toggleCheck(this)"><svg class="tl-check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 3h12l4 8-10 12L2 11l4-8z"/><path d="M2 11h20"/><path d="M12 23L8 11l4-8 4 8-4 12z" opacity="0.3" fill="currentColor"/></svg></div><span class="tl-seg">S7</span><span class="tl-time-badge" data-seg="s7">18:44</span></div><span class="tl-duration" data-seg="s7">2h26m</span></div><div class="tl-route">麟光<span class="arrow">→</span>指南宮<span class="arrow">→</span>政大</div><div class="tl-note" data-seg="s7">經世界山莊→和平東路→指南宮千階→貓空。<span class="highlight">最後衝刺！</span></div><div class="tl-meta"><span class="tl-meta-item"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 7L9 3 5 7"/><path d="M9 3v12"/><path d="M11 17l4 4 4-4"/><path d="M15 21V9"/></svg></span>13km</span><span class="tl-meta-item"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 19V5"/><polyline points="5 12 12 5 19 12"/></svg></span>+500m</span><span class="tl-meta-item tl-meta-condition" data-seg="s7"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="14 2 18 6 7 17 3 13 14 2"/><line x1="5" y1="15" x2="2" y2="18"/><line x1="9" y1="19" x2="6" y2="22"/></svg></span> 頭燈</span><span class="tl-meta-item tl-meta-signal" data-seg-sig="s7" data-level="good"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 20h.01"/><path d="M7 20v-4"/><path d="M12 20v-8"/><path d="M17 20V8"/></svg></span> 收訊好</span></div></div></div>
+    <!-- Finish --><div class="tl-item" data-phase="finish" data-id="fin"><div class="tl-card"><div class="tl-header"><div class="tl-header-left"><div class="tl-check" onclick="toggleCheck(this)"><svg class="tl-check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 3h12l4 8-10 12L2 11l4-8z"/><path d="M2 11h20"/><path d="M12 23L8 11l4-8 4 8-4 12z" opacity="0.3" fill="currentColor"/></svg></div><span class="tl-seg">完走</span><span class="tl-time-badge" data-seg="fin">~21:10</span></div></div><div class="tl-route" style="font-size:1.2rem;"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg></span> 完走！</div><div class="tl-note" id="finishNote">全程 <strong>~21 小時</strong>・92km・+5000m</div></div></div>
   </div>
 </section>
 
@@ -1650,7 +1664,7 @@ input[type="range"]::-webkit-slider-thumb {
   <div class="seg-card"><div class="seg-header" onclick="this.parentElement.classList.toggle('open')"><div class="seg-title-group"><span class="seg-badge night" data-seg-badge="s1">S1・00:00</span><span class="seg-name">關渡→二子坪</span></div><span class="seg-toggle">&#9662;</span></div><div class="seg-body"><div class="seg-content">
     <div class="seg-timing-note" data-seg-timing="s1" style="display:none;"></div>
     <div class="seg-stats"><span class="seg-stat"><strong>11~13km</strong></span><span class="seg-stat"><strong>30~1092m</strong></span><span class="seg-stat"><strong>+1,200m</strong></span><span class="seg-stat"><strong data-seg-dur="s1">3h20m</strong></span></div>
-    <div class="seg-signal sig-weak"><span class="sig-icon">📶</span><div><strong>收訊：間歇（谷地斷訊）</strong><p>清天宮附近有訊號</p></div></div>
+    <div class="seg-signal sig-weak"><span class="sig-icon"><span class="icon icon-lg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 20h.01"/><path d="M7 20v-4"/><path d="M12 20v-8"/><path d="M17 20V8"/></svg></span></span><div><strong>收訊：間歇（谷地斷訊）</strong><p>清天宮附近有訊號</p></div></div>
     <div class="seg-subtitle">路況</div>
     <p class="seg-text"><strong>忠義山步道：</strong>原始路況，部分需拉繩。凌晨全黑行走注意腳下。</p>
     <p class="seg-text"><strong>貴子坑→清天宮：</strong>一般道路段，凌晨車少但仍注意安全。路燈少。</p>
@@ -1658,24 +1672,24 @@ input[type="range"]::-webkit-slider-thumb {
     <div class="seg-warning"><p><strong>夜間：</strong>頭燈充飽電。陽明山有蛇出沒，登山杖打草驚蛇。道路段注意來車。</p></div>
     <div class="seg-subtitle">補給</div>
     <p class="seg-text"><strong>清天宮</strong>（<span class="seg-inline-time" data-seg-inline="s1-supply1">~01:30</span>）飲水機＋廁所｜<strong>二子坪</strong>（<span class="seg-inline-time" data-seg-inline="s1-supply2">~03:20</span>）販賣機（服務站9:00-16:30）＋廁所</p>
-    <div class="seg-gpx"><a href="https://taipeigrandtrail.gov.taipei/News_Content.aspx?n=E0B7C742E7BA29C6&s=5A897AA80DB36A12&sms=9681E3755A0FC621" target="_blank" class="gpx-btn">📥 下載 GPX（官方）</a><span class="gpx-hint">出發前一天下載！山上網速極慢</span></div>
+    <div class="seg-gpx"><a href="https://taipeigrandtrail.gov.taipei/News_Content.aspx?n=E0B7C742E7BA29C6&s=5A897AA80DB36A12&sms=9681E3755A0FC621" target="_blank" class="gpx-btn"><span class="icon icon-sm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></span> 下載 GPX（官方）</a><span class="gpx-hint">出發前一天下載！山上網速極慢</span></div>
   </div></div></div>
 
   <div class="seg-card"><div class="seg-header" onclick="this.parentElement.classList.toggle('open')"><div class="seg-title-group"><span class="seg-badge dawn" data-seg-badge="s2">S2・03:20</span><span class="seg-name">面天坪→小油坑</span></div><span class="seg-toggle">&#9662;</span></div><div class="seg-body"><div class="seg-content">
     <div class="seg-timing-note" data-seg-timing="s2" style="display:none;"></div>
     <div class="seg-stats"><span class="seg-stat"><strong>12km</strong></span><span class="seg-stat"><strong>684~1077m</strong></span><span class="seg-stat"><strong>+800m</strong></span><span class="seg-stat"><strong data-seg-dur="s2">2h40m</strong></span></div>
     <div class="decision-tree">
-      <div class="decision-title">⚠️ S2 出發前決策</div>
+      <div class="decision-title"><span class="icon icon-sm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span> S2 出發前決策</div>
       <div class="decision-item go">
-        <div class="decision-label">✅ GO</div>
+        <div class="decision-label"><span class="icon icon-sm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></span> GO</div>
         <div class="decision-text">連續 3 天未降雨 + 降雨機率 <30% + 能見度良好</div>
       </div>
       <div class="decision-item caution">
-        <div class="decision-label">⚠️ 注意</div>
+        <div class="decision-label"><span class="icon icon-sm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span> 注意</div>
         <div class="decision-text">1-2 天前有小雨 + 降雨機率 30-60% → 穿雨鞋＋工作手套，放慢速度</div>
       </div>
       <div class="decision-item nogo">
-        <div class="decision-label">❌ 跳過</div>
+        <div class="decision-label"><span class="icon icon-sm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg></span> 跳過</div>
         <div class="decision-text">前 2-3 天有大雨 或 降雨機率 >70% 或 濃霧 → 搭 108 公車從二子坪直達小油坑</div>
       </div>
       <div class="decision-links">
@@ -1683,7 +1697,7 @@ input[type="range"]::-webkit-slider-thumb {
         <a href="https://www.ymsnp.gov.tw/YMSNP_HighwayCondition.aspx?n=17910&sms=13477" target="_blank">陽管處步道資訊</a>
       </div>
     </div>
-    <div class="seg-signal sig-bad"><span class="sig-icon">📵</span><div><strong>收訊：差（谷地死角）</strong><p>最危險段卻最沒訊號，務必離線GPX</p></div></div>
+    <div class="seg-signal sig-bad"><span class="sig-icon"><span class="icon icon-lg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 20h.01"/><path d="M7 20v-4"/><line x1="3" y1="3" x2="21" y2="21"/></svg></span></span><div><strong>收訊：差（谷地死角）</strong><p>最危險段卻最沒訊號，務必離線GPX</p></div></div>
     <div class="seg-warning"><p><strong>注意：</strong>官方起點為面天坪涼亭。從二子坪出發需經二子坪步道走約10分鐘銜接。</p></div>
     <div class="seg-danger"><p><strong>全程最難！</strong>大屯山西峰/南峰泥濘陡攀，需持續拉繩。跨距大、路窄。雨後極危險。</p></div>
     <div class="seg-subtitle">危險路段</div>
@@ -1692,13 +1706,13 @@ input[type="range"]::-webkit-slider-thumb {
     <div class="seg-warning"><p><strong>穿越野跑鞋或雨鞋，帶工作手套。</strong>前幾天有雨可搭108公車從二子坪直達小油坑跳過此段。</p></div>
     <div class="seg-subtitle">撤退</div>
     <p class="seg-text">面天坪退回二子坪｜大屯山鞍部有108公車站｜竹子湖有公車下山</p>
-    <div class="seg-gpx"><a href="https://taipeigrandtrail.gov.taipei/News_Content.aspx?n=E0B7C742E7BA29C6&s=5A897AA80DB36A12&sms=9681E3755A0FC621" target="_blank" class="gpx-btn">📥 下載 GPX（官方）</a><span class="gpx-hint">出發前一天下載！山上網速極慢</span></div>
+    <div class="seg-gpx"><a href="https://taipeigrandtrail.gov.taipei/News_Content.aspx?n=E0B7C742E7BA29C6&s=5A897AA80DB36A12&sms=9681E3755A0FC621" target="_blank" class="gpx-btn"><span class="icon icon-sm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></span> 下載 GPX（官方）</a><span class="gpx-hint">出發前一天下載！山上網速極慢</span></div>
   </div></div></div>
 
   <div class="seg-card"><div class="seg-header" onclick="this.parentElement.classList.toggle('open')"><div class="seg-title-group"><span class="seg-badge day" data-seg-badge="s3">S3・06:00</span><span class="seg-name">小油坑→風櫃口</span></div><span class="seg-toggle">&#9662;</span></div><div class="seg-body"><div class="seg-content">
     <div class="seg-timing-note" data-seg-timing="s3" style="display:none;"></div>
     <div class="seg-stats"><span class="seg-stat"><strong>13km</strong></span><span class="seg-stat"><strong>553~1120m</strong></span><span class="seg-stat"><strong>+950m</strong></span><span class="seg-stat"><strong data-seg-dur="s3">3h20m</strong></span></div>
-    <div class="seg-signal sig-good"><span class="sig-icon">📶</span><div><strong>收訊：好（稜線高處）</strong><p>冷水坑、擎天崗收訊穩定</p></div></div>
+    <div class="seg-signal sig-good"><span class="sig-icon"><span class="icon icon-lg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 20h.01"/><path d="M7 20v-4"/><path d="M12 20v-8"/><path d="M17 20V8"/></svg></span></span><div><strong>收訊：好（稜線高處）</strong><p>冷水坑、擎天崗收訊穩定</p></div></div>
     <div class="seg-info"><p><strong>全程最高點！</strong>七星山 1120m。<span id="s3SummitNote">~06:30 登頂有機會看日出。</span></p></div>
     <div class="seg-warning"><p><strong>火災後路況：</strong>七星山區曾發生山林大火（約50公頃），經巡檢已重新開放，但部分路段植被受損、路況可能與過去不同。出發前請查詢<a href="https://www.ymsnp.gov.tw/YMSNP_HighwayCondition.aspx?n=17910&sms=13477" target="_blank" style="color:var(--amber);text-decoration:underline;">陽管處步道開放資訊</a>。</p></div>
     <div class="seg-subtitle">路況</div>
@@ -1707,26 +1721,26 @@ input[type="range"]::-webkit-slider-thumb {
     <div class="seg-warning"><p><strong>山頂可能低於10°C+強風。</strong>備薄風衣。午後常有雷陣雨。</p></div>
     <div class="seg-subtitle">補給</div>
     <p class="seg-text"><strong>冷水坑</strong>（<span class="seg-inline-time" data-seg-inline="s3-supply1">~07:30</span>）販賣機＋廁所｜<strong>擎天崗</strong> 廁所、小15公車可至劍潭（撤退用）</p>
-    <div class="seg-gpx"><a href="https://taipeigrandtrail.gov.taipei/News_Content.aspx?n=E0B7C742E7BA29C6&s=5A897AA80DB36A12&sms=9681E3755A0FC621" target="_blank" class="gpx-btn">📥 下載 GPX（官方）</a><span class="gpx-hint">出發前一天下載！山上網速極慢</span></div>
+    <div class="seg-gpx"><a href="https://taipeigrandtrail.gov.taipei/News_Content.aspx?n=E0B7C742E7BA29C6&s=5A897AA80DB36A12&sms=9681E3755A0FC621" target="_blank" class="gpx-btn"><span class="icon icon-sm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></span> 下載 GPX（官方）</a><span class="gpx-hint">出發前一天下載！山上網速極慢</span></div>
   </div></div></div>
 
   <div class="seg-card"><div class="seg-header" onclick="this.parentElement.classList.toggle('open')"><div class="seg-title-group"><span class="seg-badge day" data-seg-badge="s4">S4・09:20</span><span class="seg-name">風櫃口→大湖公園</span></div><span class="seg-toggle">&#9662;</span></div><div class="seg-body"><div class="seg-content">
     <div class="seg-timing-note" data-seg-timing="s4" style="display:none;"></div>
-    <div class="seg-stats"><span class="seg-stat"><strong>~13km 步道</strong></span><span class="seg-stat"><strong>30~553m</strong></span><span class="seg-stat"><strong>+350m ⬇870m</strong></span><span class="seg-stat"><strong data-seg-dur="s4">3h00m</strong></span></div>
-    <div class="seg-signal sig-bad"><span class="sig-icon">📵</span><div><strong>收訊：差（雙溪溝古道段）</strong><p>白石湖後恢復</p></div></div>
+    <div class="seg-stats"><span class="seg-stat"><strong>~13km 步道</strong></span><span class="seg-stat"><strong>30~553m</strong></span><span class="seg-stat"><strong>+350m <span class="icon icon-sm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14"/><polyline points="19 12 12 19 5 12"/></svg></span>870m</strong></span><span class="seg-stat"><strong data-seg-dur="s4">3h00m</strong></span></div>
+    <div class="seg-signal sig-bad"><span class="sig-icon"><span class="icon icon-lg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 20h.01"/><path d="M7 20v-4"/><line x1="3" y1="3" x2="21" y2="21"/></svg></span></span><div><strong>收訊：差（雙溪溝古道段）</strong><p>白石湖後恢復</p></div></div>
     <div class="seg-subtitle">路況</div>
     <p class="seg-text"><strong>雙溪溝古道：</strong>溪畔路段，泥濘濕滑。雲霧中易失方向。</p>
     <p class="seg-text"><strong>白石湖→圓覺寺：</strong>柏油＋石板，好走。白石湖有咖啡廳。</p>
     <p class="seg-text"><strong>圓覺瀑布→大溝溪：</strong>全程最清涼路段之一。</p>
     <div class="seg-warning"><p><strong>官方終點是中華科大</strong>（含大湖公園→中華科大的道路段約5km）。一日完走在大湖公園站叫 Uber 即可，不需走到中華科大。</p></div>
     <div class="seg-info"><p><strong>過半！</strong>陽明山段結束。大湖公園站便利商店大補給。建議換襪子、充分補食。</p></div>
-    <div class="seg-gpx"><a href="https://taipeigrandtrail.gov.taipei/News_Content.aspx?n=E0B7C742E7BA29C6&s=5A897AA80DB36A12&sms=9681E3755A0FC621" target="_blank" class="gpx-btn">📥 下載 GPX（官方）</a><span class="gpx-hint">出發前一天下載！山上網速極慢</span></div>
+    <div class="seg-gpx"><a href="https://taipeigrandtrail.gov.taipei/News_Content.aspx?n=E0B7C742E7BA29C6&s=5A897AA80DB36A12&sms=9681E3755A0FC621" target="_blank" class="gpx-btn"><span class="icon icon-sm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></span> 下載 GPX（官方）</a><span class="gpx-hint">出發前一天下載！山上網速極慢</span></div>
   </div></div></div>
 
   <div class="seg-card"><div class="seg-header" onclick="this.parentElement.classList.toggle('open')"><div class="seg-title-group"><span class="seg-badge afternoon" data-seg-badge="s5">S5・12:40</span><span class="seg-name">劍潭→碧山巖</span></div><span class="seg-toggle">&#9662;</span></div><div class="seg-body"><div class="seg-content">
     <div class="seg-timing-note" data-seg-timing="s5" style="display:none;"></div>
     <div class="seg-stats"><span class="seg-stat"><strong>12km</strong></span><span class="seg-stat"><strong>10~327m</strong></span><span class="seg-stat"><strong>+550m</strong></span><span class="seg-stat"><strong data-seg-dur="s5">3h00m</strong></span></div>
-    <div class="seg-signal sig-good"><span class="sig-icon">📶</span><div><strong>收訊：好（靠近市區）</strong><p>全段收訊穩定</p></div></div>
+    <div class="seg-signal sig-good"><span class="sig-icon"><span class="icon icon-lg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 20h.01"/><path d="M7 20v-4"/><path d="M12 20v-8"/><path d="M17 20V8"/></svg></span></span><div><strong>收訊：好（靠近市區）</strong><p>全段收訊穩定</p></div></div>
     <div class="seg-subtitle">路況</div>
     <p class="seg-text">難度「易」，坡度有限。但<strong>步道網極複雜，岔路多，最容易迷路的一段！</strong>務必跟緊GPX。</p>
     <p class="seg-text">午後最熱，部分路段無遮蔽。途中經過墳墓區域。</p>
@@ -1734,26 +1748,26 @@ input[type="range"]::-webkit-slider-thumb {
     <div class="seg-subtitle">補給</div>
     <p class="seg-text"><strong>鄭成功廟</strong>有飲水機｜<strong>碧山巖</strong>（<span class="seg-inline-time" data-seg-inline="s5-supply1">~15:40</span>）飲水機＋廁所</p>
     <p class="seg-text"><strong>撤退：</strong>沿途多下切口至市區，離文明最近的一段。</p>
-    <div class="seg-gpx"><a href="https://taipeigrandtrail.gov.taipei/News_Content.aspx?n=E0B7C742E7BA29C6&s=5A897AA80DB36A12&sms=9681E3755A0FC621" target="_blank" class="gpx-btn">📥 下載 GPX（官方）</a><span class="gpx-hint">出發前一天下載！山上網速極慢</span></div>
+    <div class="seg-gpx"><a href="https://taipeigrandtrail.gov.taipei/News_Content.aspx?n=E0B7C742E7BA29C6&s=5A897AA80DB36A12&sms=9681E3755A0FC621" target="_blank" class="gpx-btn"><span class="icon icon-sm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></span> 下載 GPX（官方）</a><span class="gpx-hint">出發前一天下載！山上網速極慢</span></div>
   </div></div></div>
 
   <div class="seg-card"><div class="seg-header" onclick="this.parentElement.classList.toggle('open')"><div class="seg-title-group"><span class="seg-badge afternoon" data-seg-badge="s6">S6・16:20</span><span class="seg-name">中華科大→麟光</span></div><span class="seg-toggle">&#9662;</span></div><div class="seg-body"><div class="seg-content">
     <div class="seg-timing-note" data-seg-timing="s6" style="display:none;"></div>
     <div class="seg-stats"><span class="seg-stat"><strong>11km</strong></span><span class="seg-stat"><strong>30~375m</strong></span><span class="seg-stat"><strong>+680m</strong></span><span class="seg-stat"><strong data-seg-dur="s6">2h24m</strong></span></div>
-    <div class="seg-signal sig-good"><span class="sig-icon">📶</span><div><strong>收訊：好（靠近市區）</strong><p>全段收訊穩定</p></div></div>
+    <div class="seg-signal sig-good"><span class="sig-icon"><span class="icon icon-lg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 20h.01"/><path d="M7 20v-4"/><path d="M12 20v-8"/><path d="M17 20V8"/></svg></span></span><div><strong>收訊：好（靠近市區）</strong><p>全段收訊穩定</p></div></div>
     <div class="seg-subtitle">路況</div>
     <p class="seg-text"><strong>中華科大→九五峰：</strong>全程樓梯上坡，林蔭少注意防曬。九五峰巨石眺望101。</p>
     <p class="seg-text"><strong>拇指山：</strong>短但陡，需拉繩。</p>
     <p class="seg-text"><strong>糶米古道→富陽：</strong>原生步道林蔭佳，下降至麟光站。</p>
     <div class="seg-subtitle">補給</div>
     <p class="seg-text"><strong>安祿宮</strong>飲水機（冰溫熱）＋廁所｜<strong>麟光站</strong>（<span class="seg-inline-time" data-seg-inline="s6-supply1">~18:44</span>）便利商店，<strong>最後補給！</strong></p>
-    <div class="seg-gpx"><a href="https://taipeigrandtrail.gov.taipei/News_Content.aspx?n=E0B7C742E7BA29C6&s=5A897AA80DB36A12&sms=9681E3755A0FC621" target="_blank" class="gpx-btn">📥 下載 GPX（官方）</a><span class="gpx-hint">出發前一天下載！山上網速極慢</span></div>
+    <div class="seg-gpx"><a href="https://taipeigrandtrail.gov.taipei/News_Content.aspx?n=E0B7C742E7BA29C6&s=5A897AA80DB36A12&sms=9681E3755A0FC621" target="_blank" class="gpx-btn"><span class="icon icon-sm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></span> 下載 GPX（官方）</a><span class="gpx-hint">出發前一天下載！山上網速極慢</span></div>
   </div></div></div>
 
   <div class="seg-card"><div class="seg-header" onclick="this.parentElement.classList.toggle('open')"><div class="seg-title-group"><span class="seg-badge dusk" data-seg-badge="s7">S7・18:44</span><span class="seg-name">麟光→政大</span></div><span class="seg-toggle">&#9662;</span></div><div class="seg-body"><div class="seg-content">
     <div class="seg-timing-note" data-seg-timing="s7" style="display:none;"></div>
     <div class="seg-stats"><span class="seg-stat"><strong>13km</strong></span><span class="seg-stat"><strong>26~308m</strong></span><span class="seg-stat"><strong>+500m</strong></span><span class="seg-stat"><strong data-seg-dur="s7">2h26m</strong></span></div>
-    <div class="seg-signal sig-good"><span class="sig-icon">📶</span><div><strong>收訊：好</strong><p>指南宮、貓空地區收訊穩定</p></div></div>
+    <div class="seg-signal sig-good"><span class="sig-icon"><span class="icon icon-lg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 20h.01"/><path d="M7 20v-4"/><path d="M12 20v-8"/><path d="M17 20V8"/></svg></span></span><div><strong>收訊：好</strong><p>指南宮、貓空地區收訊穩定</p></div></div>
     <div class="seg-subtitle">路況</div>
     <div class="seg-warning"><p><strong>路線銜接：</strong>官方 S7 起點為世界山莊（S6 途經點）。從麟光的完整路線：麟光→富陽→世界山莊→和平東路→萬壽橋→指南宮千階。與 S6 有部分重疊屬正常。</p></div>
     <p class="seg-text"><strong>指南宮千階：</strong>石階陡升，天黑後頭燈行走。</p>
@@ -1764,7 +1778,7 @@ input[type="range"]::-webkit-slider-thumb {
     <p class="seg-text"><strong>貓纜指南宮站/貓空站</strong>可搭纜車或公車（平日末班21:00/假日22:00，每月除第一個週一外其餘週一公休）｜<strong>樟山寺</strong>棕15公車</p>
     <div class="seg-subtitle">完走後</div>
     <p class="seg-text">政大校門口：公車 236區/237/282/530/611/676/棕6/綠1。或叫 Uber/計程車。</p>
-    <div class="seg-gpx"><a href="https://taipeigrandtrail.gov.taipei/News_Content.aspx?n=E0B7C742E7BA29C6&s=5A897AA80DB36A12&sms=9681E3755A0FC621" target="_blank" class="gpx-btn">📥 下載 GPX（官方）</a><span class="gpx-hint">出發前一天下載！山上網速極慢</span></div>
+    <div class="seg-gpx"><a href="https://taipeigrandtrail.gov.taipei/News_Content.aspx?n=E0B7C742E7BA29C6&s=5A897AA80DB36A12&sms=9681E3755A0FC621" target="_blank" class="gpx-btn"><span class="icon icon-sm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></span> 下載 GPX（官方）</a><span class="gpx-hint">出發前一天下載！山上網速極慢</span></div>
   </div></div></div>
 
   <!-- S8 Note -->
@@ -1794,12 +1808,12 @@ input[type="range"]::-webkit-slider-thumb {
     <div class="supply-card" data-supply-idx="3"><div class="supply-time-col"><div class="supply-time" data-supply-time="3">06:00</div><div class="supply-seg-label">S2終/S3起</div></div><div><div class="supply-name">小油坑遊客中心</div><div class="supply-items"><span class="supply-tag">遊客中心</span><span class="supply-tag">廁所</span></div></div></div>
     <div class="supply-card" data-supply-idx="4"><div class="supply-time-col"><div class="supply-time" data-supply-time="4">07:30</div><div class="supply-seg-label">S3途中</div></div><div><div class="supply-name">冷水坑</div><div class="supply-items"><span class="supply-tag">販賣機</span><span class="supply-tag">廁所</span></div></div></div>
     <div class="supply-card" data-supply-idx="5"><div class="supply-time-col"><div class="supply-time" data-supply-time="5">08:20</div><div class="supply-seg-label">S3/S4</div></div><div><div class="supply-name">擎天崗遊客中心</div><div class="supply-items"><span class="supply-tag">販賣部</span><span class="supply-tag">咖啡</span><span class="supply-tag">飲水機</span><span class="supply-tag">廁所</span></div></div></div>
-    <div class="supply-card major" data-supply-idx="6"><div class="supply-time-col"><div class="supply-time" data-supply-time="6">12:20</div><div class="supply-seg-label">接駁</div></div><div><div class="supply-name">大湖公園站 ⭐</div><div class="supply-items"><span class="supply-tag key">便利商店</span><span class="supply-tag key">熱食</span><span class="supply-tag">廁所</span></div></div></div>
-    <div class="supply-card major" data-supply-idx="7"><div class="supply-time-col"><div class="supply-time" data-supply-time="7">12:40</div><div class="supply-seg-label">S5起</div></div><div><div class="supply-name">劍潭站 ⭐</div><div class="supply-items"><span class="supply-tag key">便利商店</span><span class="supply-tag key">熱食</span></div></div></div>
+    <div class="supply-card major" data-supply-idx="6"><div class="supply-time-col"><div class="supply-time" data-supply-time="6">12:20</div><div class="supply-seg-label">接駁</div></div><div><div class="supply-name">大湖公園站 <span class="icon icon-sm" style="color:var(--amber)"><svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span></div><div class="supply-items"><span class="supply-tag key">便利商店</span><span class="supply-tag key">熱食</span><span class="supply-tag">廁所</span></div></div></div>
+    <div class="supply-card major" data-supply-idx="7"><div class="supply-time-col"><div class="supply-time" data-supply-time="7">12:40</div><div class="supply-seg-label">S5起</div></div><div><div class="supply-name">劍潭站 <span class="icon icon-sm" style="color:var(--amber)"><svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span></div><div class="supply-items"><span class="supply-tag key">便利商店</span><span class="supply-tag key">熱食</span></div></div></div>
     <div class="supply-card" data-supply-idx="8"><div class="supply-time-col"><div class="supply-time" data-supply-time="8">13:50</div><div class="supply-seg-label">S5途中</div></div><div><div class="supply-name">鄭成功廟</div><div class="supply-items"><span class="supply-tag">飲水機(冰/熱)</span><span class="supply-tag">廁所</span><span class="supply-tag">桌椅</span></div></div></div>
     <div class="supply-card" data-supply-idx="9"><div class="supply-time-col"><div class="supply-time" data-supply-time="9">15:40</div><div class="supply-seg-label">接駁</div></div><div><div class="supply-name">碧山巖/接駁途中</div><div class="supply-items"><span class="supply-tag">便利商店</span></div></div></div>
     <div class="supply-card" data-supply-idx="10"><div class="supply-time-col"><div class="supply-time" data-supply-time="10">17:30</div><div class="supply-seg-label">S6途中</div></div><div><div class="supply-name">忠正嶺安祿宮</div><div class="supply-items"><span class="supply-tag">飲水機(冰溫熱)</span><span class="supply-tag">廁所</span></div></div></div>
-    <div class="supply-card major" data-supply-idx="11"><div class="supply-time-col"><div class="supply-time" data-supply-time="11">18:44</div><div class="supply-seg-label">S6終/S7起</div></div><div><div class="supply-name">麟光站 ⭐ 最後補給</div><div class="supply-items"><span class="supply-tag key">便利商店</span><span class="supply-tag">飲料</span></div></div></div>
+    <div class="supply-card major" data-supply-idx="11"><div class="supply-time-col"><div class="supply-time" data-supply-time="11">18:44</div><div class="supply-seg-label">S6終/S7起</div></div><div><div class="supply-name">麟光站 <span class="icon icon-sm" style="color:var(--amber)"><svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span> 最後補給</div><div class="supply-items"><span class="supply-tag key">便利商店</span><span class="supply-tag">飲料</span></div></div></div>
     <div class="supply-card" data-supply-idx="12"><div class="supply-time-col"><div class="supply-time" data-supply-time="12">19:50</div><div class="supply-seg-label">S7途中</div></div><div><div class="supply-name">樟山寺</div><div class="supply-items"><span class="supply-tag">奉茶(自備杯)</span><span class="supply-tag">溫水</span><span class="supply-tag">廁所</span></div></div></div>
     <div class="supply-card" data-supply-idx="13"><div class="supply-time-col"><div class="supply-time" data-supply-time="13">20:10</div><div class="supply-seg-label">S7途中</div></div><div><div class="supply-name">貓空地區</div><div class="supply-items"><span class="supply-tag">茶館</span><span class="supply-tag">餐廳</span><span class="supply-tag">貓纜站</span></div></div></div>
   </div>
@@ -1875,7 +1889,7 @@ input[type="range"]::-webkit-slider-thumb {
   </div>
 
   <div class="logistics-card">
-    <div class="logistics-card-title">📱 行前 APP 準備</div>
+    <div class="logistics-card-title"><span class="icon icon-sm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg></span> 行前 APP 準備</div>
     <div class="logistics-card-body">
       <p><strong>必裝：</strong>健行筆記 APP（寶石收集 + 離線地圖）</p>
       <p><strong>推薦：</strong>Hikingbook 或 綠野遊蹤（備用 GPS 導航）</p>
@@ -1910,13 +1924,15 @@ input[type="range"]::-webkit-slider-thumb {
   <div class="gems-intro">
     <p>2026 台北大縱走使用<strong>健行筆記 APP</strong> 收集數位寶石。全 8 段共 56 顆寶石，走近寶石點時 APP 自動登錄。集滿可兌換完走證書、毛巾和紀念徽章。兌換期間：2026/6/1 - 2027/1/15。</p>
     <div class="gems-app-links">
-      <a href="https://hiking.biji.co/index.php?q=minisite&id=318" target="_blank">📱 2026 活動頁面</a>
-      <a href="https://taipeigrandtrail.gov.taipei/News_Content.aspx?n=E0B7C742E7BA29C6&sms=9681E3755A0FC621&s=15047C0DA0162369" target="_blank">📋 官方活動辦法</a>
-      <a href="https://www.google.com/maps/d/u/0/viewer?mid=1jJ5jx8neGOYXcdI0yd3DSTpuqlaemmk" target="_blank">🗺️ 寶石位置地圖</a>
+      <a href="https://hiking.biji.co/index.php?q=minisite&id=318" target="_blank"><span class="icon icon-sm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg></span> 2026 活動頁面</a>
+      <a href="https://taipeigrandtrail.gov.taipei/News_Content.aspx?n=E0B7C742E7BA29C6&sms=9681E3755A0FC621&s=15047C0DA0162369" target="_blank"><span class="icon icon-sm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/></svg></span> 官方活動辦法</a>
+      <a href="https://www.google.com/maps/d/u/0/viewer?mid=1jJ5jx8neGOYXcdI0yd3DSTpuqlaemmk" target="_blank"><span class="icon icon-sm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg></span> 寶石位置地圖</a>
     </div>
+    <img src="https://www-ws.gov.taipei/001/Upload/785/relpic/57400/8456087/64737dd5-7d8f-4262-9eeb-6aec10006cf6.png" alt="寶石手拿牌範例" class="gems-image" loading="lazy">
+    <img src="https://www-ws.gov.taipei/001/Upload/785/relpic/57400/8456087/3bbf2b13-50f7-4965-98ef-0c8613032400.png" alt="2026 寶石設計" class="gems-image" loading="lazy">
   </div>
 
-  <div class="gems-subtitle">📅 每月寶石王挑戰</div>
+  <div class="gems-subtitle"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span> 每月寶石王挑戰</div>
   <div class="gems-monthly" id="gemsMonthly">
     <!-- JS generates: highlights current month -->
   </div>
@@ -1935,6 +1951,12 @@ input[type="range"]::-webkit-slider-thumb {
 
   <div class="gems-note">
     <strong>重要：</strong>出發前一天下載健行筆記 APP 並登入帳號、下載離線地圖、開啟定位服務。山上網路慢，現場下載會來不及。
+  </div>
+
+  <div class="gems-subtitle">完走獎勵</div>
+  <div class="gems-rewards">
+    <img src="https://www-ws.gov.taipei/001/Upload/785/relpic/57400/8456087/80f48a3e-7af2-4606-a264-4592447b018a.jpg" alt="完走毛巾" loading="lazy">
+    <img src="https://www-ws.gov.taipei/001/Upload/785/relpic/57400/8456087/6944fca4-f0e6-4107-a567-ea07dc5303ea.jpg" alt="紀念徽章" loading="lazy">
   </div>
 </section>
 
@@ -1965,11 +1987,11 @@ input[type="range"]::-webkit-slider-thumb {
     <div class="gear-item" onclick="toggleGear(this)"><div class="gear-check"></div><div class="gear-text">身分證/健保卡＋衛生紙</div></div>
   </div>
   <div class="gear-seasonal" id="gearSeasonal">
-    <div class="gear-seasonal-title">📅 <span id="gearSeasonLabel">4月</span>建議</div>
+    <div class="gear-seasonal-title"><span class="icon icon-sm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span> <span id="gearSeasonLabel">4月</span>建議</div>
     <div class="gear-grid" id="gearSeasonalGrid"></div>
   </div>
   <div class="gear-optional">
-    <div class="gear-seasonal-title">💡 長距離選配</div>
+    <div class="gear-seasonal-title"><span class="icon icon-sm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2z"/></svg></span> 長距離選配</div>
     <div class="gear-grid" id="gearOptionalGrid"></div>
   </div>
 </section>
@@ -1990,25 +2012,25 @@ input[type="range"]::-webkit-slider-thumb {
       <input type="range" id="tempSlider" min="5" max="38" value="22" oninput="updateCalc()">
     </div>
     <div class="calc-card">
-      <div class="calc-icon">💧</div>
+      <div class="calc-icon"><span class="icon icon-lg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg></span></div>
       <div class="calc-label">建議總飲水量</div>
       <div class="calc-value" id="calcWater">6.3<span class="unit">L</span></div>
       <div class="calc-sub" id="calcWaterSub">每小時 ~300ml</div>
     </div>
     <div class="calc-card">
-      <div class="calc-icon">🔥</div>
+      <div class="calc-icon"><span class="icon icon-lg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22c-4.97 0-9-2.69-9-6s2-7 4-9l2 2c.5-3 2-6 5-8 1 2 2.5 5 2 8l2-2c2 2 4 5 4 9s-4.03 6-9 6z"/><path d="M12 22c-1.66 0-3-1.79-3-4s1.34-4 3-5c1.66 1 3 2.79 3 5s-1.34 4-3 4z"/></svg></span></div>
       <div class="calc-label">預估總消耗熱量</div>
       <div class="calc-value" id="calcCal">6,300<span class="unit">kcal</span></div>
       <div class="calc-sub" id="calcCalSub">每小時 ~300kcal</div>
     </div>
     <div class="calc-card">
-      <div class="calc-icon">🧂</div>
+      <div class="calc-icon"><span class="icon icon-lg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="6" y="8" width="12" height="14" rx="1"/><path d="M6 12h12"/><path d="M10 2h4v6h-4z"/><circle cx="10" cy="17" r="0.5" fill="currentColor"/><circle cx="14" cy="15" r="0.5" fill="currentColor"/><circle cx="12" cy="18" r="0.5" fill="currentColor"/></svg></span></div>
       <div class="calc-label">建議鹽錠</div>
       <div class="calc-value" id="calcSalt">21<span class="unit">顆</span></div>
       <div class="calc-sub">每小時 1 顆</div>
     </div>
     <div class="calc-card">
-      <div class="calc-icon">⚡</div>
+      <div class="calc-icon"><span class="icon icon-lg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></span></div>
       <div class="calc-label">建議能量膠</div>
       <div class="calc-value" id="calcGel">14<span class="unit">包</span></div>
       <div class="calc-sub">每 45 分鐘 1 包</div>
@@ -2022,15 +2044,15 @@ input[type="range"]::-webkit-slider-thumb {
 <section class="gpx-section" id="gpx">
   <div class="section-label">GPX DOWNLOAD</div>
   <div class="section-title">GPX 下載</div>
-  <div class="gpx-warning">⚠️ 出發前一天下載所有 GPX 檔！山上網路極慢，現場下載會失敗。</div>
+  <div class="gpx-warning"><span class="icon icon-sm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span> 出發前一天下載所有 GPX 檔！山上網路極慢，現場下載會失敗。</div>
   <div class="gpx-grid">
     <a href="https://taipeigrandtrail.gov.taipei/News_Content.aspx?n=E0B7C742E7BA29C6&s=5A897AA80DB36A12&sms=9681E3755A0FC621" target="_blank" class="gpx-download-card">
-      <div class="gpx-download-icon">📥</div>
+      <div class="gpx-download-icon"><span class="icon icon-lg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></span></div>
       <div class="gpx-download-name">官方 GPX 全段下載</div>
       <div class="gpx-download-desc">S1-S8 分段 GPX 檔案</div>
     </a>
     <a href="https://hiking.biji.co/index.php?q=trail&act=gpx_detail&id=108887" target="_blank" class="gpx-download-card">
-      <div class="gpx-download-icon">🗺️</div>
+      <div class="gpx-download-icon"><span class="icon icon-lg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg></span></div>
       <div class="gpx-download-name">健行筆記 GPX</div>
       <div class="gpx-download-desc">全路線 GPX + 社群軌跡</div>
     </a>
@@ -2045,22 +2067,22 @@ input[type="range"]::-webkit-slider-thumb {
   <div class="section-title">出發前天氣確認</div>
   <div class="weather-grid">
     <a href="https://www.cwa.gov.tw/V8/C/L/Mountain/Mountain.html?PID=D102" target="_blank" class="weather-card">
-      <div class="weather-icon">🌤️</div>
+      <div class="weather-icon"><span class="icon icon-lg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.5 19H9a5 5 0 1 1 .1-10A7 7 0 0 1 22 13a4.5 4.5 0 0 1-4.5 6z"/><line x1="12" y1="2" x2="12" y2="4"/><line x1="20" y1="6" x2="18.5" y2="7.5"/></svg></span></div>
       <div class="weather-name">中央氣象署</div>
       <div class="weather-desc">山區天氣預報</div>
     </a>
     <a href="https://www.ymsnp.gov.tw/YMSNP_HighwayCondition.aspx?n=17910&sms=13477" target="_blank" class="weather-card">
-      <div class="weather-icon">🏔️</div>
+      <div class="weather-icon"><span class="icon icon-lg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 21l4-10 4 10"/><path d="M2 21l6-12 2.5 5"/><path d="M22 21l-6-12-2.5 5"/></svg></span></div>
       <div class="weather-name">陽管處</div>
       <div class="weather-desc">步道開放資訊</div>
     </a>
     <a href="https://www.cwa.gov.tw/V8/C/W/OBS_Radar.html" target="_blank" class="weather-card">
-      <div class="weather-icon">📡</div>
+      <div class="weather-icon"><span class="icon icon-lg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 0 1 0 20"/><line x1="12" y1="12" x2="12" y2="2"/></svg></span></div>
       <div class="weather-name">雷達回波</div>
       <div class="weather-desc">即時降雨圖</div>
     </a>
     <a href="https://www.windy.com/25.175/121.527?25.120,121.527,12" target="_blank" class="weather-card">
-      <div class="weather-icon">💨</div>
+      <div class="weather-icon"><span class="icon icon-lg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9.59 4.59A2 2 0 1 1 11 8H2"/><path d="M12.59 19.41A2 2 0 1 0 14 16H2"/><path d="M17.73 7.73A2.5 2.5 0 1 1 19.5 12H2"/></svg></span></div>
       <div class="weather-name">Windy</div>
       <div class="weather-desc">風速/雲圖/降雨</div>
     </a>
@@ -2074,12 +2096,12 @@ input[type="range"]::-webkit-slider-thumb {
   <div class="section-label">SAFETY</div>
   <div class="section-title">安全須知</div>
   <div class="safety-grid">
-    <div class="safety-card"><div class="safety-icon">🔦</div><div class="safety-title">頭燈策略</div><div class="safety-desc">300流明+。<span id="safetyHeadlampText">S1全段＋S7後段需頭燈</span>。備用電池必帶。</div></div>
-    <div class="safety-card"><div class="safety-icon">🐍</div><div class="safety-title">蛇類動物</div><div class="safety-desc">陽明山夜間蛇類活躍。穿長褲、登山杖打草驚蛇。保持距離。</div></div>
-    <div class="safety-card"><div class="safety-icon">🌡️</div><div class="safety-title">20°C溫差</div><div class="safety-desc">凌晨平地18-22°C，七星山頂可能<10°C+強風。備薄風衣。午後30°C+。</div></div>
-    <div class="safety-card"><div class="safety-icon">📱</div><div class="safety-title">導航通訊</div><div class="safety-desc">離線GPX必備。推薦：健行筆記/Hikingbook/綠野遊蹤。開飛航省電。</div></div>
-    <div class="safety-card"><div class="safety-icon">⚡</div><div class="safety-title">電力管理</div><div class="safety-desc">21hr長征手機極耗電。10000mAh+行動電源。降亮度省電模式。</div></div>
-    <div class="safety-card"><div class="safety-icon">🍬</div><div class="safety-title">營養補給</div><div class="safety-desc">每小時200-300kcal。能量膠每45分鐘。鹽錠每小時。不等餓才吃。</div></div>
+    <div class="safety-card"><div class="safety-icon"><span class="icon icon-lg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="14 2 18 6 7 17 3 13 14 2"/><line x1="5" y1="15" x2="2" y2="18"/><line x1="9" y1="19" x2="6" y2="22"/></svg></span></div><div class="safety-title">頭燈策略</div><div class="safety-desc">300流明+。<span id="safetyHeadlampText">S1全段＋S7後段需頭燈</span>。備用電池必帶。</div></div>
+    <div class="safety-card"><div class="safety-icon"><span class="icon icon-lg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19c0-3 2-5 5-5h2c3 0 5-2 5-5s-2-5-5-5H9"/><circle cx="7" cy="4" r="1" fill="currentColor"/></svg></span></div><div class="safety-title">蛇類動物</div><div class="safety-desc">陽明山夜間蛇類活躍。穿長褲、登山杖打草驚蛇。保持距離。</div></div>
+    <div class="safety-card"><div class="safety-icon"><span class="icon icon-lg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z"/></svg></span></div><div class="safety-title">20°C溫差</div><div class="safety-desc">凌晨平地18-22°C，七星山頂可能<10°C+強風。備薄風衣。午後30°C+。</div></div>
+    <div class="safety-card"><div class="safety-icon"><span class="icon icon-lg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg></span></div><div class="safety-title">導航通訊</div><div class="safety-desc">離線GPX必備。推薦：健行筆記/Hikingbook/綠野遊蹤。開飛航省電。</div></div>
+    <div class="safety-card"><div class="safety-icon"><span class="icon icon-lg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></span></div><div class="safety-title">電力管理</div><div class="safety-desc">21hr長征手機極耗電。10000mAh+行動電源。降亮度省電模式。</div></div>
+    <div class="safety-card"><div class="safety-icon"><span class="icon icon-lg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="7"/><path d="M5.3 5.3L2 2"/><path d="M18.7 18.7L22 22"/><path d="M5 12H2"/><path d="M22 12h-3"/></svg></span></div><div class="safety-title">營養補給</div><div class="safety-desc">每小時200-300kcal。能量膠每45分鐘。鹽錠每小時。不等餓才吃。</div></div>
   </div>
 </section>
 
@@ -2118,6 +2140,61 @@ input[type="range"]::-webkit-slider-thumb {
 </footer>
 
 <script>
+// ═══ SVG ICON MAP ═══
+const ICONS = {
+  gem: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 3h12l4 8-10 12L2 11l4-8z"/><path d="M2 11h20"/><path d="M12 23L8 11l4-8 4 8-4 12z" opacity="0.3" fill="currentColor"/></svg>',
+  moon: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/></svg>',
+  sunrise: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 18a5 5 0 0 0-10 0"/><line x1="12" y1="2" x2="12" y2="9"/><polyline points="8 6 12 2 16 6"/><line x1="1" y1="22" x2="23" y2="22"/></svg>',
+  sunset: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 18a5 5 0 0 0-10 0"/><line x1="12" y1="9" x2="12" y2="2"/><polyline points="16 6 12 10 8 6"/><line x1="1" y1="22" x2="23" y2="22"/></svg>',
+  sun: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>',
+  flashlight: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="14 2 18 6 7 17 3 13 14 2"/><line x1="5" y1="15" x2="2" y2="18"/><line x1="9" y1="19" x2="6" y2="22"/></svg>',
+  signal: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 20h.01"/><path d="M7 20v-4"/><path d="M12 20v-8"/><path d="M17 20V8"/></svg>',
+  signalWeak: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 20h.01"/><path d="M7 20v-4"/><path d="M12 20v-2" opacity="0.3"/><path d="M17 20v-1" opacity="0.15"/></svg>',
+  signalOff: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 20h.01"/><path d="M7 20v-4"/><line x1="3" y1="3" x2="21" y2="21"/></svg>',
+  distance: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 7L9 3 5 7"/><path d="M9 3v12"/><path d="M11 17l4 4 4-4"/><path d="M15 21V9"/></svg>',
+  arrowUp: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 19V5"/><polyline points="5 12 12 5 19 12"/></svg>',
+  arrowDown: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14"/><polyline points="19 12 12 19 5 12"/></svg>',
+  check: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>',
+  flag: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>',
+  pin: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>',
+  download: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>',
+  map: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg>',
+  thermometer: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z"/></svg>',
+  phone: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>',
+  zap: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>',
+  candy: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="7"/><path d="M5.3 5.3L2 2"/><path d="M18.7 18.7L22 22"/><path d="M5 12H2"/><path d="M22 12h-3"/></svg>',
+  snake: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19c0-3 2-5 5-5h2c3 0 5-2 5-5s-2-5-5-5H9"/><circle cx="7" cy="4" r="1" fill="currentColor"/></svg>',
+  weather: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.5 19H9a5 5 0 1 1 .1-10A7 7 0 0 1 22 13a4.5 4.5 0 0 1-4.5 6z"/><line x1="12" y1="2" x2="12" y2="4"/><line x1="20" y1="6" x2="18.5" y2="7.5"/><line x1="22" y1="13" x2="22" y2="13"/></svg>',
+  mountain: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 21l4-10 4 10"/><path d="M2 21l6-12 2.5 5"/><path d="M22 21l-6-12-2.5 5"/></svg>',
+  radar: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 0 1 0 20"/><line x1="12" y1="12" x2="12" y2="2"/></svg>',
+  wind: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9.59 4.59A2 2 0 1 1 11 8H2"/><path d="M12.59 19.41A2 2 0 1 0 14 16H2"/><path d="M17.73 7.73A2.5 2.5 0 1 1 19.5 12H2"/></svg>',
+  droplet: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>',
+  fire: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22c-4.97 0-9-2.69-9-6s2-7 4-9l2 2c.5-3 2-6 5-8 1 2 2.5 5 2 8l2-2c2 2 4 5 4 9s-4.03 6-9 6z"/><path d="M12 22c-1.66 0-3-1.79-3-4s1.34-4 3-5c1.66 1 3 2.79 3 5s-1.34 4-3 4z"/></svg>',
+  salt: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="6" y="8" width="12" height="14" rx="1"/><path d="M6 12h12"/><path d="M10 2h4v6h-4z"/><circle cx="10" cy="17" r="0.5" fill="currentColor"/><circle cx="14" cy="15" r="0.5" fill="currentColor"/><circle cx="12" cy="18" r="0.5" fill="currentColor"/></svg>',
+  timer: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2 2"/><path d="M5 3L2 6"/><path d="M22 6l-3-3"/><line x1="10" y1="2" x2="14" y2="2"/></svg>',
+  calendar: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>',
+  play: '<svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="5 3 19 12 5 21 5 3"/></svg>',
+  stop: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>',
+  refresh: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10"/><path d="M20.49 15a9 9 0 0 1-14.85 3.36L1 14"/></svg>',
+  clipboard: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/></svg>',
+  lightbulb: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2z"/></svg>',
+  warning: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>',
+  crossCircle: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>',
+  star: '<svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>',
+};
+
+function icon(name, cls) { return '<span class="icon' + (cls ? ' ' + cls : '') + '">' + ICONS[name] + '</span>'; }
+
+function replaceEmojiWithIcons(str) {
+  return str
+    .replace(/☀️/g, icon('sun'))
+    .replace(/🌡️/g, icon('thermometer'))
+    .replace(/🌇/g, icon('sunset'))
+    .replace(/🔦/g, icon('flashlight'))
+    .replace(/🌅/g, icon('sunrise'))
+    .replace(/🌙/g, icon('moon'));
+}
+
 // ═══ THEME SYSTEM ═══
 (function initTheme() {
   const saved = localStorage.getItem('tgt_theme');
@@ -2208,20 +2285,20 @@ const MILESTONE_BASE = [0, 330, 390, 740, 1110, 1270];
 const SEG_NAMES = {
   s1:'S1 關渡→二子坪', s2:'S2 面天坪→小油坑', s3:'S3 小油坑→風櫃口',
   s4:'S4 風櫃口→大湖公園', t1:'Uber 大湖公園→劍潭', s5:'S5 劍潭→碧山巖',
-  t2:'Uber 碧山巖→中華科大', s6:'S6 中華科大→麟光', s7:'S7 麟光→政大', fin:'🏁 完走！'
+  t2:'Uber 碧山巖→中華科大', s6:'S6 中華科大→麟光', s7:'S7 麟光→政大', fin:'<span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg></span> 完走！'
 };
 const SEG_KM = { s1:11.8, s2:12, s3:13, s4:13, t1:0, s5:12, t2:0, s6:11, s7:13, fin:0 };
 const SEG_ASCENT = { s1:1200, s2:800, s3:950, s4:350, t1:0, s5:550, t2:0, s6:680, s7:500, fin:0 };
 
 // ═══ SIGNAL DATA ═══
 const SEG_SIGNAL = {
-  s1: { icon: '📶', text: '收訊：間歇（谷地斷訊）' },
-  s2: { icon: '📵', text: '收訊：差（谷地死角）' },
-  s3: { icon: '📶', text: '收訊：好（稜線高處）' },
-  s4: { icon: '📵', text: '收訊：差（雙溪溝古道段）' },
-  s5: { icon: '📶', text: '收訊：好（靠近市區）' },
-  s6: { icon: '📶', text: '收訊：好（靠近市區）' },
-  s7: { icon: '📶', text: '收訊：好' },
+  s1: { icon: 'signalWeak', text: '收訊：間歇（谷地斷訊）' },
+  s2: { icon: 'signalOff', text: '收訊：差（谷地死角）' },
+  s3: { icon: 'signal', text: '收訊：好（稜線高處）' },
+  s4: { icon: 'signalOff', text: '收訊：差（雙溪溝古道段）' },
+  s5: { icon: 'signal', text: '收訊：好（靠近市區）' },
+  s6: { icon: 'signal', text: '收訊：好（靠近市區）' },
+  s7: { icon: 'signal', text: '收訊：好' },
 };
 
 // ═══ GATE TIMES DATA ═══
@@ -2470,7 +2547,7 @@ function buildSchedule(pace) {
     segs.push({ id: bs.id, name: SEG_NAMES[bs.id], startMin: cumMin, durMin: dur, km: SEG_KM[bs.id], ascent: SEG_ASCENT[bs.id] });
     cumMin += dur;
   }
-  segs.push({ id: 'fin', name: '🏁 完走！', startMin: cumMin, durMin: 0, km: 0, ascent: 0 });
+  segs.push({ id: 'fin', name: '<span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg></span> 完走！', startMin: cumMin, durMin: 0, km: 0, ascent: 0 });
   return { segs, totalMin: cumMin };
 }
 
@@ -3091,23 +3168,23 @@ function applyConfig() {
         }
 
         if (hasSunrise) {
-          condEl.textContent = '🌅 日出';
+          condEl.innerHTML = icon('sunrise') + ' 日出';
         } else if (hasSunset) {
-          condEl.textContent = '🌇 日落';
+          condEl.innerHTML = icon('sunset') + ' 日落';
         } else if (entirelyDark) {
-          condEl.textContent = '🌙 夜走';
+          condEl.innerHTML = icon('moon') + ' 夜走';
         } else if (phase === 'night') {
-          condEl.textContent = '🔦 頭燈';
+          condEl.innerHTML = icon('flashlight') + ' 頭燈';
         } else if (phase === 'afternoon' && midClockTime > 720 && midClockTime < sun.set - 60) {
-          condEl.textContent = '🌡️ 防曬';
+          condEl.innerHTML = icon('sun') + ' 防曬';
         } else if (phase === 'dawn') {
-          condEl.textContent = '🌅 晨光';
+          condEl.innerHTML = icon('sunrise') + ' 晨光';
         } else if (phase === 'dusk') {
-          condEl.textContent = '🌇 黃昏';
+          condEl.innerHTML = icon('sunset') + ' 黃昏';
         } else if (phase === 'day') {
-          condEl.textContent = '☀️ 日間';
+          condEl.innerHTML = icon('sun') + ' 日間';
         } else {
-          condEl.textContent = '☀️ 日間';
+          condEl.innerHTML = icon('sun') + ' 日間';
         }
       }
     }
@@ -3251,7 +3328,7 @@ function applyConfig() {
       timingEl.style.display = 'none';
     } else {
       timingEl.style.display = '';
-      timingEl.textContent = tNote;
+      timingEl.innerHTML = replaceEmojiWithIcons(tNote);
     }
   }
 
@@ -3563,9 +3640,9 @@ function updateSmartSummary(segs, startMin, totalMin, sun) {
   const nightH = (nightMin / 60).toFixed(1);
   const dayH = (dayMin / 60).toFixed(1);
 
-  let html = '<span class="ss-night">🌙 夜走 ' + nightH + 'hr</span> ｜ <span class="ss-day">☀️ 日走 ' + dayH + 'hr</span>';
+  let html = '<span class="ss-night">' + icon('moon') + ' 夜走 ' + nightH + 'hr</span> ｜ <span class="ss-day">' + icon('sun') + ' 日走 ' + dayH + 'hr</span>';
   if (headlampSegs.length > 0) {
-    html += ' ｜ <span class="ss-headlamp">🔦 需頭燈: ' + headlampSegs.join(', ') + '</span>';
+    html += ' ｜ <span class="ss-headlamp">' + icon('flashlight') + ' 需頭燈: ' + headlampSegs.join(', ') + '</span>';
   }
 
   el.innerHTML = html;
@@ -3643,16 +3720,16 @@ function updateCheckpointDisplay() {
 
     const actualTime = minToHHMM(currentStartMin + elapsed);
     if (checkpoint.auto) {
-      badgeEl.innerHTML = '⏱ ' + actualTime + ' (預估)';
+      badgeEl.innerHTML = icon('timer') + ' ' + actualTime + ' (預估)';
       badgeEl.className = 'checkpoint-badge cp-auto';
     } else if (Math.abs(diff) < 5) {
-      badgeEl.innerHTML = '✅ ' + actualTime + ' (準時)';
+      badgeEl.innerHTML = icon('check') + ' ' + actualTime + ' (準時)';
       badgeEl.className = 'checkpoint-badge cp-ontime';
     } else if (diff > 0) {
-      badgeEl.innerHTML = '⏱️ ' + actualTime + ' (慢 ' + Math.round(diff) + '分)';
+      badgeEl.innerHTML = icon('timer') + ' ' + actualTime + ' (慢 ' + Math.round(diff) + '分)';
       badgeEl.className = 'checkpoint-badge cp-late';
     } else {
-      badgeEl.innerHTML = '⚡ ' + actualTime + ' (快 ' + Math.round(-diff) + '分)';
+      badgeEl.innerHTML = icon('zap') + ' ' + actualTime + ' (快 ' + Math.round(-diff) + '分)';
       badgeEl.className = 'checkpoint-badge cp-early';
     }
   });
@@ -3875,7 +3952,7 @@ function updateTracker() {
     etaEl.textContent = '\u2713';
     const finH = Math.floor(totalMin/60);
     const finM = Math.round(totalMin%60);
-    segEl.innerHTML = '🏁 <strong>恭喜完走！</strong>全程 ' + finH + ' 小時' + (finM > 0 ? ' ' + finM + ' 分' : '');
+    segEl.innerHTML = icon('flag') + ' <strong>恭喜完走！</strong>全程 ' + finH + ' 小時' + (finM > 0 ? ' ' + finM + ' 分' : '');
     gateEl.style.display = 'none';
     // Auto-check all segments on completion
     SCHEDULE.forEach(function(seg) {
@@ -3989,7 +4066,7 @@ function updateTracker() {
   // Signal for current segment
   var currentSegId = current.id;
   if (SEG_SIGNAL[currentSegId]) {
-    sigIcon.textContent = SEG_SIGNAL[currentSegId].icon;
+    sigIcon.innerHTML = icon(SEG_SIGNAL[currentSegId].icon);
     sigText.textContent = SEG_SIGNAL[currentSegId].text;
     document.getElementById('trackerPosition').style.display = '';
   } else {
