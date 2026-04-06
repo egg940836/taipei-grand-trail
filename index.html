@@ -1597,6 +1597,65 @@ html.trail-mode .pace-stat-value { font-size: 1.15rem; }
 }
 .tracker-battery.warning { background: var(--amber-bg); color: var(--amber); }
 .tracker-battery.critical { background: var(--sunset-bg); color: var(--danger-text); }
+
+/* ── Pace Guide ── */
+.pace-guide { margin-top: 0.5rem; }
+.pace-guide-title { font-size: 0.75rem; color: var(--text-dim); margin-bottom: 0.4rem; }
+.pace-guide-items { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+.pace-guide-btn {
+  flex: 1 1 auto; min-width: 70px; padding: 0.5rem 0.6rem;
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: var(--radius-sm); cursor: pointer;
+  text-align: center; transition: all 0.2s;
+  font-family: var(--font-body); font-size: 0.75rem; color: var(--text-secondary);
+  -webkit-tap-highlight-color: transparent;
+}
+.pace-guide-btn strong { display: block; font-size: 0.8rem; color: var(--text-primary); margin-bottom: 0.15rem; }
+.pace-guide-btn span { font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-dim); }
+.pace-guide-btn:hover { border-color: var(--amber); }
+.pace-guide-btn:active { transform: scale(0.97); }
+.pace-guide-btn.active { border-color: var(--amber); background: var(--amber-bg); }
+.pace-guide-btn.disabled { opacity: 0.4; cursor: default; border-style: dashed; }
+.pace-guide-btn.disabled:hover { border-color: var(--border); }
+.pace-guide-btn.disabled:active { transform: none; }
+
+/* ── Data Verification Date ── */
+.data-date {
+  font-family: var(--font-mono); font-size: 0.6rem; color: var(--text-dim);
+  opacity: 0.6; margin-left: 0.3rem; white-space: nowrap;
+}
+
+/* ── Offline Reminder ── */
+.offline-reminder {
+  text-align: center; margin-top: 0.75rem; padding: 0.5rem;
+  border-radius: var(--radius-sm); background: var(--amber-bg);
+  border: 1px dashed var(--amber-border);
+}
+.offline-reminder a {
+  font-family: var(--font-mono); font-size: 0.75rem;
+  color: var(--amber); text-decoration: none; font-weight: 500;
+}
+
+/* ── Quick Nav Strip ── */
+.quick-nav-strip {
+  max-width: 900px; margin: 0 auto; padding: 0.75rem 1rem;
+  display: flex; align-items: center; gap: 0.5rem;
+  overflow-x: auto; -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.quick-nav-strip::-webkit-scrollbar { display: none; }
+.quick-nav-strip > span {
+  font-size: 0.75rem; color: var(--text-dim); white-space: nowrap; flex-shrink: 0;
+}
+.quick-nav-strip > button {
+  padding: 0.4rem 0.75rem; border-radius: var(--radius-pill);
+  background: var(--bg-card); border: 1px solid var(--border);
+  color: var(--text-secondary); font-size: 0.75rem; white-space: nowrap;
+  cursor: pointer; flex-shrink: 0; transition: all 0.2s;
+  font-family: var(--font-body);
+}
+.quick-nav-strip > button:hover { border-color: var(--amber); color: var(--amber); }
+.quick-nav-strip > button:active { transform: scale(0.96); }
 </style>
 </head>
 <body>
@@ -1719,6 +1778,14 @@ html.trail-mode .pace-stat-value { font-size: 1.15rem; }
   <div class="hero-scroll"><span></span></div>
 </section>
 
+<div class="quick-nav-strip" id="quickNavStrip">
+  <span>首次使用？</span>
+  <button onclick="document.getElementById('pace').scrollIntoView({behavior:'smooth'})">1. 設定配速</button>
+  <button onclick="document.getElementById('timeline').scrollIntoView({behavior:'smooth'})">2. 看行程</button>
+  <button onclick="document.getElementById('gear').scrollIntoView({behavior:'smooth'})">3. 打勾裝備</button>
+  <button onclick="document.getElementById('gpx').scrollIntoView({behavior:'smooth'})">4. 下載GPX</button>
+</div>
+
 <!-- Elevation -->
 <section class="elevation-section">
   <div class="section-label">ELEVATION</div>
@@ -1768,6 +1835,12 @@ html.trail-mode .pace-stat-value { font-size: 1.15rem; }
       <div class="month-selector" id="monthSelector"></div>
     </div>
 
+    <div class="offline-reminder">
+      <a href="#gpx" onclick="document.getElementById('gpx').scrollIntoView({behavior:'smooth'}); return false;">
+        出發前務必：儲存離線版 + 下載 GPX →
+      </a>
+    </div>
+
     <!-- Pace slider -->
     <div class="config-row">
       <div class="config-row-label">
@@ -1776,6 +1849,24 @@ html.trail-mode .pace-stat-value { font-size: 1.15rem; }
       </div>
       <div class="pace-slider-labels"><span>×0.50 (快)</span><span>×1.20 (慢)</span></div>
       <input type="range" id="paceSlider" min="50" max="120" step="1" value="60" oninput="onConfigChange()">
+    </div>
+
+    <div class="pace-guide" id="paceGuide">
+      <div class="pace-guide-title">你的程度？</div>
+      <div class="pace-guide-items">
+        <button class="pace-guide-btn" data-pace="55" onclick="setPaceFromGuide(0.55)">
+          <strong>越野跑者</strong><span>×0.5-0.6</span>
+        </button>
+        <button class="pace-guide-btn" data-pace="75" onclick="setPaceFromGuide(0.75)">
+          <strong>經驗山友</strong><span>×0.7-0.8</span>
+        </button>
+        <button class="pace-guide-btn" data-pace="95" onclick="setPaceFromGuide(0.95)">
+          <strong>一般登山</strong><span>×0.9-1.0</span>
+        </button>
+        <button class="pace-guide-btn disabled" onclick="return false;">
+          <strong>新手休閒</strong><span>不建議一日</span>
+        </button>
+      </div>
     </div>
 
     <!-- Fatigue toggle -->
@@ -2131,12 +2222,12 @@ html.trail-mode .pace-stat-value { font-size: 1.15rem; }
   <div class="section-label">ESCAPE ROUTES</div>
   <div class="section-title">各段撤退路線</div>
   <div class="retreat-card"><span class="retreat-seg">S1</span><div class="retreat-detail"><strong>貴子坑</strong>走回關渡｜<strong>清天宮</strong>有產業道路通車</div></div>
-  <div class="retreat-card"><span class="retreat-seg">S2</span><div class="retreat-detail"><strong>面天坪</strong>退回二子坪｜<strong>鞍部</strong>108公車（末班17:30自陽明山發車）、竹子湖小9公車（末班22:50）｜<strong>竹子湖</strong>多班公車</div></div>
-  <div class="retreat-card"><span class="retreat-seg">S3</span><div class="retreat-detail"><strong>冷水坑</strong>小15公車（平日末班16:20/假日17:30）｜<strong>擎天崗</strong>小15至劍潭（平日末班~16:40）｜<strong>風櫃口</strong>市民小巴1（僅5班/日，末班17:30！）</div></div>
+  <div class="retreat-card"><span class="retreat-seg">S2</span><div class="retreat-detail"><strong>面天坪</strong>退回二子坪｜<strong>鞍部</strong>108公車（末班17:30自陽明山發車）<span class="data-date">2026.04 查</span>、竹子湖小9公車（末班22:50）<span class="data-date">2026.04 查</span>｜<strong>竹子湖</strong>多班公車</div></div>
+  <div class="retreat-card"><span class="retreat-seg">S3</span><div class="retreat-detail"><strong>冷水坑</strong>小15公車（平日末班16:20/假日17:30）<span class="data-date">2026.04 查</span>｜<strong>擎天崗</strong>小15至劍潭（平日末班~16:40）｜<strong>風櫃口</strong>市民小巴1（僅5班/日，末班17:30！）<span class="data-date">2026.04 查</span></div></div>
   <div class="retreat-card"><span class="retreat-seg">S4</span><div class="retreat-detail"><strong>碧山路</strong>岔路下內湖｜<strong>白石湖</strong>咖啡廳+公車｜<strong>圓覺寺</strong>步行至大湖公園站</div></div>
   <div class="retreat-card"><span class="retreat-seg">S5</span><div class="retreat-detail">沿途多下切口：<strong>劍潭山/文間山/鄭成功廟/圓明寺/忠勇山</strong>。全段離市區最近，撤退最方便</div></div>
   <div class="retreat-card"><span class="retreat-seg">S6</span><div class="retreat-detail"><strong>九五峰</strong>退往象山下信義區｜<strong>糶米古道</strong>下至吳興街｜<strong>福州山</strong>直下麟光站</div></div>
-  <div class="retreat-card"><span class="retreat-seg">S7</span><div class="retreat-detail"><strong>指南宮/貓空</strong>搭貓纜或公車（平日末班21:00/假日22:00，除每月第一個週一外週一公休）｜<strong>樟山寺</strong>棕15公車（平日末班23:00/假日00:00）</div></div>
+  <div class="retreat-card"><span class="retreat-seg">S7</span><div class="retreat-detail"><strong>指南宮/貓空</strong>搭貓纜或公車（平日末班21:00/假日22:00，除每月第一個週一外週一公休）<span class="data-date">2026.04 查</span>｜<strong>樟山寺</strong>棕15公車（平日末班23:00/假日00:00）<span class="data-date">2026.04 查</span></div></div>
 </section>
 
 <div class="divider"></div>
@@ -2149,7 +2240,7 @@ html.trail-mode .pace-stat-value { font-size: 1.15rem; }
   <div class="logistics-card">
     <div class="logistics-card-title">起點交通（如何到達關渡）</div>
     <ul class="logistics-list">
-      <li><strong>捷運：</strong>淡水信義線（紅線）關渡站。末班車約 00:15 到站。</li>
+      <li><strong>捷運：</strong>淡水信義線（紅線）關渡站。末班車約 00:15 到站。<span class="data-date">2026.04 查</span></li>
       <li><strong>Uber/計程車：</strong>台北市區→關渡 約 250-350 元，15-20 分鐘。深夜叫車穩定。</li>
       <li><strong>自駕：</strong>可停劍潭站停車場（平日 150 元/日），再搭計程車至關渡。</li>
     </ul>
@@ -2162,7 +2253,7 @@ html.trail-mode .pace-stat-value { font-size: 1.15rem; }
       <li><strong>小15：</strong>擎天崗/冷水坑→劍潭站。班次較多，撤退首選。</li>
       <li><strong>小2：</strong>碧山巖→內湖。</li>
       <li><strong>棕15：</strong>樟山寺→政大方向。</li>
-      <li><strong>貓纜：</strong>平日末班 21:00／假日 22:00。除每月第一個週一外，週一公休。</li>
+      <li><strong>貓纜：</strong>平日末班 21:00／假日 22:00。除每月第一個週一外，週一公休。<span class="data-date">2026.04 查</span></li>
     </ul>
   </div>
 
@@ -2451,6 +2542,9 @@ html.trail-mode .pace-stat-value { font-size: 1.15rem; }
   <p style="margin-top:0.5rem;">
     GPX：<a href="https://taipeigrandtrail.gov.taipei/News_Content.aspx?n=E0B7C742E7BA29C6&s=5A897AA80DB36A12&sms=9681E3755A0FC621" target="_blank">官網下載</a>
     ｜ 活動：<a href="https://hiking.biji.co/index.php?q=minisite&id=318" target="_blank">健行筆記</a>
+  </p>
+  <p style="margin-top:0.5rem;">
+    發現資料有誤？<a href="https://github.com/egg940836/taipei-grand-trail/issues" target="_blank">回報問題</a>
   </p>
 </footer>
 
@@ -4831,6 +4925,16 @@ function checkCompletionExport() {
     }, 60000);
   }
 })();
+
+// ═══ PACE GUIDE ═══
+function setPaceFromGuide(pace) {
+  currentPace = pace;
+  document.getElementById('paceSlider').value = Math.round(pace * 100);
+  document.querySelectorAll('.pace-guide-btn').forEach(function(b) { b.classList.remove('active'); });
+  event.currentTarget.classList.add('active');
+  applyConfig();
+  updateCalc();
+}
 
 // ═══ INIT ═══
 applyConfig();
