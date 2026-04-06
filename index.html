@@ -1469,9 +1469,53 @@ input[type="range"]::-webkit-slider-thumb {
   .trail-mode-toggle { top: 10px; right: 60px; width: 44px; height: 44px; }
 }
 
-/* Trail mode: 25% font size increase */
-html.trail-mode { font-size: 20px; }
-html.trail-mode .section-label { letter-spacing: 0.2em; }
+/* Trail mode: increase TEXT sizes only, don't touch layout (padding/gap/width stay rem-based at 16px) */
+html.trail-mode .section-title { font-size: clamp(1.6rem, 5vw, 2.5rem); }
+html.trail-mode .section-label { font-size: 0.85rem; letter-spacing: 0.2em; }
+html.trail-mode .hero h1 { font-size: clamp(2.6rem, 8vw, 6rem); }
+html.trail-mode .hero-sub { font-size: clamp(0.95rem, 2vw, 1.2rem); }
+html.trail-mode .hero-eyebrow { font-size: 0.85rem; }
+html.trail-mode .stat-value { font-size: clamp(1.6rem, 5vw, 2.8rem); }
+html.trail-mode .stat-label { font-size: 0.85rem; }
+html.trail-mode .tl-route { font-size: 1.25rem; }
+html.trail-mode .tl-note { font-size: 1rem; }
+html.trail-mode .tl-time-badge { font-size: 0.95rem; }
+html.trail-mode .tl-duration { font-size: 0.95rem; }
+html.trail-mode .tl-seg { font-size: 0.85rem; }
+html.trail-mode .tl-meta-item { font-size: 0.85rem; }
+html.trail-mode .seg-name { font-size: 1.15rem; }
+html.trail-mode .seg-badge { font-size: 0.8rem; }
+html.trail-mode .seg-text { font-size: 1rem; }
+html.trail-mode .seg-stat { font-size: 0.9rem; }
+html.trail-mode .seg-subtitle { font-size: 1rem; }
+html.trail-mode .seg-warning p, html.trail-mode .seg-danger p, html.trail-mode .seg-info p { font-size: 1rem; }
+html.trail-mode .seg-timing-note { font-size: 1rem; }
+html.trail-mode .supply-name { font-size: 1.1rem; }
+html.trail-mode .supply-time { font-size: 1rem; }
+html.trail-mode .supply-tag { font-size: 0.85rem; }
+html.trail-mode .gate-name { font-size: 1.1rem; }
+html.trail-mode .gate-clock { font-size: 1.2rem; }
+html.trail-mode .gate-elapsed { font-size: 0.9rem; }
+html.trail-mode .gate-action { font-size: 0.9rem; }
+html.trail-mode .safety-title { font-size: 1.05rem; }
+html.trail-mode .safety-desc { font-size: 0.95rem; }
+html.trail-mode .gear-text { font-size: 1rem; }
+html.trail-mode .milestone-title { font-size: 1.05rem; }
+html.trail-mode .milestone-desc { font-size: 0.95rem; }
+html.trail-mode .retreat-detail { font-size: 1rem; }
+html.trail-mode .gap-detail { font-size: 1rem; }
+html.trail-mode .note-list li { font-size: 1rem; }
+html.trail-mode .note-title { font-size: 1.1rem; }
+html.trail-mode .tracker-clock { font-size: 2rem; }
+html.trail-mode .tracker-info-value { font-size: 1.2rem; }
+html.trail-mode .tracker-segment { font-size: 0.95rem; }
+html.trail-mode .tracker-big-label { font-size: 0.95rem; }
+html.trail-mode .tracker-next-gate-info { font-size: 1.1rem; }
+html.trail-mode .gems-intro { font-size: 1rem; }
+html.trail-mode .logistics-card-body p { font-size: 0.95rem; }
+html.trail-mode .calc-value { font-size: 1.8rem; }
+html.trail-mode .emergency-value { font-size: 1rem; }
+html.trail-mode .pace-stat-value { font-size: 1.15rem; }
 
 /* ═══ CHANGE 3: NOTES SECTION ═══ */
 .notes-section { padding: 2.5rem 1rem; max-width: 900px; margin: 0 auto; }
