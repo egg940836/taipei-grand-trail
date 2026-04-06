@@ -1651,7 +1651,7 @@ html.trail-mode .pace-stat-value { font-size: 1.15rem; }
 <body>
 
 <!-- Offline Banner -->
-<div class="offline-banner" id="offlineBanner">離線模式 -- 所有資料已快取可用</div>
+<div class="offline-banner" id="offlineBanner">目前離線 — 部分功能受限，建議連線後使用或事先儲存離線版</div>
 
 <!-- Trail Mode Toggle -->
 <button class="trail-mode-toggle" id="trailModeToggle" title="戶外模式" aria-label="戶外模式">
@@ -2402,7 +2402,7 @@ html.trail-mode .pace-stat-value { font-size: 1.15rem; }
     <a href="#" onclick="saveOffline(); return false;" class="gpx-download-card">
       <div class="gpx-download-icon"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></div>
       <div class="gpx-download-name">儲存離線版</div>
-      <div class="gpx-download-desc">下載整頁 HTML 到手機</div>
+      <div class="gpx-download-desc">下載整頁到手機（不含外部圖片，建議出發前開啟一次讓瀏覽器快取）</div>
     </a>
   </div>
 </section>
@@ -4794,7 +4794,7 @@ function saveOffline() {
   a.click();
   document.body.removeChild(a);
   URL.revokeObjectURL(url);
-  showToast('已下載離線版');
+  showToast('已下載離線版（外部圖片需連線顯示）');
 }
 
 // ═══ HUD (Feature 4) ═══
@@ -4919,29 +4919,58 @@ function checkCompletionExport() {
 }
 
 // ═══ BATTERY WARNING (Feature 6) ═══
-if ('getBattery' in navigator) {
-  navigator.getBattery().then(function(battery) {
-    function updateBatteryDisplay() {
-      var el = document.getElementById('trackerBattery');
-      if (!el || !state.startTime) return;
-      var level = Math.round(battery.level * 100);
-      if (level <= 15) {
-        el.style.display = '';
-        el.className = 'tracker-battery critical';
-        el.textContent = '⚠ 電量 ' + level + '% — 立即接行動電源！';
-      } else if (level <= 30) {
-        el.style.display = '';
-        el.className = 'tracker-battery warning';
-        el.textContent = '電量 ' + level + '% — 建議開啟省電模式';
-      } else {
-        el.style.display = 'none';
+// Battery API: Chrome/Android only. iOS Safari does NOT support this.
+// On unsupported devices, show a static reminder instead.
+(function initBattery() {
+  var el = document.getElementById('trackerBattery');
+  if (!el) return;
+
+  if ('getBattery' in navigator) {
+    navigator.getBattery().then(function(battery) {
+      function updateBatteryDisplay() {
+        if (!state.startTime) { el.style.display = 'none'; return; }
+        var level = Math.round(battery.level * 100);
+        if (level <= 15) {
+          el.style.display = '';
+          el.className = 'tracker-battery critical';
+          el.innerHTML = icon('zap') + ' 電量 ' + level + '% — 立即接行動電源！';
+        } else if (level <= 30) {
+          el.style.display = '';
+          el.className = 'tracker-battery warning';
+          el.innerHTML = icon('zap') + ' 電量 ' + level + '% — 建議開啟省電模式';
+        } else {
+          el.style.display = 'none';
+        }
       }
-    }
-    battery.addEventListener('levelchange', updateBatteryDisplay);
-    setInterval(updateBatteryDisplay, 60000);
-    updateBatteryDisplay();
-  }).catch(function(){});
-}
+      battery.addEventListener('levelchange', updateBatteryDisplay);
+      setInterval(updateBatteryDisplay, 60000);
+      updateBatteryDisplay();
+    }).catch(function() {
+      // API exists but failed — show static tip
+      showStaticBatteryTip(el);
+    });
+  } else {
+    // iOS or unsupported browser — show static tip when tracker is active
+    showStaticBatteryTip(el);
+  }
+
+  function showStaticBatteryTip(el) {
+    // Show a one-time reminder when tracker activates
+    var shown = false;
+    setInterval(function() {
+      if (state.startTime && !state.trackerStopped && !shown) {
+        var elapsed = (Date.now() - state.startTime) / 3600000; // hours
+        if (elapsed >= 3) { // Show after 3 hours of hiking
+          el.style.display = '';
+          el.className = 'tracker-battery warning';
+          el.innerHTML = icon('zap') + ' 提醒：21hr 長征很耗電，注意電量並準備行動電源';
+          shown = true;
+        }
+      }
+      if (!state.startTime) { el.style.display = 'none'; shown = false; }
+    }, 60000);
+  }
+})();
 
 // ═══ INIT ═══
 applyConfig();
