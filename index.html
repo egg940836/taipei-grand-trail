@@ -864,24 +864,6 @@ nav a:hover, nav a.active { color: var(--amber); }
 }
 .supply-tag.key { background: var(--ridge-bg); color: var(--ridge); }
 
-/* ═══ ROUTE GAPS ═══ */
-.gaps-section { padding: 2.5rem 1rem; max-width: 900px; margin: 0 auto; }
-.gap-card {
-  background: linear-gradient(135deg, var(--bg-card), transparent);
-  border: 1px dashed var(--border-hover); border-radius: var(--radius-md);
-  padding: 1rem; margin-bottom: 0.75rem;
-  box-shadow: var(--shadow-sm);
-}
-.gap-visual {
-  display: flex; align-items: center; gap: 0.5rem;
-  font-family: var(--font-display); font-weight: 700; font-size: 0.9rem;
-  margin-bottom: 0.5rem;
-}
-.gap-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--slate); }
-.gap-line { width: 30px; height: 2px; background: repeating-linear-gradient(90deg, var(--slate) 0 4px, transparent 4px 8px); }
-.gap-detail { font-size: 0.8rem; color: var(--text-dim); line-height: 1.6; }
-.gap-detail strong { color: var(--text-primary); }
-
 /* ═══ RETREAT ═══ */
 .retreat-section { padding: 2.5rem 1rem; max-width: 900px; margin: 0 auto; }
 .retreat-card {
@@ -919,22 +901,6 @@ nav a:hover, nav a.active { color: var(--amber); }
 }
 .logistics-list li strong { color: var(--text-primary); }
 
-/* ═══ MILESTONES ═══ */
-.milestones-section { padding: 2.5rem 1rem; max-width: 900px; margin: 0 auto; }
-.milestones-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.6rem; }
-.milestone {
-  padding: 1rem; border-radius: var(--radius-md); border-left: 3px solid; background: var(--bg-card);
-  box-shadow: var(--shadow-sm);
-}
-.milestone[data-phase="night"] { border-color: var(--night-phase); }
-.milestone[data-phase="dawn"] { border-color: var(--amber); }
-.milestone[data-phase="day"] { border-color: var(--sky); }
-.milestone[data-phase="afternoon"] { border-color: var(--sunrise); }
-.milestone[data-phase="dusk"] { border-color: var(--sunset); }
-.milestone[data-phase="finish"] { border-color: var(--ridge); }
-.milestone-time { font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-dim); margin-bottom: 0.15rem; letter-spacing: -0.01em; }
-.milestone-title { font-family: var(--font-display); font-weight: 700; font-size: 0.9rem; margin-bottom: 0.15rem; }
-.milestone-desc { font-size: 0.75rem; color: var(--text-dim); }
 
 /* ═══ GEAR (checkable) ═══ */
 .gear-section { padding: 2.5rem 1rem; max-width: 900px; margin: 0 auto; }
@@ -977,36 +943,19 @@ nav a:hover, nav a.active { color: var(--amber); }
 .gear-optional .gear-item { border-style: dashed; opacity: 0.8; cursor: default; }
 .gear-optional .gear-item:active { transform: none; }
 
-/* ═══ WEATHER LINKS ═══ */
-.weather-links { padding: 2.5rem 1rem; max-width: 900px; margin: 0 auto; }
-.weather-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.6rem; }
-.weather-card {
-  display: block; text-decoration: none; text-align: center;
-  background: var(--bg-card); border: 1px solid var(--border-faint);
-  border-radius: var(--radius-md); padding: 1rem;
-  box-shadow: var(--shadow-sm);
-  transition: box-shadow 0.25s ease, transform 0.25s ease, border-color 0.25s ease;
+/* ═══ WEATHER (compact) ═══ */
+.weather-section { padding: 2.5rem 1rem; max-width: 900px; margin: 0 auto; }
+.weather-compact {
+  display: flex; flex-wrap: wrap; gap: 0.5rem;
 }
-/* weather-card:active handled below */
-.weather-card:hover { border-color: var(--amber-border); }
-.weather-icon { font-size: 1.5rem; margin-bottom: 0.35rem; }
-.weather-icon .icon-lg { width: 24px; height: 24px; }
-.weather-name { font-family: var(--font-display); font-weight: 700; font-size: 0.85rem; color: var(--text-primary); margin-bottom: 0.15rem; }
-.weather-desc { font-size: 0.7rem; color: var(--text-dim); }
-
-/* ═══ SAFETY ═══ */
-.safety-section { padding: 2.5rem 1rem; max-width: 900px; margin: 0 auto; }
-.safety-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; }
-.safety-card {
-  background: var(--bg-card); border: 1px solid var(--border-faint);
-  border-radius: var(--radius-md); padding: 1rem;
-  box-shadow: var(--shadow-sm);
+.weather-compact a {
+  flex: 1 1 auto; min-width: 140px; padding: 0.75rem 1rem;
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: var(--radius-sm); text-decoration: none;
+  color: var(--text-secondary); font-size: 0.85rem;
+  text-align: center; transition: border-color 0.2s;
 }
-.safety-card:active { transform: scale(0.97); }
-.safety-icon { font-size: 1.3rem; margin-bottom: 0.35rem; }
-.safety-icon .icon-lg { width: 22px; height: 22px; }
-.safety-title { font-family: var(--font-display); font-weight: 700; font-size: 0.85rem; margin-bottom: 0.35rem; }
-.safety-desc { font-size: 0.75rem; color: var(--text-dim); line-height: 1.65; }
+.weather-compact a:hover { border-color: var(--amber); color: var(--amber); }
 
 /* ═══ EMERGENCY ═══ */
 .emergency-section { padding: 2.5rem 1rem; max-width: 900px; margin: 0 auto; }
@@ -1117,11 +1066,8 @@ footer a { color: var(--amber); text-decoration: none; }
 /* ═══ DESKTOP ═══ */
 @media (min-width: 641px) {
   .supply-grid { grid-template-columns: repeat(2, 1fr); }
-  .milestones-grid { grid-template-columns: repeat(3, 1fr); }
   .gear-grid { grid-template-columns: repeat(3, 1fr); }
-  .safety-grid { grid-template-columns: repeat(3, 1fr); }
   .emergency-grid { grid-template-columns: repeat(4, 1fr); }
-  .weather-grid { grid-template-columns: repeat(4, 1fr); }
   .gates-grid { grid-template-columns: repeat(2, 1fr); }
   .gems-grid { grid-template-columns: repeat(2, 1fr); }
   .timeline { padding-left: 72px; }
@@ -1157,11 +1103,8 @@ footer a { color: var(--amber); text-decoration: none; }
 @media (max-width: 420px) {
   .hero-stats { grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
   .gear-grid { grid-template-columns: 1fr; }
-  .safety-grid { grid-template-columns: 1fr; }
-  .milestones-grid { grid-template-columns: 1fr; }
   .emergency-grid { grid-template-columns: 1fr; }
   .pace-stats { grid-template-columns: 1fr; }
-  .weather-grid { grid-template-columns: 1fr; }
   .gates-grid { grid-template-columns: 1fr; }
   .gpx-grid { grid-template-columns: 1fr; }
 }
@@ -1396,14 +1339,14 @@ input[type="range"]::-webkit-slider-thumb {
 
 /* ═══ HOVER MICRO-INTERACTIONS (desktop only) ═══ */
 @media (hover: hover) {
-  .seg-card:hover, .supply-card:hover, .weather-card:hover, .gpx-download-card:hover, .gem-card:hover {
+  .seg-card:hover, .supply-card:hover, .gpx-download-card:hover, .gem-card:hover {
     box-shadow: var(--shadow-hover);
     transform: translateY(-2px);
   }
 }
 
 /* ═══ ACTIVE (TAP) STATES ═══ */
-.seg-card:active, .supply-card:active, .weather-card:active, .gpx-download-card:active, .gem-card:active {
+.seg-card:active, .supply-card:active, .gpx-download-card:active, .gem-card:active {
   transform: translateY(0) scale(0.99);
   transition-duration: 0.1s;
 }
@@ -1428,11 +1371,8 @@ input[type="range"]::-webkit-slider-thumb {
 .seg-warning p, .seg-danger p, .seg-info p { font-size: 0.85rem; }
 .seg-timing-note { font-size: 0.85rem; }
 .supply-time { font-size: 0.85rem; }
-.safety-desc { font-size: 0.85rem; }
 .retreat-detail { font-size: 0.9rem; }
-.gap-detail { font-size: 0.9rem; }
 .gear-text { font-size: 0.9rem; }
-.milestone-desc { font-size: 0.85rem; }
 .gems-intro { font-size: 0.9rem; }
 .logistics-card-body p { font-size: 0.85rem; }
 
@@ -1440,7 +1380,6 @@ input[type="range"]::-webkit-slider-thumb {
 .tl-route { font-size: 1.1rem; }
 .supply-name { font-size: 1rem; }
 .seg-name { font-size: 1rem; }
-.safety-title { font-size: 0.95rem; }
 .gate-name { font-size: 1rem; }
 
 /* Safety-critical text — BOLD and large */
@@ -1497,13 +1436,8 @@ html.trail-mode .gate-name { font-size: 1.1rem; }
 html.trail-mode .gate-clock { font-size: 1.2rem; }
 html.trail-mode .gate-elapsed { font-size: 0.9rem; }
 html.trail-mode .gate-action { font-size: 0.9rem; }
-html.trail-mode .safety-title { font-size: 1.05rem; }
-html.trail-mode .safety-desc { font-size: 0.95rem; }
 html.trail-mode .gear-text { font-size: 1rem; }
-html.trail-mode .milestone-title { font-size: 1.05rem; }
-html.trail-mode .milestone-desc { font-size: 0.95rem; }
 html.trail-mode .retreat-detail { font-size: 1rem; }
-html.trail-mode .gap-detail { font-size: 1rem; }
 html.trail-mode .note-list li { font-size: 1rem; }
 html.trail-mode .note-title { font-size: 1.1rem; }
 html.trail-mode .tracker-clock { font-size: 2rem; }
@@ -1698,13 +1632,11 @@ html.trail-mode .pace-stat-value { font-size: 1.15rem; }
     <a href="#supply">補給</a>
     <a href="#retreat">撤退</a>
     <a href="#logistics">交通</a>
-    <a href="#milestones">里程碑</a>
     <a href="#gems">寶石</a>
     <a href="#gear">裝備</a>
     <a href="#calc">計算</a>
     <a href="#gpx">GPX</a>
-    <a href="#notes">注意</a>
-    <a href="#safety">安全</a>
+    <a href="#notes">安全</a>
   </div>
 </nav>
 
@@ -1727,7 +1659,7 @@ html.trail-mode .pace-stat-value { font-size: 1.15rem; }
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
       <span>裝備</span>
     </a>
-    <a href="#safety" data-section="safety">
+    <a href="#notes" data-section="notes">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
       <span>安全</span>
     </a>
@@ -2164,16 +2096,6 @@ html.trail-mode .pace-stat-value { font-size: 1.15rem; }
 
 <div class="divider"></div>
 
-<!-- ═══ GAPS ═══ -->
-<section class="gaps-section">
-  <div class="section-label">CONNECTIONS</div>
-  <div class="section-title">路線斷點接駁</div>
-  <div class="gap-card"><div class="gap-visual"><span>S4終</span><div class="gap-dot"></div><div class="gap-line"></div><div class="gap-dot"></div><span>S5起</span></div><div class="gap-detail">大湖公園→劍潭｜<strong>~6km</strong>｜Uber <strong>~20-25分</strong> / 捷運 <strong>~30分</strong><br>Uber 約 NT$200-300 ｜ 捷運：文湖線→大安站轉淡水信義線</div></div>
-  <div class="gap-card"><div class="gap-visual"><span>S5終</span><div class="gap-dot"></div><div class="gap-line"></div><div class="gap-dot"></div><span>S6起</span></div><div class="gap-detail">碧山巖→中華科大｜<strong>~8km</strong>｜Uber <strong>~25-30分</strong> / 公車+捷運 <strong>~50分</strong><br>Uber 約 NT$250-350 ｜ 小2公車→內湖站(文湖線)→南港展覽館站</div></div>
-</section>
-
-<div class="divider"></div>
-
 <!-- ═══ RETREAT ═══ -->
 <section class="retreat-section" id="retreat">
   <div class="section-label">ESCAPE ROUTES</div>
@@ -2204,14 +2126,6 @@ html.trail-mode .pace-stat-value { font-size: 1.15rem; }
   </div>
 
   <div class="logistics-card">
-    <div class="logistics-card-title">接駁段 Uber 預估</div>
-    <ul class="logistics-list">
-      <li><strong>T1 大湖公園→劍潭：</strong>Uber 約 200-300 元，20-25 分鐘。或捷運文湖線→大安站轉淡水信義線（約 30 分）</li>
-      <li><strong>T2 碧山巖→中華科大：</strong>Uber 約 250-350 元，25-30 分鐘。或小2公車→內湖站(文湖線)→南港展覽館站（約 50 分）</li>
-    </ul>
-  </div>
-
-  <div class="logistics-card">
     <div class="logistics-card-title">關鍵公車時刻</div>
     <ul class="logistics-list">
       <li><strong>108 陽明山遊園公車：</strong>二子坪↔小油坑↔竹子湖。末班約 17:30。假日擠爆，建議 15:00 前到站。</li>
@@ -2231,30 +2145,6 @@ html.trail-mode .pace-stat-value { font-size: 1.15rem; }
     </ul>
   </div>
 
-  <div class="logistics-card">
-    <div class="logistics-card-title"><span class="icon icon-sm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg></span> 行前 APP 準備</div>
-    <div class="logistics-card-body">
-      <p><strong>必裝：</strong>健行筆記 APP（寶石收集 + 離線地圖）</p>
-      <p><strong>推薦：</strong>Hikingbook 或 綠野遊蹤（備用 GPS 導航）</p>
-      <p><strong>前一天務必：</strong>①登入帳號 ②下載 S1-S7 離線地圖 ③匯入 GPX 檔 ④開啟定位權限 ⑤充滿電</p>
-    </div>
-  </div>
-</section>
-
-<div class="divider"></div>
-
-<!-- ═══ MILESTONES ═══ -->
-<section class="milestones-section" id="milestones">
-  <div class="section-label">MILESTONES</div>
-  <div class="section-title">關鍵里程碑</div>
-  <div class="milestones-grid" id="milestonesGrid">
-    <div class="milestone" data-phase="night" data-ms-idx="0"><div class="milestone-time" data-ms-time="0">~00:00</div><div class="milestone-title">起登</div><div class="milestone-desc" data-ms-desc="0">關渡出發</div></div>
-    <div class="milestone" data-phase="dawn" data-ms-idx="1"><div class="milestone-time" data-ms-time="1">~05:30</div><div class="milestone-title">天亮</div><div class="milestone-desc" data-ms-desc="1">S2尾/S3初</div></div>
-    <div class="milestone" data-phase="day" data-ms-idx="2"><div class="milestone-time" data-ms-time="2">~06:30</div><div class="milestone-title">七星山頂</div><div class="milestone-desc" data-ms-desc="2">全程最高 1120m</div></div>
-    <div class="milestone" data-phase="day" data-ms-idx="3"><div class="milestone-time" data-ms-time="3">~12:20</div><div class="milestone-title">S4 完成</div><div class="milestone-desc" data-ms-desc="3">陽明山段結束</div></div>
-    <div class="milestone" data-phase="dusk" data-ms-idx="4"><div class="milestone-time" data-ms-time="4">~18:30</div><div class="milestone-title">日落</div><div class="milestone-desc" data-ms-desc="4">S6 尾聲</div></div>
-    <div class="milestone" data-phase="finish" data-ms-idx="5"><div class="milestone-time" data-ms-time="5">~21:10</div><div class="milestone-title">完走！</div><div class="milestone-desc" data-ms-desc="5">政大終點</div></div>
-  </div>
 </section>
 
 <div class="divider"></div>
@@ -2409,31 +2299,15 @@ html.trail-mode .pace-stat-value { font-size: 1.15rem; }
 
 <div class="divider"></div>
 
-<!-- ═══ WEATHER LINKS ═══ -->
-<section class="weather-links" id="weather">
-  <div class="section-label">WEATHER CHECK</div>
+<!-- ═══ WEATHER ═══ -->
+<section class="weather-section" id="weather">
+  <div class="section-label">WEATHER</div>
   <div class="section-title">出發前天氣確認</div>
-  <div class="weather-grid">
-    <a href="https://www.cwa.gov.tw/V8/C/L/Mountain/Mountain.html?PID=D102" target="_blank" class="weather-card">
-      <div class="weather-icon"><span class="icon icon-lg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.5 19H9a5 5 0 1 1 .1-10A7 7 0 0 1 22 13a4.5 4.5 0 0 1-4.5 6z"/><line x1="12" y1="2" x2="12" y2="4"/><line x1="20" y1="6" x2="18.5" y2="7.5"/></svg></span></div>
-      <div class="weather-name">中央氣象署</div>
-      <div class="weather-desc">山區天氣預報</div>
-    </a>
-    <a href="https://www.ymsnp.gov.tw/YMSNP_HighwayCondition.aspx?n=17910&sms=13477" target="_blank" class="weather-card">
-      <div class="weather-icon"><span class="icon icon-lg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 21l4-10 4 10"/><path d="M2 21l6-12 2.5 5"/><path d="M22 21l-6-12-2.5 5"/></svg></span></div>
-      <div class="weather-name">陽管處</div>
-      <div class="weather-desc">步道開放資訊</div>
-    </a>
-    <a href="https://www.cwa.gov.tw/V8/C/W/OBS_Radar.html" target="_blank" class="weather-card">
-      <div class="weather-icon"><span class="icon icon-lg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 0 1 0 20"/><line x1="12" y1="12" x2="12" y2="2"/></svg></span></div>
-      <div class="weather-name">雷達回波</div>
-      <div class="weather-desc">即時降雨圖</div>
-    </a>
-    <a href="https://www.windy.com/25.175/121.527?25.120,121.527,12" target="_blank" class="weather-card">
-      <div class="weather-icon"><span class="icon icon-lg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9.59 4.59A2 2 0 1 1 11 8H2"/><path d="M12.59 19.41A2 2 0 1 0 14 16H2"/><path d="M17.73 7.73A2.5 2.5 0 1 1 19.5 12H2"/></svg></span></div>
-      <div class="weather-name">Windy</div>
-      <div class="weather-desc">風速/雲圖/降雨</div>
-    </a>
+  <div class="weather-compact">
+    <a href="https://www.cwa.gov.tw/V8/C/L/Mountain/Mountain.html?PID=D102" target="_blank">中央氣象署 山區預報</a>
+    <a href="https://www.ymsnp.gov.tw/YMSNP_HighwayCondition.aspx?n=17910&sms=13477" target="_blank">陽管處 步道資訊</a>
+    <a href="https://www.cwa.gov.tw/V8/C/W/OBS_Radar.html" target="_blank">雷達回波圖</a>
+    <a href="https://www.windy.com/25.175/121.527?25.120,121.527,12" target="_blank">Windy 風速雲圖</a>
   </div>
 </section>
 
@@ -2463,12 +2337,14 @@ html.trail-mode .pace-stat-value { font-size: 1.15rem; }
         <li><strong>虎頭蜂：</strong>8-11月高峰。穿淺色衣、勿噴香水、被攻擊時蹲低護頭快跑</li>
         <li><strong>失溫：</strong>七星山頂即使夏天也可能 &lt;10°C + 強風。濕衣+風=快速失溫</li>
         <li>中暑前兆：不出汗、皮膚乾熱、意識模糊→立即降溫求救</li>
+        <li><strong>20°C溫差：</strong>凌晨平地18-22°C，七星山頂可能&lt;10°C+強風，備薄風衣。午後30°C+</li>
       </ul>
     </div>
 
     <div class="note-card">
       <div class="note-title">導航與迷路</div>
       <ul class="note-list">
+        <li><strong>頭燈：</strong>300流明+。<span id="safetyHeadlampText">需頭燈路段依設定顯示</span></li>
         <li>S5 岔路最多，最易迷路。<strong>全程跟緊 GPX</strong></li>
         <li>Google Maps 山區不可靠，用健行筆記/Hikingbook/綠野遊蹤</li>
         <li>離線地圖<strong>出發前一天下載</strong>，山上下載會失敗</li>
@@ -2486,6 +2362,8 @@ html.trail-mode .pace-stat-value { font-size: 1.15rem; }
         <li>查詢 <strong>3 天內降雨紀錄</strong>決定是否跳過 S2</li>
         <li>建議結伴（2-4人），獨攀風險顯著提高</li>
         <li>攜帶身分證/健保卡（急救時需要）</li>
+        <li><strong>電力管理：</strong>10000mAh+ 行動電源必帶。降亮度、開省電模式，21hr 長征極耗電</li>
+        <li><strong>必裝 APP：</strong>健行筆記（寶石收集+離線地圖）、Hikingbook 或綠野遊蹤（備用GPS）</li>
       </ul>
     </div>
 
@@ -2514,24 +2392,8 @@ html.trail-mode .pace-stat-value { font-size: 1.15rem; }
 
 <div class="divider"></div>
 
-<!-- ═══ SAFETY ═══ -->
-<section class="safety-section" id="safety">
-  <div class="section-label">SAFETY</div>
-  <div class="section-title">安全須知</div>
-  <div class="safety-grid">
-    <div class="safety-card"><div class="safety-icon"><span class="icon icon-lg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="14 2 18 6 7 17 3 13 14 2"/><line x1="5" y1="15" x2="2" y2="18"/><line x1="9" y1="19" x2="6" y2="22"/></svg></span></div><div class="safety-title">頭燈策略</div><div class="safety-desc">300流明+。<span id="safetyHeadlampText">S1全段＋S7後段需頭燈</span>。備用電池必帶。</div></div>
-    <div class="safety-card"><div class="safety-icon"><span class="icon icon-lg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19c0-3 2-5 5-5h2c3 0 5-2 5-5s-2-5-5-5H9"/><circle cx="7" cy="4" r="1" fill="currentColor"/></svg></span></div><div class="safety-title">蛇類動物</div><div class="safety-desc">陽明山夜間蛇類活躍。穿長褲、登山杖打草驚蛇。保持距離。</div></div>
-    <div class="safety-card"><div class="safety-icon"><span class="icon icon-lg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z"/></svg></span></div><div class="safety-title">20°C溫差</div><div class="safety-desc">凌晨平地18-22°C，七星山頂可能<10°C+強風。備薄風衣。午後30°C+。</div></div>
-    <div class="safety-card"><div class="safety-icon"><span class="icon icon-lg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg></span></div><div class="safety-title">導航通訊</div><div class="safety-desc">離線GPX必備。推薦：健行筆記/Hikingbook/綠野遊蹤。開飛航省電。</div></div>
-    <div class="safety-card"><div class="safety-icon"><span class="icon icon-lg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></span></div><div class="safety-title">電力管理</div><div class="safety-desc">21hr長征手機極耗電。10000mAh+行動電源。降亮度省電模式。</div></div>
-    <div class="safety-card"><div class="safety-icon"><span class="icon icon-lg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="7"/><path d="M5.3 5.3L2 2"/><path d="M18.7 18.7L22 22"/><path d="M5 12H2"/><path d="M22 12h-3"/></svg></span></div><div class="safety-title">營養補給</div><div class="safety-desc">每小時200-300kcal。能量膠每45分鐘。鹽錠每小時。不等餓才吃。</div></div>
-  </div>
-</section>
-
-<div class="divider"></div>
-
 <!-- ═══ EMERGENCY ═══ -->
-<section class="emergency-section">
+<section class="emergency-section" id="emergency">
   <div class="section-label">EMERGENCY</div>
   <div class="section-title">緊急聯絡</div>
   <div class="emergency-grid">
@@ -2705,7 +2567,7 @@ const BASE_SEGMENTS = [
 ];
 
 const SUPPLY_BASE = [90, 150, 200, 360, 450, 500, 740, 760, 830, 940, 1050, 1124, 1190, 1210];
-const MILESTONE_BASE = [0, 330, 390, 740, 1110, 1270];
+// MILESTONE_BASE removed (milestones section deleted)
 
 const SEG_NAMES = {
   s1:'S1 關渡→二子坪', s2:'S2 面天坪→小油坑', s3:'S3 小油坑→風櫃口',
@@ -3662,63 +3524,6 @@ function applyConfig() {
     if (note) noteEl.innerHTML = note;
   }
 
-  // ═══ DYNAMIC MILESTONE DESCRIPTIONS ═══
-  var startPhase = getPhase(normMin(startMin), sun.rise, sun.set);
-
-  // Milestone idx 0 (起登): show night hours if starting at night
-  var ms0desc = document.querySelector('[data-ms-desc="0"]');
-  if (ms0desc) {
-    if (startPhase === 'night' || startPhase === 'dawn') {
-      var hoursToSunrise = 0;
-      for (var d0 = -1; d0 <= 2; d0++) {
-        var sr0 = sun.rise + d0 * 1440;
-        if (sr0 > startMin) { hoursToSunrise = (sr0 - startMin) / 60; break; }
-      }
-      ms0desc.textContent = hoursToSunrise > 0 ? '摸黑 ' + hoursToSunrise.toFixed(0) + '+ 小時' : '白天出發';
-    } else {
-      ms0desc.textContent = '白天出發';
-    }
-  }
-
-  // Milestone idx 1 (天亮): only show if sunrise occurs during journey
-  var ms1 = document.querySelector('[data-ms-idx="1"]');
-  if (ms1) {
-    var sunriseInJourney = false;
-    for (var d1 = -1; d1 <= 2; d1++) {
-      var sr1 = sun.rise + d1 * 1440;
-      var elapsed1 = sr1 - startMin;
-      if (elapsed1 > 0 && elapsed1 < totalMin) { sunriseInJourney = true; break; }
-    }
-    ms1.style.display = sunriseInJourney ? '' : 'none';
-    var ms1desc = document.querySelector('[data-ms-desc="1"]');
-    if (ms1desc) ms1desc.textContent = startPhase === 'night' ? '結束夜走' : '日出';
-  }
-
-  // Milestone idx 4 (日落): check if sunset is during journey
-  var ms4 = document.querySelector('[data-ms-idx="4"]');
-  if (ms4) {
-    var sunsetInJourney = false;
-    var sunsetSegName = '';
-    for (var d4 = -1; d4 <= 2; d4++) {
-      var ss4 = sun.set + d4 * 1440;
-      var elapsed4 = ss4 - startMin;
-      if (elapsed4 > 0 && elapsed4 < totalMin) {
-        sunsetInJourney = true;
-        for (var si = 0; si < segs.length; si++) {
-          var s = segs[si];
-          if (elapsed4 >= s.startMin && elapsed4 < s.startMin + s.durMin) {
-            sunsetSegName = s.name.split(' ')[0];
-            break;
-          }
-        }
-        break;
-      }
-    }
-    ms4.style.display = sunsetInJourney ? '' : 'none';
-    var ms4desc = document.querySelector('[data-ms-desc="4"]');
-    if (ms4desc) ms4desc.textContent = sunsetSegName ? sunsetSegName + ' 期間' : 'S6 尾聲';
-  }
-
   // ═══ DYNAMIC S3 SUMMIT NOTE ═══
   var s3note = document.getElementById('s3SummitNote');
   if (s3note) {
@@ -3802,14 +3607,6 @@ function applyConfig() {
     var gapStr = gapH > 0 ? gapH + 'h' + (gapM > 0 ? String(gapM).padStart(2,'0') + 'm' : '') : gapM + 'm';
     var waterMl = Math.round(gapMin / 60 * 300);
     gapEl.innerHTML = '→ 下個補給 ' + gapStr + '（建議帶 ' + waterMl + 'ml）';
-  });
-
-  // Milestone times (clock time)
-  MILESTONE_BASE.forEach((baseMin, idx) => {
-    const scaled = scaleBaseTime(baseMin, pace);
-    const clockTime = minToClockWithDay(startMin + scaled);
-    const els = document.querySelectorAll('[data-ms-time="' + idx + '"]');
-    els.forEach(el => { el.textContent = '~' + clockTime; });
   });
 
   // ═══ GATE TIMES ═══
@@ -4746,14 +4543,13 @@ var tocSections = [
   { id: 'supply', label: 'SUPPLY', name: '補給點' },
   { id: 'retreat', label: 'ESCAPE', name: '撤退路線' },
   { id: 'logistics', label: 'LOGISTICS', name: '交通物流' },
-  { id: 'milestones', label: 'MILESTONES', name: '里程碑' },
   { id: 'gems', label: 'GEMS', name: '寶石收集' },
   { id: 'gear', label: 'GEAR', name: '裝備清單' },
   { id: 'calc', label: 'CALC', name: '補給計算機' },
   { id: 'gpx', label: 'GPX', name: 'GPX 下載' },
   { id: 'weather', label: 'WEATHER', name: '天氣確認' },
   { id: 'notes', label: 'NOTES', name: '注意事項' },
-  { id: 'safety', label: 'SAFETY', name: '安全須知' },
+  { id: 'emergency', label: 'EMERGENCY', name: '緊急聯絡' },
 ];
 
 (function buildTOC() {
